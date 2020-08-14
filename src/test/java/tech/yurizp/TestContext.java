@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class TestContext {
 
     public static WebDriver driver;
+    private static String OS = System.getProperty("os.name").toLowerCase();
 
     @BeforeSuite
     public void ini() {
@@ -22,8 +23,13 @@ public class TestContext {
             Map<String, String> mobileEmulation = Collections.singletonMap("deviceName", "Nexus 5");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
-            System.setProperty(
-                    "webdriver.chrome.driver", new File("src/main/resources/chromedriver").getAbsolutePath());
+            if (isWindows()) {
+                System.setProperty("webdriver.chrome.driver", new File("src/main/resources/chromedriver.exe").getAbsolutePath());
+            }
+            if (isUnix()) {
+                System.setProperty("webdriver.chrome.driver", new File("src/main/resources/chromedriver").getAbsolutePath());
+            }
+
             driver = new ChromeDriver(chromeOptions);
             driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
             driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.MINUTES);
@@ -40,6 +46,14 @@ public class TestContext {
     public void clearCache() {
         driver.manage().deleteAllCookies();
         driver.get("chrome://settings/clearBrowserData");
+    }
+
+    public static boolean isWindows() {
+        return (OS.indexOf("win") >= 0);
+    }
+
+    public static boolean isUnix() {
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
     }
 
 }

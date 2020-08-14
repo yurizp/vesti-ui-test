@@ -8,6 +8,7 @@ import tech.yurizp.PageObjects.HomePage;
 import tech.yurizp.TestContext;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.testng.Assert.assertTrue;
 
@@ -23,6 +24,7 @@ public class HomeTest extends TestContext {
   @Test(groups = {"caminho-feliz", "home"})
   public void validaSeAnunciosEstaoSemPreco() {
     driver.navigate().to(homePage.getUrl());
+    List<AnunciosVendasDto> collect = homePage.getAnunciosProdutosDto().stream().filter(anunciosVendasDto -> "Ver Preço".equalsIgnoreCase(anunciosVendasDto.getPreco())).collect(Collectors.toList());
     List<AnunciosVendasDto> anunciosVendasDtos = homePage.buscarTodosAnunciosComPreco();
     assertTrue(anunciosVendasDtos.isEmpty());
   }

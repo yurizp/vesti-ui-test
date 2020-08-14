@@ -7,6 +7,7 @@ group 'tech.yurizp'
 version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -14,6 +15,8 @@ repositories {
 
 test {
     useTestNG()
+    systemProperty "file.encoding", "utf-8"
+
 }
 
 dependencies {
@@ -26,4 +29,8 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.141.59'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.9.1'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }

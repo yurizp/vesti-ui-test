@@ -15,34 +15,36 @@ import java.util.stream.Collectors;
 @Getter
 public class HomePage extends AcoesCustomizadas {
 
-  private URL url = new URL("http://divamodas.homolog.vesti.mobi/");
+    private URL url = new URL("http://divamodas.homolog.vesti.mobi/");
 
-  @FindBy(how = How.XPATH, using = "//*[@id=\"grid-panel\"]//list-grid-item")
-  private List<WebElement> anunciosProdutos;
+    @FindBy(how = How.XPATH, using = "//*[@id=\"grid-panel\"]//list-grid-item")
+    private List<WebElement> anunciosProdutos;
 
-  public HomePage() throws MalformedURLException {}
+    public HomePage() throws MalformedURLException {
+    }
 
-  public List<AnunciosVendasDto> getAnunciosProdutosDto() {
-    return anunciosProdutos.stream()
-        .map(
-            webElement ->
-                new AnunciosVendasDto(
-                    ((RemoteWebElement) webElement).findElementByTagName("h2").getText(),
-                    ((RemoteWebElement) webElement).findElementByTagName("button").getText()))
-        .collect(Collectors.toList());
-  }
+    public List<AnunciosVendasDto> getAnunciosProdutosDto() {
+        return anunciosProdutos.stream()
+                .map(
+                        webElement ->
+                                new AnunciosVendasDto(
+                                        ((RemoteWebElement) webElement).findElementByTagName("h2").getText(),
+                                        ((RemoteWebElement) webElement).findElementByTagName("button").getText()))
+                .collect(Collectors.toList());
+    }
 
-  public List<AnunciosVendasDto> buscarTodosAnunciosComPreco() {
-    return getAnunciosProdutosDto().stream()
-        .filter(anuncio -> !"Ver preço".equalsIgnoreCase(anuncio.getPreco()))
-        .collect(Collectors.toList());
-  }
+    public List<AnunciosVendasDto> buscarTodosAnunciosComPreco() {
+        return getAnunciosProdutosDto()
+                .stream()
+                .filter(anunciosVendasDto -> !"Ver Preço".equalsIgnoreCase(anunciosVendasDto.getPreco()))
+                .collect(Collectors.toList());
+    }
 
-  public void clicarEmAnuncioDeProduto() {
-    getAnunciosProdutos().stream()
-        .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("button"))
-        .findFirst()
-        .get()
-        .click();
-  }
+    public void clicarEmAnuncioDeProduto() {
+        getAnunciosProdutos().stream()
+                .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("button"))
+                .findFirst()
+                .get()
+                .click();
+    }
 }

@@ -17,7 +17,7 @@ public class CadastroVendedorPageObject extends AcoesCustomizadas {
 
     private URL url = new URL("https://happweb.vesti.mobi/catalogo/divamodas/cadastro");
 
-    @FindBy(how = How.XPATH, using = "//*[@ng-reflect-name=\"cnpjCpfOrEmail\"]//input")
+    @FindBy(how = How.XPATH, using = "/html/body/app/catalogue/sign-in-panel/div/div/form/div/x-input/div/input")
     private WebElement cnpjCpfOuEmail;
 
     @FindBy(how = How.XPATH, using = "//*[@class=\"form-group\"]/../../button")
@@ -99,7 +99,7 @@ public class CadastroVendedorPageObject extends AcoesCustomizadas {
         Assert.assertEquals(getCnpjCpfOuEmailText(), Mascara.cnpj(vendedorDto.getCnpjCpfOuEmail()));
         getBotaoContinuar().click();
         getNome().sendKeys(vendedorDto.getNome());
-        getEmail().sendKeys(vendedorDto.getEmail());
+        sendKeys(vendedorDto.getEmail(), getEmail());
         sendKeys(vendedorDto.getTelefone(), getTelefone());
         getSenha().sendKeys(vendedorDto.getSenha());
         getConfirmacaoSenha().sendKeys(vendedorDto.getConfirmacaoSenha());
@@ -113,9 +113,9 @@ public class CadastroVendedorPageObject extends AcoesCustomizadas {
 
     public void finalizarCadastro() {
         getBotaoCadastrar().click();
-        Assert.assertEquals(
-                getMensagemCadastroText(),
-                "Estamos analisando os seus dados para liberação do catálogo");
+        String actual = getMensagemCadastroText();
+        String expected = "Estamos analisando os seus dados para liberação do catálogo";
+        Assert.assertEquals(actual, expected);
         botaoVoltarAoCatalogo.click();
     }
 
