@@ -22,10 +22,15 @@ public class HomeTest extends TestContext {
   }
 
   @Test(groups = {"caminho-feliz", "home"})
-  public void validaSeAnunciosEstaoSemPreco() {
+    public void validaSeAnunciosEstaoSemPreco() {
     driver.navigate().to(homePage.getUrl());
     List<AnunciosVendasDto> collect = homePage.getAnunciosProdutosDto().stream().filter(anunciosVendasDto -> "Ver Preço".equalsIgnoreCase(anunciosVendasDto.getPreco())).collect(Collectors.toList());
     List<AnunciosVendasDto> anunciosVendasDtos = homePage.buscarTodosAnunciosComPreco();
-    assertTrue(anunciosVendasDtos.isEmpty());
+    assertTrue(anunciosVendasDtos.isEmpty(), "[validaSeAnunciosEstaoSemPreco] - Existem anuncios com preço de venda.");
+  }
+
+  @Test(groups = {"caminho-feliz", "home"})
+    public void deveFalhar() {
+    assertTrue(false, "[validaSeAnunciosEstaoSemPreco] - Existem anuncios com preço de venda.");
   }
 }
