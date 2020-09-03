@@ -1,4 +1,4 @@
-package tech.yurizp.Prototype;
+package mobi.vesti.test.Prototype;
 
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClient;

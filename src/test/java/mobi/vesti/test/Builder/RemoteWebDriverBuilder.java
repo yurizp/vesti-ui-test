@@ -1,12 +1,12 @@
-package tech.yurizp.Builder;
+package mobi.vesti.test.Builder;
 
 import lombok.extern.slf4j.Slf4j;
+import mobi.vesti.test.Prototype.AwsSeleniumApiPrototype;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import tech.yurizp.Prototype.AwsSeleniumApiPrototype;
-import tech.yurizp.Prototype.TestingBotPrototype;
+import mobi.vesti.test.Prototype.TestingBotPrototype;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -73,11 +73,11 @@ public class RemoteWebDriverBuilder {
     private static ChromeDriver localRunner() {
         if (isWindows()) {
             log.info("{} Sistema operacional Windows.", PREFIXO);
-            System.setProperty("webdriver.chrome.driver", new File("src/main/resources/chromedriver.exe").getAbsolutePath());
+            System.setProperty("webdriver.chrome.driver", new File("src/test/resources/chromedriver.exe").getAbsolutePath());
         }
         if (isUnix()) {
             log.info("{} Sistema operacional Linux.", PREFIXO);
-            System.setProperty("webdriver.chrome.driver", new File("src/main/resources/chromedriver").getAbsolutePath());
+            System.setProperty("webdriver.chrome.driver",new File("src/test/resources/chromedriver").getAbsolutePath());
         }
         return new ChromeDriver(getChromeOptions());
     }

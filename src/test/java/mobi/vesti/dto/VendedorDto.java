@@ -1,4 +1,4 @@
-package tech.yurizp.Dto;
+package mobi.vesti.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

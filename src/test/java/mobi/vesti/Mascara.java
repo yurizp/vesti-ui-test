@@ -1,4 +1,4 @@
-package tech.yurizp;
+package mobi.vesti;
 
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;

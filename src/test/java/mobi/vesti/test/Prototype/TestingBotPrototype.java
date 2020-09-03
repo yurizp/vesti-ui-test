@@ -1,4 +1,4 @@
-package tech.yurizp.Prototype;
+package mobi.vesti.test.Prototype;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,26 +1,35 @@
-package tech.yurizp.PageObjects;
+package mobi.vesti.pageobjects;
 
 import lombok.Getter;
+import mobi.vesti.Mascara;
+import mobi.vesti.Mensagens;
+import mobi.vesti.dto.VendedorDto;
+import mobi.vesti.properties.ConfiguracoesGlobais;
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
-import tech.yurizp.Dto.VendedorDto;
-import tech.yurizp.Mascara;
 
+import javax.xml.stream.XMLStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 
-@Getter
-public class CadastroVendedorPageObject extends AcoesCustomizadas {
+import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_ANALISANDO_DADOS;
+import static org.testng.Assert.assertFalse;
 
-    private URL url = new URL("https://happweb.vesti.mobi/catalogo/divamodas/cadastro");
+@Getter
+public class CadastroVendedorPageObject {
+
+    private final static String URL = ConfiguracoesGlobais.BASE_URL;
+
 
     @FindBy(how = How.XPATH, using = "/html/body/app/catalogue/sign-in-panel/div/div/form/div/x-input/div/input")
     private WebElement cnpjCpfOuEmail;
 
-    @FindBy(how = How.XPATH, using = "//*[@class=\"form-group\"]/../../button")
+    @FindBy(how = How.XPATH, using = "//form//button")
     private WebElement botaoContinuar;
 
     @FindBy(how = How.XPATH, using = "//*[@ng-reflect-name=\"cnpjcpf\"]//input")
@@ -50,11 +59,20 @@ public class CadastroVendedorPageObject extends AcoesCustomizadas {
     @FindBy(how = How.XPATH, using = "//*[@class=\"vesti-panel\"]//button")
     private WebElement botaoVoltarAoCatalogo;
 
-    public CadastroVendedorPageObject() throws MalformedURLException {
-    }
+    @FindBy(how = How.XPATH, using = "//*[@ng-reflect-klass=\"form-group\"]//span")
+    private WebElement mensagemCpfOuCnpjInvalidos;
 
-    public String getCnpjCpfOuEmailTextText() {
-        return cnpjCpfOuEmail.getAttribute("value");
+    @FindBy(how = How.XPATH, using = "//*[@ng-reflect-name=\"password\"]//..//span")
+    private WebElement mensagemCampoInvalido;
+
+    @FindBy(how = How.XPATH, using = "//catalogue/alert/div")
+    private WebElement popMensagemAlertaPreencherCorretamente;
+
+    @FindBy(how = How.XPATH, using = "//*[@class=\"container-fluid\"]//button")
+    private WebElement botaoVoltar;
+
+
+ public CadastroVendedorPageObject() throws MalformedURLException {
     }
 
     public String getCnpjCpfOuEmailText() {
@@ -95,12 +113,13 @@ public class CadastroVendedorPageObject extends AcoesCustomizadas {
 
     public void preencherFormularioCnpj(VendedorDto vendedorDto)
             throws InterruptedException, ParseException {
-        sendKeys(vendedorDto.getCnpjCpf(), getCnpjCpfOuEmail());
+        AcoesCustomizadas.sendKeys(vendedorDto.getCnpjCpf(), getCnpjCpfOuEmail());
         Assert.assertEquals(getCnpjCpfOuEmailText(), Mascara.cnpj(vendedorDto.getCnpjCpfOuEmail()));
         getBotaoContinuar().click();
+        assertFalse(getCnpjCpf().isEnabled(), "O campo de CPF ou CNPJ esta editavel esta habilitado como editavel.");
         getNome().sendKeys(vendedorDto.getNome());
-        sendKeys(vendedorDto.getEmail(), getEmail());
-        sendKeys(vendedorDto.getTelefone(), getTelefone());
+        AcoesCustomizadas.sendKeys(vendedorDto.getEmail(), getEmail());
+        AcoesCustomizadas.sendKeys(vendedorDto.getTelefone(), getTelefone());
         getSenha().sendKeys(vendedorDto.getSenha());
         getConfirmacaoSenha().sendKeys(vendedorDto.getConfirmacaoSenha());
         Assert.assertEquals(this.getCnpjCpfText(), Mascara.cnpj((vendedorDto.getCnpjCpf())));
@@ -114,9 +133,15 @@ public class CadastroVendedorPageObject extends AcoesCustomizadas {
     public void finalizarCadastro() {
         getBotaoCadastrar().click();
         String actual = getMensagemCadastroText();
-        String expected = "Estamos analisando os seus dados para liberação do catálogo";
-        Assert.assertEquals(actual, expected);
+        Assert.assertEquals(actual, MENSAGEM_ANALISANDO_DADOS);
         botaoVoltarAoCatalogo.click();
     }
 
+    public String getPopMensagemAlertaPreencherCorretamenteText() {
+        return StringUtils.trimToNull(getPopMensagemAlertaPreencherCorretamente().getAttribute("innerHTML"));
+    }
+
+    public String getMensagemCampoInvalidoText() {
+        return getMensagemCampoInvalido().getText();
+    }
 }

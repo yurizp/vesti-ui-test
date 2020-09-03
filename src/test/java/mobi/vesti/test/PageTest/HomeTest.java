@@ -1,11 +1,11 @@
-package tech.yurizp.PageTest;
+package mobi.vesti.test.PageTest;
 
+import mobi.vesti.pageobjects.HomePage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import tech.yurizp.Dto.AnunciosVendasDto;
-import tech.yurizp.PageObjects.HomePage;
-import tech.yurizp.TestContext;
+import mobi.vesti.dto.AnunciosVendasDto;
+import mobi.vesti.test.TestContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +29,4 @@ public class HomeTest extends TestContext {
     assertTrue(anunciosVendasDtos.isEmpty(), "[validaSeAnunciosEstaoSemPreco] - Existem anuncios com preço de venda.");
   }
 
-  @Test(groups = {"caminho-feliz", "home"})
-    public void deveFalhar() {
-    assertTrue(false, "[validaSeAnunciosEstaoSemPreco] - Existem anuncios com preço de venda.");
-  }
 }

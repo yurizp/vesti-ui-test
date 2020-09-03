@@ -1,4 +1,4 @@
-package tech.yurizp.Factory;
+package mobi.vesti.factory;
 
 import java.util.Random;
 

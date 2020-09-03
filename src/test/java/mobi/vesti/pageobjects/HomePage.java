@@ -1,11 +1,12 @@
-package tech.yurizp.PageObjects;
+package mobi.vesti.pageobjects;
 
 import lombok.Getter;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import tech.yurizp.Dto.AnunciosVendasDto;
+import mobi.vesti.dto.AnunciosVendasDto;
+import mobi.vesti.properties.ConfiguracoesGlobais;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @Getter
 public class HomePage extends AcoesCustomizadas {
 
-    private URL url = new URL("http://divamodas.homolog.vesti.mobi/");
+    private URL url = new URL(ConfiguracoesGlobais.BASE_URL);
 
     @FindBy(how = How.XPATH, using = "//*[@id=\"grid-panel\"]//list-grid-item")
     private List<WebElement> anunciosProdutos;
