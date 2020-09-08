@@ -1,26 +1,24 @@
-package mobi.vesti.test.PageTest;
+package mobi.vesti.test.pages;
 
-import mobi.vesti.Mascara;
 import mobi.vesti.dto.AnunciosVendasDto;
 import mobi.vesti.dto.VendedorDto;
 import mobi.vesti.factory.ContatoFactory;
 import mobi.vesti.factory.DocumentoFactory;
-import mobi.vesti.pageobjects.AcoesCustomizadas;
+import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.pageobjects.CadastroVendedorPageObject;
-import mobi.vesti.pageobjects.HomePage;
+import mobi.vesti.pageobjects.HomePageObject;
+import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.Mascara;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.text.ParseException;
 import java.util.List;
 
-import static mobi.vesti.pageobjects.AcoesCustomizadas.sendKeys;
+import static mobi.vesti.utils.AcoesCustomizadas.sendKeys;
 import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_CPF_CNPJ_INVALIDOS;
 import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_DE_SENHAS_DIFERENTES;
 import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_EMAIL_INVALIDO;
@@ -31,22 +29,20 @@ import static org.testng.Assert.assertTrue;
 
 public class CadastroVendedorTest extends TestContext {
 
-    public HomePage homePage;
+    public HomePageObject homePage;
     public CadastroVendedorPageObject cadastroVendedorPage;
 
     @BeforeClass()
     public void before() {
         cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
-        homePage = PageFactory.initElements(driver, HomePage.class);
+        homePage = PageFactory.initElements(driver, HomePageObject.class);
     }
 
     @Test
     public void testarFluxoDeCadastroComSucessoDeNovoVendedor()
             throws InterruptedException, ParseException {
-        driver.navigate().to(homePage.getUrl());
-        List<AnunciosVendasDto> anunciosVendasDtos = homePage.buscarTodosAnunciosComPreco();
-        assertTrue(anunciosVendasDtos.isEmpty());
-        homePage.clicarEmAnuncioDeProduto();
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        homePage.validarQuePrecosNaoSaoExibidos();
         String cnpj = DocumentoFactory.cnpj();
         VendedorDto vendedorDto =
                 VendedorDto.builder()
@@ -58,18 +54,17 @@ public class CadastroVendedorTest extends TestContext {
                         .telefone(ContatoFactory.celular(10))
                         .nome(ContatoFactory.nomeSobrenome())
                         .build();
+        homePage.clicarEmAnuncioDeProdutoSemPreco();
         cadastroVendedorPage.preencherFormularioCnpj(vendedorDto);
         cadastroVendedorPage.finalizarCadastro();
-        anunciosVendasDtos = homePage.buscarTodosAnunciosComPreco();
-        assertTrue(anunciosVendasDtos.isEmpty());
+        homePage.validarQuePrecosNaoSaoExibidos();
     }
 
     @Test
     public void testarValidacaoDeCamposNoCadastroDeVendedor() throws Exception {
-        driver.navigate().to(homePage.getUrl());
-        List<AnunciosVendasDto> anunciosVendasDtos = homePage.buscarTodosAnunciosComPreco();
-        assertTrue(anunciosVendasDtos.isEmpty(), "Foram encontrados anuncios de produtos com preço.");
-        homePage.clicarEmAnuncioDeProduto();
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        homePage.validarQuePrecosNaoSaoExibidos();
+        homePage.clicarEmAnuncioDeProdutoSemPreco();
         cadastroVendedorPage.getCnpjCpfOuEmail().click();
         sendKeys("123asdasdsdada", cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
@@ -79,7 +74,7 @@ public class CadastroVendedorTest extends TestContext {
         assertEquals(cadastroVendedorPage.getCnpjCpfOuEmailText(), Mascara.cnpj("18733438000144"));
         AcoesCustomizadas.focarNoElemento(cadastroVendedorPage.getBotaoContinuar());
         cadastroVendedorPage.getBotaoVoltar().click();
-        homePage.clicarEmAnuncioDeProduto();
+        homePage.clicarEmAnuncioDeProdutoSemPreco();
         sendKeys("18733438000144", cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
         testarValidacaoDeEmail();

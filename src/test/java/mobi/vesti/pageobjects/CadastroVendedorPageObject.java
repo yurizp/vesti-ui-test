@@ -1,19 +1,15 @@
 package mobi.vesti.pageobjects;
 
 import lombok.Getter;
-import mobi.vesti.Mascara;
-import mobi.vesti.Mensagens;
 import mobi.vesti.dto.VendedorDto;
-import mobi.vesti.properties.ConfiguracoesGlobais;
+import mobi.vesti.utils.AcoesCustomizadas;
+import mobi.vesti.utils.Mascara;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.testng.Assert;
 
-import javax.xml.stream.XMLStreamReader;
 import java.net.MalformedURLException;
 import java.text.ParseException;
 
@@ -22,9 +18,6 @@ import static org.testng.Assert.assertFalse;
 
 @Getter
 public class CadastroVendedorPageObject {
-
-    private final static String URL = ConfiguracoesGlobais.BASE_URL;
-
 
     @FindBy(how = How.XPATH, using = "/html/body/app/catalogue/sign-in-panel/div/div/form/div/x-input/div/input")
     private WebElement cnpjCpfOuEmail;
@@ -72,7 +65,7 @@ public class CadastroVendedorPageObject {
     private WebElement botaoVoltar;
 
 
- public CadastroVendedorPageObject() throws MalformedURLException {
+    public CadastroVendedorPageObject() throws MalformedURLException {
     }
 
     public String getCnpjCpfOuEmailText() {

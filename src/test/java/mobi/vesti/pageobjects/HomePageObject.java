@@ -1,0 +1,92 @@
+package mobi.vesti.pageobjects;
+
+import lombok.Getter;
+import mobi.vesti.dto.AnunciosVendasDto;
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.testng.Assert.assertEquals;
+
+@Getter
+public class HomePageObject {
+
+    @FindBy(how = How.XPATH, using = "//*[@id=\"grid-panel\"]//list-grid-item")
+    private List<WebElement> anunciosProdutos;
+
+    public HomePageObject() throws MalformedURLException {
+    }
+
+    public List<AnunciosVendasDto> getAnunciosSemPecoProdutosDto() {
+        return anunciosProdutos.stream()
+                .map(
+                        webElement ->
+                                new AnunciosVendasDto(
+                                        ((RemoteWebElement) webElement).findElementByTagName("h2").getText(),
+                                        ((RemoteWebElement) webElement).findElementByClassName("grid-image").getText()
+                                ))
+                .collect(Collectors.toList());
+    }
+
+    public List<AnunciosVendasDto> getAnunciosComPrecoProdutosDto() {
+        return anunciosProdutos.stream()
+                .map(
+                        webElement ->
+                                new AnunciosVendasDto(
+                                        ((RemoteWebElement) webElement).findElementByTagName("h2").getText(),
+                                        ((RemoteWebElement) webElement).findElementByClassName("grid-image").getText()
+                                ))
+                .collect(Collectors.toList());
+    }
+
+    public void clicarEmAnuncioDeProdutoSemPreco() {
+        getAnunciosProdutos().stream()
+                .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("button"))
+                .findFirst()
+                .get()
+                .click();
+    }
+
+    public void clicarEmAnuncioDeProdutoSemPreco(String anuncioNome) {
+        getAnunciosProdutos().stream()
+                .filter(element -> StringUtils.equalsIgnoreCase(anuncioNome, ((RemoteWebElement) element).findElementByTagName("h2").getText()))
+                .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("button"))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException(String.format("Não foi encontrado o anuncio %s", anuncioNome)))
+                .click();
+    }
+
+    public void clicarEmAnuncioDeProdutoComPreco() {
+        getAnunciosProdutos().stream()
+                .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("button"))
+                .findFirst()
+                .get()
+                .click();
+    }
+
+    public void clicarEmAnuncioDeProdutoComPreco(String anuncioNome) {
+        getAnunciosProdutos()
+                .stream()
+                .filter(element -> StringUtils.equalsIgnoreCase(anuncioNome, ((RemoteWebElement) element).findElementByTagName("h2").getText()))
+                .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("img"))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException(String.format("Não foi encontrado o anuncio %s", anuncioNome)))
+                .click();
+    }
+
+    public void validarQuePrecosNaoSaoExibidos() {
+        List<AnunciosVendasDto> anunciosVendasDtos = this.getAnunciosSemPecoProdutosDto();
+        assertEquals(anunciosVendasDtos.size(), 8);
+    }
+
+    public void validarQuePrecosEstaoSendoExibidos() {
+        List<AnunciosVendasDto> anunciosVendasDtos = this.getAnunciosComPrecoProdutosDto();
+        assertEquals(anunciosVendasDtos.size(), 8);
+    }
+}

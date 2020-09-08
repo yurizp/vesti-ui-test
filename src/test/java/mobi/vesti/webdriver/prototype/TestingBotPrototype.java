@@ -1,4 +1,4 @@
-package mobi.vesti.test.Prototype;
+package mobi.vesti.webdriver.prototype;
 
 import lombok.extern.slf4j.Slf4j;
 

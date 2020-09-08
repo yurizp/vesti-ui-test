@@ -1,4 +1,4 @@
-package mobi.vesti;
+package mobi.vesti.utils;
 
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;

@@ -1,4 +1,4 @@
-package mobi.vesti.test.Prototype;
+package mobi.vesti.webdriver.prototype;
 
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClient;

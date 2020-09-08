@@ -1,12 +1,12 @@
-package mobi.vesti.test.Builder;
+package mobi.vesti.webdriver.builder;
 
 import lombok.extern.slf4j.Slf4j;
-import mobi.vesti.test.Prototype.AwsSeleniumApiPrototype;
+import mobi.vesti.webdriver.prototype.AwsSeleniumApiPrototype;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import mobi.vesti.test.Prototype.TestingBotPrototype;
+import mobi.vesti.webdriver.prototype.TestingBotPrototype;
 
 import java.io.File;
 import java.net.MalformedURLException;

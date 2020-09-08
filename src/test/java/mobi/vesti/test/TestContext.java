@@ -1,7 +1,7 @@
 package mobi.vesti.test;
 
 import mobi.vesti.properties.ConfiguracoesGlobais;
-import mobi.vesti.test.Builder.RemoteWebDriverBuilder;
+import mobi.vesti.webdriver.builder.RemoteWebDriverBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +15,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.net.MalformedURLException;
-import java.util.Dictionary;
 
 public class TestContext {
 
@@ -40,7 +39,7 @@ public class TestContext {
         driver.get("chrome://settings/clearBrowserData");
         driver.findElement(By.xpath("//settings-ui")).sendKeys(Keys.ENTER);
         if (driver instanceof WebStorage) {
-            WebStorage webStorage = (WebStorage)driver;
+            WebStorage webStorage = (WebStorage) driver;
             webStorage.getSessionStorage().clear();
             webStorage.getLocalStorage().clear();
             webStorage.getSessionStorage().clear();
@@ -52,5 +51,9 @@ public class TestContext {
         storage.removeItem("localStorage");
     }
 
-
+    @Override
+    protected void finalize() throws Throwable {
+        driver.close();
+        driver.quit();
+    }
 }
