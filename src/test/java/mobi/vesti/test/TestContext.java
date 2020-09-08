@@ -10,7 +10,9 @@ import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.html5.RemoteWebStorage;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -51,9 +53,4 @@ public class TestContext {
         storage.removeItem("localStorage");
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        driver.close();
-        driver.quit();
-    }
 }

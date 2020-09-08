@@ -26,10 +26,7 @@ public class RemoteWebDriverBuilder {
     private static TestingBotPrototype testingBotPrototype = new TestingBotPrototype();
 
     public static WebDriver instance() throws MalformedURLException {
-        if (remoteWebDriver == null) {
-            remoteWebDriver = init();
-        }
-        return remoteWebDriver;
+        return init();
     }
 
     private static RemoteWebDriver init() throws MalformedURLException {

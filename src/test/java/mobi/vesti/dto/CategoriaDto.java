@@ -2,29 +2,27 @@ package mobi.vesti.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import mobi.vesti.utils.ObjectUtils;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 
-@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VendedorDto {
+public class CategoriaDto {
 
-    private String cnpjCpfOuEmail;
-    private String cnpjCpf;
-    private String email;
-    private String telefone;
-    private String senha;
-    private String confirmacaoSenha;
     public String nome;
+    public WebElement categoriaElement;
+
+    public void fechar() {
+        ((RemoteWebElement) categoriaElement).findElementByTagName("i").click();
+    }
 
     @SneakyThrows
     @Override
     public String toString() {
         return ObjectUtils.toString(this);
     }
-
 }

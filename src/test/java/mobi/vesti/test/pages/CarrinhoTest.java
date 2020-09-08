@@ -22,12 +22,12 @@ public class CarrinhoTest extends TestContext {
     @BeforeClass
     public void before() {
         homePage = PageFactory.initElements(driver, HomePageObject.class);
-        loginPage = PageFactory.initElements(driver, LoginPageObject.class);
+        loginPage = new LoginPageObject(driver);
         carrinhoPage = new CarrinhoPageObject(driver);
         cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
     }
 
-    @Test
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void testarAdicionarERemoverProdutosDoCarrinho() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         homePage.clicarEmAnuncioDeProdutoSemPreco("POLO");

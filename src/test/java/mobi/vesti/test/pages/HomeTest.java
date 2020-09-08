@@ -1,18 +1,18 @@
 package mobi.vesti.test.pages;
 
-import mobi.vesti.dto.AnunciosVendasDto;
+import mobi.vesti.dto.ProdutosDto;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
+import mobi.vesti.properties.MensgensProperties;
+import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.util.RetryAnalyzerCount;
 
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HomeTest extends TestContext {
 
@@ -23,11 +23,12 @@ public class HomeTest extends TestContext {
         homePage = PageFactory.initElements(driver, HomePageObject.class);
     }
 
-    @Test(groups = {"caminho-feliz", "home"})
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void validaSeAnunciosEstaoSemPreco() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
-        List<AnunciosVendasDto> anunciosVendasDtos = homePage.getAnunciosSemPecoProdutosDto();
-        assertEquals(anunciosVendasDtos.size(), 8, "[validaSeAnunciosEstaoSemPreco] - Existem anuncios com preço de venda.");
+        List<ProdutosDto> produtosHome = homePage.getAnunciosSemPecoProdutosDto();
+        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO.toArray())
+                .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
 }

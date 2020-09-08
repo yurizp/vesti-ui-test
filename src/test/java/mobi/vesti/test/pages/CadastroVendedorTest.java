@@ -1,6 +1,5 @@
 package mobi.vesti.test.pages;
 
-import mobi.vesti.dto.AnunciosVendasDto;
 import mobi.vesti.dto.VendedorDto;
 import mobi.vesti.factory.ContatoFactory;
 import mobi.vesti.factory.DocumentoFactory;
@@ -16,7 +15,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.text.ParseException;
-import java.util.List;
 
 import static mobi.vesti.utils.AcoesCustomizadas.sendKeys;
 import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_CPF_CNPJ_INVALIDOS;
@@ -38,7 +36,7 @@ public class CadastroVendedorTest extends TestContext {
         homePage = PageFactory.initElements(driver, HomePageObject.class);
     }
 
-    @Test
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void testarFluxoDeCadastroComSucessoDeNovoVendedor()
             throws InterruptedException, ParseException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
@@ -60,7 +58,7 @@ public class CadastroVendedorTest extends TestContext {
         homePage.validarQuePrecosNaoSaoExibidos();
     }
 
-    @Test
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void testarValidacaoDeCamposNoCadastroDeVendedor() throws Exception {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         homePage.validarQuePrecosNaoSaoExibidos();

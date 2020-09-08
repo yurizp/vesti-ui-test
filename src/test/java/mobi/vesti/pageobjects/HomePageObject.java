@@ -1,7 +1,7 @@
 package mobi.vesti.pageobjects;
 
 import lombok.Getter;
-import mobi.vesti.dto.AnunciosVendasDto;
+import mobi.vesti.dto.ProdutosDto;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -23,24 +23,24 @@ public class HomePageObject {
     public HomePageObject() throws MalformedURLException {
     }
 
-    public List<AnunciosVendasDto> getAnunciosSemPecoProdutosDto() {
+    public List<ProdutosDto> getAnunciosSemPecoProdutosDto() {
         return anunciosProdutos.stream()
                 .map(
                         webElement ->
-                                new AnunciosVendasDto(
+                                new ProdutosDto(
                                         ((RemoteWebElement) webElement).findElementByTagName("h2").getText(),
-                                        ((RemoteWebElement) webElement).findElementByClassName("grid-image").getText()
+                                        ((RemoteWebElement) webElement).findElementByTagName("button").getText()
                                 ))
                 .collect(Collectors.toList());
     }
 
-    public List<AnunciosVendasDto> getAnunciosComPrecoProdutosDto() {
+    public List<ProdutosDto> getAnunciosComPrecoProdutosDto() {
         return anunciosProdutos.stream()
                 .map(
                         webElement ->
-                                new AnunciosVendasDto(
+                                new ProdutosDto(
                                         ((RemoteWebElement) webElement).findElementByTagName("h2").getText(),
-                                        ((RemoteWebElement) webElement).findElementByClassName("grid-image").getText()
+                                        ((RemoteWebElement) webElement).findElementByTagName("h3").getText()
                                 ))
                 .collect(Collectors.toList());
     }
@@ -81,12 +81,12 @@ public class HomePageObject {
     }
 
     public void validarQuePrecosNaoSaoExibidos() {
-        List<AnunciosVendasDto> anunciosVendasDtos = this.getAnunciosSemPecoProdutosDto();
-        assertEquals(anunciosVendasDtos.size(), 8);
+        List<ProdutosDto> anunciosVendasDtos = this.getAnunciosSemPecoProdutosDto();
+        assertEquals(anunciosVendasDtos.size(), 9);
     }
 
     public void validarQuePrecosEstaoSendoExibidos() {
-        List<AnunciosVendasDto> anunciosVendasDtos = this.getAnunciosComPrecoProdutosDto();
-        assertEquals(anunciosVendasDtos.size(), 8);
+        List<ProdutosDto> anunciosVendasDtos = this.getAnunciosComPrecoProdutosDto();
+        assertEquals(anunciosVendasDtos.size(), 9);
     }
 }

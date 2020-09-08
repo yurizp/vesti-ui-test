@@ -22,7 +22,7 @@ public class AwsSeleniumApiPrototype {
     private static final String DEVICE_FARM_ARN = System.getenv("AWS_DEVICE_FARM_ARN");
     private static final String ACESS_KEY = System.getenv("AWS_ACESS_KEY");
     private static final String SECRET_KEY = System.getenv("AWS_SECRET_KEY");
-    private static final int TOKEN_DURATION_SECONS = 3600;
+    private static final int TOKEN_DURATION_SECONS = 36000;
 
     /***
      * Conecta a AWS Farm e retorna a URL da API do Selenium.
@@ -50,9 +50,9 @@ public class AwsSeleniumApiPrototype {
         log.info("{}Chave de acesso Acess Key: {} .", PREFIXO, ACESS_KEY.substring(0, ACESS_KEY.length() / 2));
         log.info("{}Chave de acesso Secret Key: {} .", PREFIXO, SECRET_KEY.substring(0, SECRET_KEY.length() / 2));
         log.info("{}Chave de acesso Device Farm: {} .", PREFIXO, DEVICE_FARM_ARN.substring(0, DEVICE_FARM_ARN.length() / 2));
+
         AWSSecurityTokenServiceClient stsClient = new AWSSecurityTokenServiceClient(new BasicAWSCredentials(ACESS_KEY, SECRET_KEY));
-        GetSessionTokenRequest getSessionTokenRequest = new GetSessionTokenRequest()
-                .withDurationSeconds(TOKEN_DURATION_SECONS);
+        GetSessionTokenRequest getSessionTokenRequest = new GetSessionTokenRequest();
         return stsClient.getSessionToken(getSessionTokenRequest).getCredentials();
     }
 }

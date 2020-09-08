@@ -33,6 +33,7 @@ dependencies {
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.17.2'
 }
 
 tasks.withType(JavaCompile) {
