@@ -1,11 +1,14 @@
 package mobi.vesti.test.pages;
 
+import lombok.SneakyThrows;
+import mobi.vesti.client.VestClient;
 import mobi.vesti.pageobjects.CadastroVendedorPageObject;
 import mobi.vesti.pageobjects.CarrinhoPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.LoginProperties;
+import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.AcoesCustomizadas;
 import org.openqa.selenium.support.PageFactory;
@@ -27,9 +30,11 @@ public class CarrinhoTest extends TestContext {
         cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
     }
 
+    @SneakyThrows
     @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
-    public void testarAdicionarERemoverProdutosDoCarrinho() throws InterruptedException {
+    public void testarAdicionarERemoverProdutosDoCarrinho() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        VestClient.adicionarEstoque(ProdutosProperties.POLO.ID, ProdutosProperties.POLO.ESTOQUE_REQUEST);
         homePage.clicarEmAnuncioDeProdutoSemPreco("POLO");
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
         cadastroVendedorPage.getBotaoContinuar();
@@ -38,16 +43,16 @@ public class CarrinhoTest extends TestContext {
         loginPage.getBotaoContinuar().click();
         Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoComPreco("POLO");
-        carrinhoPage.tamanhoP.verde.click();
-        carrinhoPage.tamanhoP.azul.click();
-        carrinhoPage.tamanhoG.rosa.click();
-        carrinhoPage.tamanhoG.rosa.click();
+        carrinhoPage.polo.tamanhoP.verde.click();
+        carrinhoPage.polo.tamanhoP.azul.click();
+        carrinhoPage.polo.tamanhoG.rosa.click();
+        carrinhoPage.polo.tamanhoG.rosa.click();
         carrinhoPage.carrinhoIcone.click();
-        carrinhoPage.tamanhoGG.cinza.click();
+        carrinhoPage.polo.tamanhoGG.cinza.click();
         Thread.sleep(2000);
-        AcoesCustomizadas.clicarEManterPressionado(carrinhoPage.tamanhoG.rosa);
-        AcoesCustomizadas.focarNoElemento(carrinhoPage.tamanhoG.azul);
-        carrinhoPage.tamanhoG.rosa.click();
+        AcoesCustomizadas.clicarEManterPressionado(carrinhoPage.polo.tamanhoG.rosa);
+        AcoesCustomizadas.focarNoElemento(carrinhoPage.polo.tamanhoG.azul);
+        carrinhoPage.polo.tamanhoG.rosa.click();
         carrinhoPage.botaoFinalizarPedido.click();
         Thread.sleep(2000);
         carrinhoPage.validaMensagemDePedidoEnviado();

@@ -12,6 +12,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -83,6 +84,9 @@ public class RemoteWebDriverBuilder {
         Map<String, String> mobileEmulation = Collections.singletonMap("deviceName", "Nexus 5");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        Map<String, Integer> timeouts = new HashMap<>();
+        timeouts.put("implicit", 30000);
+        chromeOptions.setCapability("timeouts", timeouts);
         return chromeOptions;
     }
 

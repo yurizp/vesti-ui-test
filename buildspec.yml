@@ -1,0 +1,17 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - echo Entering install phase...
+      - echo Nothing to do now
+  build:
+    commands:
+      - echo Build started on `date`
+      - ./gradlew dependencies
+      - ./gradlew test
+reports: #New
+  SurefireReports: # CodeBuild will create a report group called "SurefireReports".
+    files: #Store all of the files
+      - '**/*'
+    base-directory: '~/test-results/junit/'

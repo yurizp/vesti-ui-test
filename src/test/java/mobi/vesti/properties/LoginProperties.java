@@ -1,5 +1,6 @@
 package mobi.vesti.properties;
 
+import mobi.vesti.client.request.LoginVestClientRequest;
 import mobi.vesti.dto.LoginDto;
 
 public class LoginProperties {
@@ -11,4 +12,8 @@ public class LoginProperties {
             .senha("123123")
             .build();
 
+    public static final LoginVestClientRequest LOGIN_API = LoginVestClientRequest.builder()
+            .email("joaosilva@interativasoftware.com.br")
+            .senha("123")
+            .build();
 }
