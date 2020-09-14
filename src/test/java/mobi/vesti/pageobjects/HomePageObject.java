@@ -3,10 +3,12 @@ package mobi.vesti.pageobjects;
 import lombok.Getter;
 import mobi.vesti.dto.ProdutosDto;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -21,6 +23,10 @@ public class HomePageObject {
     private List<WebElement> anunciosProdutos;
 
     public HomePageObject() throws MalformedURLException {
+    }
+
+    public HomePageObject(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 
     public List<ProdutosDto> getAnunciosSemPecoProdutosDto() {
