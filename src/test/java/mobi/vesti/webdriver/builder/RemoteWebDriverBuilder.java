@@ -45,9 +45,9 @@ public class RemoteWebDriverBuilder {
     }
 
     private static void defaultConfigs() {
-        remoteWebDriver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
-        remoteWebDriver.manage().timeouts().pageLoadTimeout(1, TimeUnit.MINUTES);
-        remoteWebDriver.manage().timeouts().setScriptTimeout(1, TimeUnit.MINUTES);
+        remoteWebDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        remoteWebDriver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+        remoteWebDriver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
     }
 
     private static RemoteWebDriver cloudRunner() throws MalformedURLException {
@@ -85,7 +85,7 @@ public class RemoteWebDriverBuilder {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         Map<String, Integer> timeouts = new HashMap<>();
-        timeouts.put("implicit", 30000);
+        timeouts.put("implicit", 3000);
         chromeOptions.setCapability("timeouts", timeouts);
         return chromeOptions;
     }
