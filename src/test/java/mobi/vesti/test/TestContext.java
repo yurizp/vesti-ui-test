@@ -1,5 +1,6 @@
 package mobi.vesti.test;
 
+import lombok.SneakyThrows;
 import mobi.vesti.webdriver.builder.RemoteWebDriverBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -17,15 +18,17 @@ public class TestContext {
 
     public static WebDriver driver;
 
-    @BeforeSuite
+    @BeforeClass
     public void ini() throws MalformedURLException {
         driver = RemoteWebDriverBuilder.instance();
     }
 
-    @AfterSuite
+    @SneakyThrows
+    @AfterClass
     public void close() {
         driver.close();
         driver.quit();
+        Thread.sleep(4000);
     }
 
     @AfterMethod

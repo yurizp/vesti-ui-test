@@ -17,7 +17,10 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
       - run: ./gradlew --version
-      - run: ./gradlew test
+      - run:
+          name: Run Tests
+          no_output_timeout: 30m
+          command: ./gradlew test -Dorg.gradle.debug=true --no-daemon
       - run:
           name: Save test results
           command: |

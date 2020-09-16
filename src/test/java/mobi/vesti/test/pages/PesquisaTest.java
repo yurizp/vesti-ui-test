@@ -2,7 +2,6 @@ package mobi.vesti.test.pages;
 
 import lombok.SneakyThrows;
 import mobi.vesti.dto.ProdutosDto;
-import mobi.vesti.pageobjects.FiltroPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.pageobjects.PesquisaPageObject;

@@ -18,7 +18,8 @@ public class ProdutosProperties {
             CAMISETA_ESTAMPADA.SEM_PRECO,
             BLUSA.SEM_PRECO,
             CAMISETA.SEM_PRECO,
-            CALCA_JEANS_MILANDA.SEM_PRECO);
+            CALCA_JEANS_MILANDA.SEM_PRECO,
+            SHORTS.SEM_PRECO);
 
     public static final List<ProdutosDto> PRODUTOS_HOME_COM_PRECO = Arrays.asList(
             PACK_JEANS.COM_PRECO,
@@ -29,7 +30,8 @@ public class ProdutosProperties {
             CAMISETA_ESTAMPADA.COM_PRECO,
             BLUSA.COM_PRECO,
             CAMISETA.COM_PRECO,
-            CALCA_JEANS_MILANDA.COM_PRECO);
+            CALCA_JEANS_MILANDA.COM_PRECO,
+            SHORTS.COM_PRECO);
 
     public static class CAMISETA_ESTAMPADA {
         public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
@@ -55,7 +57,7 @@ public class ProdutosProperties {
     public static class PACK_JEANS {
         //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto("PACK JEANS", "Ver Preço");
-        public static final ProdutosDto COM_PRECO = new ProdutosDto("PACK JEANS", "R$ 50,00");
+        public static final ProdutosDto     COM_PRECO = new ProdutosDto("PACK JEANS", "R$ 50,00");
     }
 
     public static class CALCA_JEANS_PACK {
@@ -86,6 +88,12 @@ public class ProdutosProperties {
         //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto("BLUSA", "Ver Preço");
         public static final ProdutosDto COM_PRECO = new ProdutosDto("BLUSA", "R$ 159,90 R$ 99,99");
+    }
+
+    public static class SHORTS {
+        //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
+        public static final ProdutosDto SEM_PRECO = new ProdutosDto("SHORTS", "Ver Preço");
+        public static final ProdutosDto COM_PRECO = new ProdutosDto("SHORTS", "R$ 79,90");
     }
 
     public static class CAMISETA {

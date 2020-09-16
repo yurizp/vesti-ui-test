@@ -3,11 +3,11 @@ package mobi.vesti.test.pages;
 import mobi.vesti.dto.VendedorDto;
 import mobi.vesti.factory.ContatoFactory;
 import mobi.vesti.factory.DocumentoFactory;
-import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.pageobjects.CadastroVendedorPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.utils.Mascara;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.support.PageFactory;
@@ -16,14 +16,13 @@ import org.testng.annotations.Test;
 
 import java.text.ParseException;
 
-import static mobi.vesti.utils.AcoesCustomizadas.sendKeys;
 import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_CPF_CNPJ_INVALIDOS;
 import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_DE_SENHAS_DIFERENTES;
 import static mobi.vesti.properties.CadastroVendedorProperties.MENSAGEM_EMAIL_INVALIDO;
 import static mobi.vesti.properties.CadastroVendedorProperties.POP_VOCE_DEVE_PREENCHER_CAMPOS_CORRETAMENTE;
+import static mobi.vesti.utils.AcoesCustomizadas.sendKeys;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 public class CadastroVendedorTest extends TestContext {
 

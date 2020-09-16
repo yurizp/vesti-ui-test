@@ -22,13 +22,13 @@ public class PoloDetalhePage {
 
     @Getter
     public class TamanhoP {
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[2]/td[2]/button")
+        @FindBy(xpath = "//table/tbody/tr[2]/td[2]/button")
         public WebElement rosa;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[2]/button")
+        @FindBy(xpath = "//table/tbody/tr[3]/td[2]/button")
         public WebElement verde;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[2]/button")
+        @FindBy(xpath = "//table/tbody/tr[3]/td[2]/button")
         public WebElement azul;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[5]/td[2]/button")
+        @FindBy(xpath = "//table/tbody/tr[5]/td[2]/button")
         public WebElement cinza;
 
         public TamanhoP(WebDriver driver) {
@@ -38,13 +38,13 @@ public class PoloDetalhePage {
 
     @Getter
     public class TamanhoM {
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[2]/td[3]/button")
+        @FindBy(xpath = "//table/tbody/tr[2]/td[3]/button")
         public WebElement rosa;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[3]/button")
+        @FindBy(xpath = "//table/tbody/tr[3]/td[3]/button")
         public WebElement verde;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[4]/td[3]/button")
+        @FindBy(xpath = "//table/tbody/tr[4]/td[3]/button")
         public WebElement azul;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[5]/td[3]/button")
+        @FindBy(xpath = "//table/tbody/tr[5]/td[3]/button")
         public WebElement cinza;
 
         public TamanhoM(WebDriver driver) {
@@ -54,13 +54,13 @@ public class PoloDetalhePage {
 
     @Getter
     public class TamanhoG {
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[2]/td[4]/button")
+        @FindBy(xpath = "//table/tbody/tr[2]/td[4]/button")
         public WebElement rosa;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[4]/button")
+        @FindBy(xpath = "//table/tbody/tr[3]/td[4]/button")
         public WebElement verde;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[4]/td[4]/button")
+        @FindBy(xpath = "//table/tbody/tr[4]/td[4]/button")
         public WebElement azul;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[5]/td[4]/button")
+        @FindBy(xpath = "//table/tbody/tr[5]/td[4]/button")
         public WebElement cinza;
 
         public TamanhoG(WebDriver driver) {
@@ -70,13 +70,13 @@ public class PoloDetalhePage {
 
     @Getter
     public class TamanhoGG {
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[2]/td[5]/button")
+        @FindBy(xpath = "//table/tbody/tr[2]/td[5]/button")
         public WebElement rosa;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[5]/button")
+        @FindBy(xpath = "//table/tbody/tr[3]/td[5]/button")
         public WebElement verde;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[4]/td[5]/button")
+        @FindBy(xpath = "//table/tbody/tr[4]/td[5]/button")
         public WebElement azul;
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[5]/td[5]/button")
+        @FindBy(xpath = "//table/tbody/tr[5]/td[5]/button")
         public WebElement cinza;
 
         public TamanhoGG(WebDriver driver) {
