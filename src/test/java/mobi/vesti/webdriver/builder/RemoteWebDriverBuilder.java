@@ -1,14 +1,13 @@
 package mobi.vesti.webdriver.builder;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import mobi.vesti.webdriver.prototype.AwsSeleniumApiPrototype;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import mobi.vesti.webdriver.prototype.TestingBotPrototype;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
@@ -68,16 +67,9 @@ public class RemoteWebDriverBuilder {
         return new RemoteWebDriver(seleniumUrl, chromeOptions);
     }
 
-    private static ChromeDriver localRunner() {
-        if (isWindows()) {
-            log.info("{} Sistema operacional Windows.", PREFIXO);
-            System.setProperty("webdriver.chrome.driver", new File("src/test/resources/chromedriver.exe").getAbsolutePath());
-        }
-        if (isUnix()) {
-            log.info("{} Sistema operacional Linux.", PREFIXO);
-            System.setProperty("webdriver.chrome.driver",new File("src/test/resources/chromedriver").getAbsolutePath());
-        }
-        return new ChromeDriver(getChromeOptions());
+    @SneakyThrows
+    private static RemoteWebDriver localRunner() {
+        return new RemoteWebDriver(new URL("http://0.0.0.0:4444/wd/hub"), getChromeOptions());
     }
 
     private static ChromeOptions getChromeOptions() {

@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/node:jessie-browsers
 
     environment:
       JVM_OPTS: -Xmx3200m
@@ -13,33 +13,27 @@ jobs:
       - run: mkdir test-reports
       - run:
           name: Download Selenium
-          command: |
-            curl -O http://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
       - run:
           name: Start Selenium
-          command: |
-            java -jar selenium-server-standalone-3.9.1.jar -log test-reports/selenium.log
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
           background: true
-
+      - run: mkdir test-reports
       - run: ./gradlew dependencies
-
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
       - run: ./gradlew --version
-
       - run: ./gradlew test
-
       - run:
           name: Save test results
           command: |
-            mkdir -p ~/testng/results/
-            find . -type f -regex "./test-output/testng-results.xml" -exec cp {} ~/testng/results/ \;
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+            cp -a ./build/reports/tests/test/.  ~/test-results/junit/
           when: always
       - store_test_results:
-          path: ~/testng/results/
+          path: ~/test-results
       - store_artifacts:
-          path: ~/testng/results/
-      - store_artifacts:
-          path:  testng/results/
+          path: ~/test-results/junit
