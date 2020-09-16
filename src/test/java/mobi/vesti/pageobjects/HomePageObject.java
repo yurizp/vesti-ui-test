@@ -68,6 +68,14 @@ public class HomePageObject {
                 .click();
     }
 
+    public WebElement buscarAnuncioDeProduto(String anuncioNome) {
+        return getAnunciosProdutos().stream()
+                .filter(element -> StringUtils.equalsIgnoreCase(anuncioNome, ((RemoteWebElement) element).findElementByTagName("h2").getText()))
+                .map(webElement -> ((RemoteWebElement) webElement).findElementByClassName("grid-image-container"))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException(String.format("Não foi encontrado o anuncio %s", anuncioNome)));
+    }
+
     public void clicarEmAnuncioDeProdutoComPreco() {
         getAnunciosProdutos().stream()
                 .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("button"))
@@ -80,7 +88,7 @@ public class HomePageObject {
         getAnunciosProdutos()
                 .stream()
                 .filter(element -> StringUtils.equalsIgnoreCase(anuncioNome, ((RemoteWebElement) element).findElementByTagName("h2").getText()))
-                .map(webElement -> ((RemoteWebElement) webElement).findElementByTagName("img"))
+                .map(webElement -> ((RemoteWebElement) webElement).findElementByClassName("grid-image-container"))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException(String.format("Não foi encontrado o anuncio %s", anuncioNome)))
                 .click();

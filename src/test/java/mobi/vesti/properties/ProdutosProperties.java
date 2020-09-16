@@ -79,7 +79,7 @@ public class ProdutosProperties {
     public static class VESTIDO_LONGO {
         //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto("VESTIDO LONGO", "Ver Preço");
-        public static final ProdutosDto COM_PRECO = new ProdutosDto("VESTIDO LONGO", "R$ 199,99");
+        public static final ProdutosDto COM_PRECO = new ProdutosDto("VESTIDO LONGO", "R$ 199,99","100% tela");
     }
 
     public static class BLUSA {
@@ -89,16 +89,24 @@ public class ProdutosProperties {
     }
 
     public static class CAMISETA {
-        //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
+        public static final String ID = "b4a7ef4d-d61c-4275-8144-260962f6480c";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto("CAMISETA", "Ver Preço");
-        public static final ProdutosDto COM_PRECO = new ProdutosDto("CAMISETA", "R$ 69,90");
+        public static final ProdutosDto COM_PRECO = new ProdutosDto("CAMISETA", "R$ 69,90", "100% algodão");
+        public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = Arrays.asList(
+                ItensRequestVestClient.builder().tamanho(TAMANHOS).cor(BRANCO).build(),
+                ItensRequestVestClient.builder().tamanho(TAMANHOS).cor(AMARELO).build(),
+                ItensRequestVestClient.builder().tamanho(TAMANHOS).cor(AZUL).build(),
+                ItensRequestVestClient.builder().tamanho(TAMANHOS).cor(PRETO).build(),
+                ItensRequestVestClient.builder().tamanho(TAMANHOS).cor(VINHO).build(),
+                ItensRequestVestClient.builder().tamanho(TAMANHOS).cor(VERMELHO).build()
+        );
     }
 
-    private static final List<Map<String,String>> TAMANHOS = Arrays.asList(
-            Collections.singletonMap("P","4"),
-            Collections.singletonMap("M","4"),
-            Collections.singletonMap("G","4"),
-            Collections.singletonMap("GG","4")
+    private static final List<Map<String, String>> TAMANHOS = Arrays.asList(
+            Collections.singletonMap("P", "4"),
+            Collections.singletonMap("M", "4"),
+            Collections.singletonMap("G", "4"),
+            Collections.singletonMap("GG", "4")
     );
 
     private final static ColorRequestVestClient ROSA = ColorRequestVestClient.builder()
@@ -129,5 +137,35 @@ public class ProdutosProperties {
             .codigoCor("#000000")
             .id("463f9661-968d-4748-9346-863229b1dea7")
             .nome("Preto")
+            .build();
+
+    private final static ColorRequestVestClient BRANCO = ColorRequestVestClient.builder()
+            .codigoCor("#ffffff")
+            .id("d351fa15-cf87-43e8-94c0-55607d8c6ab6")
+            .nome("Branco")
+            .build();
+
+    private final static ColorRequestVestClient AMARELO = ColorRequestVestClient.builder()
+            .codigoCor("#ffe600")
+            .id("d5851612-90ee-4bf2-93aa-132cb57b0c9b")
+            .nome("Amarelo")
+            .build();
+
+    private final static ColorRequestVestClient AZUL = ColorRequestVestClient.builder()
+            .codigoCor("#260ad0")
+            .id("cd0f8bf7-c405-4e00-9db1-a57e6e0af8e4")
+            .nome("Azul")
+            .build();
+
+    private final static ColorRequestVestClient VINHO = ColorRequestVestClient.builder()
+            .codigoCor("#d12001")
+            .id("ea803052-93ba-46d1-9452-7043a437dfd5")
+            .nome("Vinho")
+            .build();
+
+    private final static ColorRequestVestClient VERMELHO = ColorRequestVestClient.builder()
+            .codigoCor("#f02410")
+            .id("d476d8f1-5b93-4e43-972a-29e3968884fb")
+            .nome("Vermelho")
             .build();
 }

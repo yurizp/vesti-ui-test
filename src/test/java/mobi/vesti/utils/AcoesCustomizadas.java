@@ -5,8 +5,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static mobi.vesti.test.TestContext.driver;
 
 public class AcoesCustomizadas {
 
@@ -30,4 +30,10 @@ public class AcoesCustomizadas {
         action.clickAndHold(element).contextClick(element).build().perform();
         action.release();
     }
+
+    public static void clicarViaJavaScript(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", element);
+    }
+
 }

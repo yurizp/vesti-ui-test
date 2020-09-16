@@ -57,4 +57,26 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
         carrinhoPage.validaMensagemDePedidoEnviado();
     }
+
+    @SneakyThrows
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    public void testarRealizarPedidoClientePossuiCadastro() {
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
+        homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
+        cadastroVendedorPage.getBotaoContinuar();
+        cadastroVendedorPage.getBotaoContinuar().click();
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO);
+        loginPage.getBotaoContinuar().click();
+        Thread.sleep(2000);
+        homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");
+        carrinhoPage.camiseta.tamanhoP.getBranco().click();
+        carrinhoPage.camiseta.tamanhoP.getAmarelo().click();
+        carrinhoPage.camiseta.tamanhoM.getAzul().click();
+        carrinhoPage.camiseta.tamanhoG.getPreto().click();
+        carrinhoPage.camiseta.tamanhoGG.getVinho().click();
+        carrinhoPage.carrinhoIcone.click();
+        carrinhoPage.botaoFinalizarPedido.click();
+    }
 }

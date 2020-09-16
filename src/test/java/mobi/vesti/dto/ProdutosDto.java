@@ -17,6 +17,12 @@ public class ProdutosDto {
 
     public String titulo;
     public String preco;
+    public String descricao;
+
+    public ProdutosDto(String titulo, String preco) {
+        this.titulo = titulo;
+        this.preco = preco;
+    }
 
     @SneakyThrows
     @Override

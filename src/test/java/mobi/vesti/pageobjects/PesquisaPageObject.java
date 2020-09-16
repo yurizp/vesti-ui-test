@@ -1,5 +1,6 @@
 package mobi.vesti.pageobjects;
 
+import mobi.vesti.utils.AcoesCustomizadas;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,8 +28,8 @@ public class PesquisaPageObject {
     }
 
     public void botaoFecharClick(){
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", botaoFechar);
+        AcoesCustomizadas.clicarViaJavaScript(botaoFechar);
     }
+
 
 }

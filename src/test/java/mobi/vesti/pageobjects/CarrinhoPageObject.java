@@ -1,6 +1,7 @@
 package mobi.vesti.pageobjects;
 
-import mobi.vesti.pageobjects.carrinho.PoloCarrinhoPage;
+import mobi.vesti.pageobjects.detalhe.CamisetaDetalhePage;
+import mobi.vesti.pageobjects.detalhe.PoloDetalhePage;
 import mobi.vesti.properties.CarrinhoProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +12,8 @@ import org.testng.Assert;
 
 public class CarrinhoPageObject {
 
-    public PoloCarrinhoPage polo;
+    public PoloDetalhePage polo;
+    public CamisetaDetalhePage camiseta;
     @FindBy(xpath = "//*[@id=\"navbar-cart-button\"]/i")
     public WebElement carrinhoIcone;
     @FindBy(xpath = "//cart-panel/div/div[2]/div[3]/div/button")
@@ -23,8 +25,8 @@ public class CarrinhoPageObject {
 
     public CarrinhoPageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        polo = new PoloCarrinhoPage(driver);
-
+        polo = new PoloDetalhePage(driver);
+        camiseta = new CamisetaDetalhePage(driver);
     }
 
     public void validaMensagemDePedidoEnviado() {
