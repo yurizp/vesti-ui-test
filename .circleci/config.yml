@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:jessie-browsers
+      - image: circleci/openjdk:8-jdk
 
     environment:
       JVM_OPTS: -Xmx3200m
@@ -10,14 +10,6 @@ jobs:
 
     steps:
       - checkout
-      - run: mkdir test-reports
-      - run:
-          name: Download Selenium
-          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-      - run:
-          name: Start Selenium
-          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-          background: true
       - run: mkdir test-reports
       - run: ./gradlew dependencies
       - save_cache:

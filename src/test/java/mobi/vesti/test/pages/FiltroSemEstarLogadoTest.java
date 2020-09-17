@@ -31,7 +31,10 @@ public class FiltroSemEstarLogadoTest extends TestContext {
     public void testarFiltroDaHome() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosProperties.BLUSA.SEM_PRECO);
-        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"), ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO, ProdutosProperties.CAMISETA.SEM_PRECO);
+        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"),
+                ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO,
+                ProdutosProperties.CAMISETA_MANGA_LON.SEM_PRECO,
+                ProdutosProperties.CAMISETA.SEM_PRECO);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosProperties.VESTIDO_LONGO.SEM_PRECO);
     }
 
@@ -43,6 +46,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         filtroPageObject.adicionarFiltros.categorias("blusa").click();
         filtroPageObject.adicionarFiltros.categorias("calça jeans").click();
         filtroPageObject.adicionarFiltros.botaoVoltar.click();
+        Thread.sleep(1000);
         List<ProdutosDto> produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
                 .containsAnyOf(ProdutosProperties.PACK_JEANS.SEM_PRECO,
@@ -67,7 +71,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("camiseta")).isFalse();
         List<ProdutosDto> produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsOnly(ProdutosProperties.CAMISETA.SEM_PRECO)
+                .containsOnly(ProdutosProperties.CAMISETA.SEM_PRECO, ProdutosProperties.CAMISETA_MANGA_LON.SEM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         filtroPageObject.adicionarFiltros.categorias("estampada").click();
@@ -78,6 +82,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
                 .containsExactlyInAnyOrder(ProdutosProperties.CAMISETA.SEM_PRECO,
+                        ProdutosProperties.CAMISETA_MANGA_LON.SEM_PRECO,
                         ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();

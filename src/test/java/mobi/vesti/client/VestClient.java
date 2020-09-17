@@ -43,6 +43,7 @@ public class VestClient {
                 .addHeader("content-type", "application/json")
                 .build();
         String response = client.newCall(request).execute().body().string();
+        System.out.println(response);
     }
 
     public static void main(String[] args) throws Exception {

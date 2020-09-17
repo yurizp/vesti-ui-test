@@ -61,8 +61,8 @@ public class CarrinhoTest extends TestContext {
     @SneakyThrows
     @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void testarRealizarPedidoClientePossuiCadastro() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
         cadastroVendedorPage.getBotaoContinuar();

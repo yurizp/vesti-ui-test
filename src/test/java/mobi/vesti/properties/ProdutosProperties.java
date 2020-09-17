@@ -18,6 +18,7 @@ public class ProdutosProperties {
             CAMISETA_ESTAMPADA.SEM_PRECO,
             BLUSA.SEM_PRECO,
             CAMISETA.SEM_PRECO,
+            CAMISETA_MANGA_LON.SEM_PRECO,
             CALCA_JEANS_MILANDA.SEM_PRECO,
             SHORTS.SEM_PRECO);
 
@@ -30,6 +31,7 @@ public class ProdutosProperties {
             CAMISETA_ESTAMPADA.COM_PRECO,
             BLUSA.COM_PRECO,
             CAMISETA.COM_PRECO,
+            CAMISETA_MANGA_LON.COM_PRECO,
             CALCA_JEANS_MILANDA.COM_PRECO,
             SHORTS.COM_PRECO);
 
@@ -94,6 +96,12 @@ public class ProdutosProperties {
         //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto("SHORTS", "Ver Preço");
         public static final ProdutosDto COM_PRECO = new ProdutosDto("SHORTS", "R$ 79,90");
+    }
+
+    public static class CAMISETA_MANGA_LON {
+        //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
+        public static final ProdutosDto SEM_PRECO = new ProdutosDto("CAMISETA MANGA LON", "Ver Preço");
+        public static final ProdutosDto COM_PRECO = new ProdutosDto("CAMISETA MANGA LON", "R$ 120,00 R$ 60,00");
     }
 
     public static class CAMISETA {

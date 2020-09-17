@@ -35,7 +35,7 @@ public class FiltroLogadoTest extends TestContext {
         loginPage.logar();
         Thread.sleep(2000);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosProperties.BLUSA.COM_PRECO);
-        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"), ProdutosProperties.CAMISETA_ESTAMPADA.COM_PRECO, ProdutosProperties.CAMISETA.COM_PRECO);
+        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"), ProdutosProperties.CAMISETA_ESTAMPADA.COM_PRECO, ProdutosProperties.CAMISETA.COM_PRECO, ProdutosProperties.CAMISETA_MANGA_LON.COM_PRECO);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosProperties.VESTIDO_LONGO.COM_PRECO);
     }
 

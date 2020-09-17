@@ -44,7 +44,10 @@ public class PesquisaTest extends TestContext {
         validarProdutosExistentesNaHomeSemPreco();
         pesquisa.botaoFecharClick();
         pesquisarProdutosSemPreco("olo", ProdutosProperties.POLO.SEM_PRECO);
-        pesquisarProdutosSemPreco("eta", ProdutosProperties.JAQUETA.SEM_PRECO, ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO, ProdutosProperties.CAMISETA.SEM_PRECO);
+        pesquisarProdutosSemPreco("eta", ProdutosProperties.JAQUETA.SEM_PRECO,
+                ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO,
+                ProdutosProperties.CAMISETA_MANGA_LON.SEM_PRECO,
+                ProdutosProperties.CAMISETA.SEM_PRECO);
         pesquisarProdutosSemPreco("vestido", ProdutosProperties.VESTIDO_LONGO.SEM_PRECO);
     }
 
@@ -63,7 +66,10 @@ public class PesquisaTest extends TestContext {
         validarProdutosExistentesNaHomeComPreco();
         pesquisa.botaoFecharClick();
         pesquisarProdutosComPreco("olo", ProdutosProperties.POLO.COM_PRECO);
-        pesquisarProdutosComPreco("eta", ProdutosProperties.JAQUETA.COM_PRECO, ProdutosProperties.CAMISETA_ESTAMPADA.COM_PRECO, ProdutosProperties.CAMISETA.COM_PRECO);
+        pesquisarProdutosComPreco("eta", ProdutosProperties.JAQUETA.COM_PRECO,
+                ProdutosProperties.CAMISETA.COM_PRECO,
+                ProdutosProperties.CAMISETA_MANGA_LON.COM_PRECO,
+                ProdutosProperties.CAMISETA_ESTAMPADA.COM_PRECO);
         pesquisarProdutosComPreco("vestido", ProdutosProperties.VESTIDO_LONGO.COM_PRECO);
     }
 
