@@ -31,7 +31,7 @@ public class PesquisaTest extends TestContext {
     }
 
     @SneakyThrows
-    @Test
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void testarPesquisa() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         Thread.sleep(1000);
@@ -52,7 +52,7 @@ public class PesquisaTest extends TestContext {
     }
 
     @SneakyThrows
-    @Test
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void testarPesquisaLogado() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         login.logar();

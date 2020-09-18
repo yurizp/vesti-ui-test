@@ -11,7 +11,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+import java.lang.annotation.Retention;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class VestClient {
 
@@ -43,6 +46,7 @@ public class VestClient {
                 .addHeader("content-type", "application/json")
                 .build();
         String response = client.newCall(request).execute().body().string();
+        assertThat(response).isEqualTo("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}");
         System.out.println(response);
     }
 

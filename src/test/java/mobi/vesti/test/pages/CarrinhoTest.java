@@ -77,6 +77,7 @@ public class CarrinhoTest extends TestContext {
         carrinhoPage.camiseta.tamanhoG.getPreto().click();
         carrinhoPage.camiseta.tamanhoGG.getVinho().click();
         carrinhoPage.carrinhoIcone.click();
+        Thread.sleep(1000);
         carrinhoPage.botaoFinalizarPedido.click();
     }
 }

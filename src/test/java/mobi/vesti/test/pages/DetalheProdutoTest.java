@@ -33,7 +33,7 @@ public class DetalheProdutoTest extends TestContext {
 
 
     @SneakyThrows
-    @Test
+    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
     public void telaProdutoVerificarFotoEstampaClientePossuiCadastro() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         validarProdutosSemPrecoNaHome();
