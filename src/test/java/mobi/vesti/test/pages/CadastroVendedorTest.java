@@ -9,6 +9,7 @@ import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.utils.Mascara;
+import mobi.vesti.utils.RetentarUmaVez;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
@@ -35,7 +36,7 @@ public class CadastroVendedorTest extends TestContext {
         homePage = PageFactory.initElements(driver, HomePageObject.class);
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarFluxoDeCadastroComSucessoDeNovoVendedor()
             throws InterruptedException, ParseException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
@@ -57,7 +58,7 @@ public class CadastroVendedorTest extends TestContext {
         homePage.validarQuePrecosNaoSaoExibidos();
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarValidacaoDeCamposNoCadastroDeVendedor() throws Exception {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         homePage.validarQuePrecosNaoSaoExibidos();

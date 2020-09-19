@@ -113,7 +113,7 @@ public class CamisetaDetalhePage {
         @FindBy(xpath = "//table/tbody/tr[5]/td[5]/button")
         private WebElement preto;
 
-        @FindBy(xpath = "//table/tbody/tr[6]/td[5]/button")
+        @FindBy(xpath = "//table/tbody/tr[6]/td[5]")
         private WebElement vinho;
 
         @FindBy(xpath = "//table/tbody/tr[7]/td[5]/button")

@@ -5,28 +5,30 @@ import mobi.vesti.client.request.EstoqueRequestVetClient;
 import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.client.response.LoginResponseVestClient;
 import mobi.vesti.properties.LoginProperties;
+import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.utils.ObjectUtils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-import java.lang.annotation.Retention;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class VestClient {
 
     private static final String BASE_URL = "https://hapi.meuvesti.com/api/appvendas";
     private static final String LOGIN_URI = "/login";
     private static final String ESTOQUE_URI = "/stocks/%s/product?v=1.0";
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static LoginResponseVestClient loginResponseVestClient;
 
     private static OkHttpClient client = new OkHttpClient();
-    private static MediaType mediaType = MediaType.parse("application/json");
 
     public static LoginResponseVestClient autenticacao() throws Exception {
-        RequestBody body = RequestBody.create(mediaType, LoginProperties.LOGIN_API.toString());
+        if (loginResponseVestClient != null) {
+            return loginResponseVestClient;
+        }
+        RequestBody body = RequestBody.create(JSON, LoginProperties.LOGIN_API.toString());
         Request request = new Request.Builder()
                 .url(BASE_URL + LOGIN_URI)
                 .post(body)
@@ -34,11 +36,13 @@ public class VestClient {
                 .build();
 
         String response = client.newCall(request).execute().body().string();
-        return ObjectUtils.OBJECT_MAPPER.readValue(response, LoginResponseVestClient.class);
+        Thread.sleep(6000);
+        loginResponseVestClient = ObjectUtils.OBJECT_MAPPER.readValue(response, LoginResponseVestClient.class);
+        return loginResponseVestClient;
     }
 
     public static void adicionarEstoque(String productId, List<ItensRequestVestClient> itens) throws Exception {
-        RequestBody body = RequestBody.create(mediaType, EstoqueRequestVetClient.builder().itens(itens).build().toString());
+        RequestBody body = RequestBody.create(JSON, EstoqueRequestVetClient.builder().itens(itens).build().toString());
         Request request = new Request.Builder()
                 .url(BASE_URL + String.format(ESTOQUE_URI, productId))
                 .put(body)
@@ -46,12 +50,12 @@ public class VestClient {
                 .addHeader("content-type", "application/json")
                 .build();
         String response = client.newCall(request).execute().body().string();
-        assertThat(response).isEqualTo("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}");
+//        assertThat("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}}").isEqualToIgnoringNewLines(response);
         System.out.println(response);
     }
 
     public static void main(String[] args) throws Exception {
-        String token = "Bearer " + autenticacao().getToken();
-        System.out.println(token);
+        adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
+        System.out.println("asds");
     }
 }

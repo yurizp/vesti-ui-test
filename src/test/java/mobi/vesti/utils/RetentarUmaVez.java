@@ -3,7 +3,7 @@ package mobi.vesti.utils;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
-public class RetryAnalyzer implements IRetryAnalyzer {
+public class RetentarUmaVez implements IRetryAnalyzer {
 
     int counter = 0;
     int retryLimit = 1;

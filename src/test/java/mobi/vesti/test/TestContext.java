@@ -6,10 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 import java.net.MalformedURLException;
@@ -18,13 +16,13 @@ public class TestContext {
 
     public static WebDriver driver;
 
-    @BeforeClass
+    @BeforeSuite
     public void ini() throws MalformedURLException {
         driver = RemoteWebDriverBuilder.instance();
     }
 
     @SneakyThrows
-    @AfterClass
+    @AfterSuite
     public void close() {
         driver.close();
         driver.quit();

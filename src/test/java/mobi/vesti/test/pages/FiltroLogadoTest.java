@@ -7,6 +7,7 @@ import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.RetentarUmaVez;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
@@ -30,7 +31,7 @@ public class FiltroLogadoTest extends TestContext {
         loginPage = new LoginPageObject(driver);
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarFiltroDaHome() throws InterruptedException {
         loginPage.logar();
         Thread.sleep(2000);
@@ -39,7 +40,7 @@ public class FiltroLogadoTest extends TestContext {
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosProperties.VESTIDO_LONGO.COM_PRECO);
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltro() throws InterruptedException {
         loginPage.logar();
         Thread.sleep(2000);
@@ -62,7 +63,7 @@ public class FiltroLogadoTest extends TestContext {
     }
 
     @Ignore
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() throws InterruptedException {
         loginPage.logar();
         Thread.sleep(2000);

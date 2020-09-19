@@ -7,6 +7,7 @@ import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.RetentarUmaVez;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
@@ -27,7 +28,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         filtroPageObject = new FiltroPageObject(driver);
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarFiltroDaHome() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosProperties.BLUSA.SEM_PRECO);
@@ -38,7 +39,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosProperties.VESTIDO_LONGO.SEM_PRECO);
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltro() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
@@ -61,7 +62,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         assertThat(produtosHome.toArray()).containsAnyOf(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         filtroPageObject.adicionarFiltros.botaoMenuHamburguer.click();

@@ -1,7 +1,6 @@
 package mobi.vesti.test.pages;
 
 import lombok.SneakyThrows;
-import mobi.vesti.dto.ProdutosDto;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.pageobjects.PaginaProdutoPageObject;
@@ -9,11 +8,9 @@ import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
-import mobi.vesti.utils.AcoesCustomizadas;
+import mobi.vesti.utils.RetentarUmaVez;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,9 +30,10 @@ public class DetalheProdutoTest extends TestContext {
 
 
     @SneakyThrows
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void telaProdutoVerificarFotoEstampaClientePossuiCadastro() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(3000);
         validarProdutosSemPrecoNaHome();
         loginPageObject.logar();
         Thread.sleep(3000);

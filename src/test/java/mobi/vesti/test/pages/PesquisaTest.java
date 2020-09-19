@@ -9,6 +9,7 @@ import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.RetentarUmaVez;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -31,7 +32,7 @@ public class PesquisaTest extends TestContext {
     }
 
     @SneakyThrows
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarPesquisa() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         Thread.sleep(1000);
@@ -52,7 +53,7 @@ public class PesquisaTest extends TestContext {
     }
 
     @SneakyThrows
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarPesquisaLogado() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         login.logar();

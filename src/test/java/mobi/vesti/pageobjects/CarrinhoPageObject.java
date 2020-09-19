@@ -22,6 +22,10 @@ public class CarrinhoPageObject {
     public WebElement tituloMensagemPedidoEnviado;
     @FindBy(xpath = "//catalogue/success-panel/div/div/div[3]/p[1]")
     public WebElement descricaoMensgemPedidoEnviado;
+    @FindBy(xpath = "//item-grid/div/div")
+    public WebElement mensagemMaximoDisponivel;
+    @FindBy(xpath = "/html/body/app/catalogue/success-panel/div/nav/div/button")
+    public WebElement botaoVoltar;
 
     public CarrinhoPageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);

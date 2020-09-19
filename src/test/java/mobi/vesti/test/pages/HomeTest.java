@@ -6,6 +6,7 @@ import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.RetentarUmaVez;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -23,7 +24,7 @@ public class HomeTest extends TestContext {
         homePage = PageFactory.initElements(driver, HomePageObject.class);
     }
 
-    @Test(retryAnalyzer = mobi.vesti.utils.RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validaSeAnunciosEstaoSemPreco() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         List<ProdutosDto> produtosHome = homePage.getAnunciosSemPecoProdutosDto();
