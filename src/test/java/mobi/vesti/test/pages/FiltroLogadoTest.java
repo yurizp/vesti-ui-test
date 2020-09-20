@@ -67,7 +67,7 @@ public class FiltroLogadoTest extends TestContext {
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() throws InterruptedException {
         loginPage.logar();
         Thread.sleep(2000);
-        filtroPageObject.adicionarFiltros.botaoMenuHamburguer.click();
+        filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
         filtroPageObject.adicionarFiltros.categorias("camiseta").click();
         filtroPageObject.adicionarFiltros.categorias("básica").click();
         filtroPageObject.adicionarFiltros.botaoVoltar.click();

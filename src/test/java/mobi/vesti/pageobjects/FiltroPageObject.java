@@ -53,8 +53,7 @@ public class FiltroPageObject {
 
     public class TelaDeFiltros {
 
-        @FindBy(xpath = "//*[@class=\"icon icon-menu\"]")
-        public WebElement botaoMenuHamburguer;
+        public MenuPageObject menuPageObject;
         @FindBy(xpath = "//filter-panel//filter-button")
         private List<WebElement> categorias;
         @FindBy(xpath = "//*[@class=\"icon icon-arrow-left\"]")
@@ -63,6 +62,7 @@ public class FiltroPageObject {
         public WebElement botaoAdicionar;
 
         public TelaDeFiltros(WebDriver driver) {
+            menuPageObject = new MenuPageObject(driver);
             PageFactory.initElements(driver, this);
         }
 

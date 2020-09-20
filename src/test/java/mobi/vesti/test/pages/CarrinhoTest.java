@@ -111,7 +111,6 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");
         carrinhoPage.camiseta.tamanhoGG.getVinho().click();
-//        Thread.sleep(2000);
         assertThat(" ").isEqualTo(carrinhoPage.camiseta.tamanhoGG.getVinho().getText());
     }
 

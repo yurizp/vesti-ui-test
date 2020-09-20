@@ -65,7 +65,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
-        filtroPageObject.adicionarFiltros.botaoMenuHamburguer.click();
+        filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
         filtroPageObject.adicionarFiltros.categorias("camiseta").click();
         filtroPageObject.adicionarFiltros.categorias("básica").click();
         filtroPageObject.adicionarFiltros.botaoVoltar.click();
