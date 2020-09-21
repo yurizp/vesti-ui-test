@@ -61,7 +61,6 @@ public class FiltroLogadoTest extends TestContext {
         assertThat(produtosHome.toArray()).containsAnyOf(ProdutosProperties.PRODUTOS_HOME_COM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
-    @Ignore
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() throws InterruptedException {
         loginPage.logar();

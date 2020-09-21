@@ -84,7 +84,7 @@ public class InfoTest extends TestContext {
 
     @SneakyThrows
     private void validarNovaAba(String url) {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         String currentUrl = driver.getCurrentUrl();

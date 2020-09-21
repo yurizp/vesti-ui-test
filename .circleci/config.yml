@@ -17,7 +17,10 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
       - run: ./gradlew --version
-      - run: ./gradlew test
+      - run:
+          name: Execução de testes
+          no_output_timeout: 1.5h
+          command: ./gradlew test
       - run:
           name: Save test results
           no_output_timeout: 1.5h
