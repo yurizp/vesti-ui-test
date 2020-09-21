@@ -78,7 +78,7 @@ public class PesquisaTest extends TestContext {
         pesquisa.caixaDePesquisa.sendKeys(textoPesquisa);
         Thread.sleep(1000);
         List<ProdutosDto> produtosHome = home.getAnunciosSemPecoProdutosDto();
-        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(produtosDto).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+        assertThat(produtosHome).containsExactlyInAnyOrder(produtosDto).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
         pesquisa.botaoFecharClick();
         Thread.sleep(1000);
     }

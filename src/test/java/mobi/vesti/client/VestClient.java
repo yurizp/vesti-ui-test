@@ -1,6 +1,7 @@
 package mobi.vesti.client;
 
 
+import lombok.extern.slf4j.Slf4j;
 import mobi.vesti.client.request.EstoqueRequestVetClient;
 import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.client.response.LoginResponseVestClient;
@@ -14,6 +15,9 @@ import okhttp3.RequestBody;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+@Slf4j
 public class VestClient {
 
     private static final String BASE_URL = "https://hapi.meuvesti.com/api/appvendas";
@@ -51,8 +55,9 @@ public class VestClient {
                 .build();
         String response = client.newCall(request).execute().body().string();
 //        assertThat("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}}").isEqualToIgnoringNewLines(response);
-        System.out.println(response);
+        log.info("O resultado da chamada de API para a vest foi: {}", response);
     }
+
 
     public static void main(String[] args) throws Exception {
         adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);

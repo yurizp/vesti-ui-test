@@ -52,7 +52,6 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         List<ProdutosDto> produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
                 .containsAnyOf(ProdutosProperties.PACK_JEANS.SEM_PRECO,
-                        ProdutosProperties.CALCA_JEANS_PACK.SEM_PRECO,
                         ProdutosProperties.JAQUETA.SEM_PRECO,
                         ProdutosProperties.VESTIDO_LONGO.SEM_PRECO,
                         ProdutosProperties.BLUSA.SEM_PRECO)

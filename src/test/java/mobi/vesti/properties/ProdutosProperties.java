@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class ProdutosProperties {
     public static final List<ProdutosDto> PRODUTOS_HOME_SEM_PRECO = Arrays.asList(PACK_JEANS.SEM_PRECO,
-            CALCA_JEANS_PACK.SEM_PRECO,
             JAQUETA.SEM_PRECO,
             VESTIDO_LONGO.SEM_PRECO,
             POLO.SEM_PRECO,
@@ -24,7 +23,6 @@ public class ProdutosProperties {
 
     public static final List<ProdutosDto> PRODUTOS_HOME_COM_PRECO = Arrays.asList(
             PACK_JEANS.COM_PRECO,
-            CALCA_JEANS_PACK.COM_PRECO,
             JAQUETA.COM_PRECO,
             VESTIDO_LONGO.COM_PRECO,
             POLO.COM_PRECO,
@@ -60,12 +58,6 @@ public class ProdutosProperties {
         //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto("PACK JEANS", "Ver Preço");
         public static final ProdutosDto     COM_PRECO = new ProdutosDto("PACK JEANS", "R$ 50,00");
-    }
-
-    public static class CALCA_JEANS_PACK {
-        //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
-        public static final ProdutosDto SEM_PRECO = new ProdutosDto("CALÇA JEANS PACK", "Ver Preço");
-        public static final ProdutosDto COM_PRECO = new ProdutosDto("CALÇA JEANS PACK", "R$ 65,50");
     }
 
     public static class JAQUETA {

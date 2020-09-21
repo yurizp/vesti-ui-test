@@ -52,7 +52,6 @@ public class FiltroLogadoTest extends TestContext {
         List<ProdutosDto> produtos = homePage.getAnunciosComPrecoProdutosDto();
         assertThat(produtos.toArray())
                 .containsAnyOf(ProdutosProperties.PACK_JEANS.COM_PRECO,
-                        ProdutosProperties.CALCA_JEANS_PACK.COM_PRECO,
                         ProdutosProperties.JAQUETA.COM_PRECO,
                         ProdutosProperties.VESTIDO_LONGO.COM_PRECO,
                         ProdutosProperties.BLUSA.COM_PRECO)

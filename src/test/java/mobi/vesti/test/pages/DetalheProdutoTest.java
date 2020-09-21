@@ -62,7 +62,6 @@ public class DetalheProdutoTest extends TestContext {
     private void validarProdutosSemPrecoNaHome() {
         assertThat(homePage.getAnunciosSemPecoProdutosDto().toArray())
                 .containsAnyOf(ProdutosProperties.PACK_JEANS.SEM_PRECO,
-                        ProdutosProperties.CALCA_JEANS_PACK.SEM_PRECO,
                         ProdutosProperties.JAQUETA.SEM_PRECO,
                         ProdutosProperties.VESTIDO_LONGO.SEM_PRECO,
                         ProdutosProperties.BLUSA.SEM_PRECO)
@@ -73,7 +72,6 @@ public class DetalheProdutoTest extends TestContext {
     private void validarProdutosComPrecoNaHome() {
         assertThat(homePage.getAnunciosComPrecoProdutosDto().toArray())
                 .containsAnyOf(ProdutosProperties.PACK_JEANS.COM_PRECO,
-                        ProdutosProperties.CALCA_JEANS_PACK.COM_PRECO,
                         ProdutosProperties.JAQUETA.COM_PRECO,
                         ProdutosProperties.VESTIDO_LONGO.COM_PRECO,
                         ProdutosProperties.BLUSA.COM_PRECO)
