@@ -1,5 +1,6 @@
 package mobi.vesti.test.pages;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import lombok.SneakyThrows;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.InfoPageObject;
@@ -15,8 +16,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class InfoTest extends TestContext {
 
@@ -83,10 +82,14 @@ public class InfoTest extends TestContext {
 
     }
 
+    @SneakyThrows
     private void validarNovaAba(String url) {
+        Thread.sleep(1000);
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
-        assertThat(driver.getCurrentUrl()).isEqualTo(url);
+        String currentUrl = driver.getCurrentUrl();
+        assertThat(currentUrl).isEqualTo(url)
+                .withFailMessage("A URL esperada não bate com a url aberta. Esperada:" + url + "URL Aberta: " + currentUrl);
         driver.close();
         driver.switchTo().window(tabs.get(0));
     }
