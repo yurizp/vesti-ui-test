@@ -1,4 +1,4 @@
-package mobi.vesti.test.pages;
+package mobi.vesti.pageobjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

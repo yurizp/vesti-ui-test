@@ -62,7 +62,7 @@ public class CadastroVendedorPageObject {
     private WebElement popMensagemAlertaPreencherCorretamente;
 
     @FindBy(how = How.XPATH, using = "//*[@class=\"container-fluid\"]//button")
-    private WebElement botaoVoltar;
+    public WebElement botaoVoltar;
 
 
     public CadastroVendedorPageObject() throws MalformedURLException {

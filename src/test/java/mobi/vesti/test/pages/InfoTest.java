@@ -1,17 +1,20 @@
 package mobi.vesti.test.pages;
 
 import lombok.SneakyThrows;
+import mobi.vesti.pageobjects.HomePageObject;
+import mobi.vesti.pageobjects.InfoPageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.pageobjects.MenuPageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.InfoProperties;
+import mobi.vesti.properties.MensgensProperties;
+import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,12 +23,14 @@ public class InfoTest extends TestContext {
     public InfoPageObject infoPageObject;
     public MenuPageObject menuPageObject;
     public LoginPageObject loginPageObject;
+    public HomePageObject homePageObject;
 
     @BeforeClass
     public void before() {
         infoPageObject = new InfoPageObject(driver);
         menuPageObject = new MenuPageObject(driver);
         loginPageObject = new LoginPageObject(driver);
+        homePageObject = new HomePageObject(driver);
     }
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
@@ -71,6 +76,11 @@ public class InfoTest extends TestContext {
         validarNovaAba(InfoProperties.LINK_VESTI);
         infoPageObject.linkWhats.click();
         validarNovaAba(InfoProperties.URL_WHATS);
+        menuPageObject.botaoVoltar.click();
+        menuPageObject.botaoSair.click();
+        Thread.sleep(5000);
+        assertThat(homePageObject.getAnunciosSemPecoProdutosDto()).containsExactlyInAnyOrderElementsOf(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+
     }
 
     private void validarNovaAba(String url) {
