@@ -35,8 +35,9 @@ public class AwsSeleniumApiPrototype {
         log.info("{}Gerado o token de segurança.", PREFIXO);
         AwsSessionCredentials awsSessionCredentials = AwsSessionCredentials.create(sessionCredentials.getAccessKeyId(), sessionCredentials.getSecretAccessKey(), sessionCredentials.getSessionToken());
         log.info("{}Criada a sessão com o WebDriver remoto.", PREFIXO);
-        DeviceFarmClient client = DeviceFarmClient.builder().region(Region.US_WEST_2).credentialsProvider(StaticCredentialsProvider.create(awsSessionCredentials)).build();
-        CreateTestGridUrlRequest request = CreateTestGridUrlRequest.builder().expiresInSeconds(300).projectArn(DEVICE_FARM_ARN).build();
+        DeviceFarmClient client = DeviceFarmClient.builder().region(Region.US_WEST_2)
+                .credentialsProvider(StaticCredentialsProvider.create(awsSessionCredentials)).build();
+        CreateTestGridUrlRequest request = CreateTestGridUrlRequest.builder().expiresInSeconds(TOKEN_DURATION_SECONS).projectArn(DEVICE_FARM_ARN).build();
         CreateTestGridUrlResponse response = client.createTestGridUrl(request);
         return new URL(response.url());
     }
