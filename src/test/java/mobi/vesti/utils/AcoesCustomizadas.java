@@ -36,4 +36,12 @@ public class AcoesCustomizadas {
         executor.executeScript("arguments[0].click();", element);
     }
 
+    public static boolean elementoExiste(WebElement element) {
+        try {
+            element.isDisplayed();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

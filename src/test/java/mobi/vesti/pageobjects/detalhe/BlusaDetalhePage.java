@@ -5,9 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.w3c.dom.html.HTMLInputElement;
 
-public class VestidoLongoDetalhePage {
+public class BlusaDetalhePage {
 
     public TamanhoP tamanhoP;
     public TamanhoM tamanhoM;
@@ -22,10 +21,8 @@ public class VestidoLongoDetalhePage {
 
     @FindBy(xpath = "//catalogue/color-zoom-box/div[1]/div/h3")
     public WebElement tituloCorZoom;
-    @FindBy(xpath = "//*[normalize-space() = 'Vestido Longo']//i")
-    public WebElement iconeXRemoverItem;
 
-    public VestidoLongoDetalhePage(WebDriver driver) {
+    public BlusaDetalhePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         tamanhoP = new TamanhoP(driver);
         tamanhoM = new TamanhoM(driver);
@@ -37,10 +34,10 @@ public class VestidoLongoDetalhePage {
     public class TamanhoP {
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[2]/button")
-        private WebElement rosa;
+        private WebElement branco;
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[2]/button")
-        private WebElement vermelho;
+        private WebElement preto;
 
         public TamanhoP(WebDriver driver) {
             PageFactory.initElements(driver, this);
@@ -51,10 +48,10 @@ public class VestidoLongoDetalhePage {
     public class TamanhoM {
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[3]/button")
-        private WebElement rosa;
+        private WebElement branco;
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[3]/button")
-        private WebElement vermelho;
+        private WebElement preto;
 
         public TamanhoM(WebDriver driver) {
             PageFactory.initElements(driver, this);
@@ -65,10 +62,10 @@ public class VestidoLongoDetalhePage {
     public class TamanhoG {
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[4]/button")
-        public WebElement rosa;
+        public WebElement branco;
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[4]/button")
-        public WebElement vermelho;
+        public WebElement preto;
 
         public TamanhoG(WebDriver driver) {
             PageFactory.initElements(driver, this);
@@ -79,10 +76,10 @@ public class VestidoLongoDetalhePage {
     public class TamanhoGG {
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[5]/button")
-        public WebElement rosa;
+        public WebElement branco;
 
         @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[5]/button")
-        public WebElement vermelho;
+        public WebElement preto;
 
         public TamanhoGG(WebDriver driver) {
             PageFactory.initElements(driver, this);
