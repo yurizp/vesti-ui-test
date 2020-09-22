@@ -324,8 +324,9 @@ public class CarrinhoTest extends TestContext {
         // Validar o valor total dos itens no carrinho
         carrinhoPage.carrinhoIcone.click();
         assertThat(carrinhoPage.totalItens.getText()).isEqualTo("36 pc    R$ 2.398,00");
-        carrinhoPage.botaoVoltar.click();
+        carrinhoPage.botaoFinalizarPedido.click();
         Thread.sleep(800);
+        carrinhoPage.validaMensagemDePedidoEnviado();
     }
 
     /**
