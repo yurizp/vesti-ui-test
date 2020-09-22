@@ -10,8 +10,8 @@ public class InfoProperties {
     public static final String INSTAGRAM = "@instagram";
     public static final String URL_VESTI = "www.vesti.mobi";
     public static final String TELEFONE_CELULAR = "(11) 98924-9349";
-    public static final String URL_INSTAGRAM = "https://www.instagram.com/instagram/";
+    public static final String URL_INSTAGRAM = "http://www.instagram.com/instagram";
     public static final String URL_WHATS = "https://api.whatsapp.com/send?phone=+5511989249349";
-    public static final String LINK_VESTI = "https://www.vesti.mobi/";
+    public static final String LINK_VESTI = "http://www.vesti.mobi/";
 
 }

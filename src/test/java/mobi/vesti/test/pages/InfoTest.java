@@ -1,6 +1,5 @@
 package mobi.vesti.test.pages;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import lombok.SneakyThrows;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.InfoPageObject;
@@ -12,11 +11,10 @@ import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.RetentarUmaVez;
-import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class InfoTest extends TestContext {
 
@@ -46,12 +44,9 @@ public class InfoTest extends TestContext {
         assertThat(infoPageObject.infosUteis.descricaoMinimoPecas.getText()).isEqualTo(InfoProperties.DESCRICAO_MINIMO_PECAS);
         assertThat(infoPageObject.infosUteis.descricaoTroca.getText()).isEqualTo(InfoProperties.DESCRICAO_TROCA);
         assertThat(infoPageObject.infosUteis.descricaoMinimoValor.getText()).isEqualTo(InfoProperties.DESCRICAO_MINIMO_VALOR);
-        infoPageObject.linkInstagram.click();
-        validarNovaAba(InfoProperties.URL_INSTAGRAM);
-        infoPageObject.linkVest.click();
-        validarNovaAba(InfoProperties.LINK_VESTI);
-        infoPageObject.linkWhats.click();
-        validarNovaAba(InfoProperties.URL_WHATS);
+        assertThat(InfoProperties.URL_INSTAGRAM).isEqualTo(infoPageObject.linkInstagram.getAttribute("href"));
+        assertThat(InfoProperties.LINK_VESTI).isEqualTo(infoPageObject.linkVest.getAttribute("href"));
+        assertThat(InfoProperties.URL_WHATS).isEqualTo(infoPageObject.linkWhats.getAttribute("href"));
     }
 
     @SneakyThrows
@@ -70,33 +65,14 @@ public class InfoTest extends TestContext {
         assertThat(infoPageObject.infosUteis.descricaoMinimoValor.getText()).isEqualTo(InfoProperties.DESCRICAO_MINIMO_VALOR);
         assertThat(infoPageObject.infosUteis.telefoneEmpresa.getText()).isEqualTo(InfoProperties.TELEFONE_CELULAR);
         assertThat(infoPageObject.infosUteis.nomeEmpresa.getText()).isEqualTo(InfoProperties.NOME_EMPRESA);
-        infoPageObject.linkInstagram.click();
-        validarNovaAba(InfoProperties.URL_INSTAGRAM);
-        infoPageObject.linkVest.click();
-        validarNovaAba(InfoProperties.LINK_VESTI);
-        infoPageObject.linkWhats.click();
-        validarNovaAba(InfoProperties.URL_WHATS);
+        assertThat(InfoProperties.URL_INSTAGRAM).isEqualTo(infoPageObject.linkInstagram.getAttribute("href"));
+        assertThat(InfoProperties.LINK_VESTI).isEqualTo(infoPageObject.linkVest.getAttribute("href"));
+        assertThat(InfoProperties.URL_WHATS).isEqualTo(infoPageObject.linkWhats.getAttribute("href"));
         menuPageObject.botaoVoltar.click();
         menuPageObject.botaoSair.click();
         Thread.sleep(5000);
         assertThat(homePageObject.getAnunciosSemPecoProdutosDto()).containsExactlyInAnyOrderElementsOf(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
 
-    }
-
-    @SneakyThrows
-    private void validarNovaAba(String url) {
-        Thread.sleep(2000);
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        for (int i = 0; i < tabs.size(); i++) {
-            String currentUrl = driver.switchTo().window(tabs.get(i)).getCurrentUrl();
-            if (StringUtils.equalsIgnoreCase(url, currentUrl)) {
-                driver.switchTo().window(tabs.get(i)).getCurrentUrl();
-                driver.close();
-                driver.switchTo().window(tabs.get(0));
-                return;
-            }
-        }
-        throw new RuntimeException("Não foi possivel validar a aba, URL: " + url);
     }
 
 }
