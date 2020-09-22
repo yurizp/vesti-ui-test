@@ -1,5 +1,6 @@
 package mobi.vesti.test.pages;
 
+import lombok.SneakyThrows;
 import mobi.vesti.dto.ProdutosDto;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
@@ -24,10 +25,16 @@ public class HomeTest extends TestContext {
         homePage = PageFactory.initElements(driver, HomePageObject.class);
     }
 
+    /**
+     * Deve validar que ao entrar na plataforma os produtos exibidos não estão com preço.
+     */
+    @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validaSeAnunciosEstaoSemPreco() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         List<ProdutosDto> produtosHome = homePage.getAnunciosSemPecoProdutosDto();
+        System.out.println(produtosHome.toString());;
         assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO.toArray())
                 .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }

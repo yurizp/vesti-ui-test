@@ -12,6 +12,7 @@ import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.RetentarUmaVez;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -86,12 +87,16 @@ public class InfoTest extends TestContext {
     private void validarNovaAba(String url) {
         Thread.sleep(2000);
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-        String currentUrl = driver.getCurrentUrl();
-        assertThat(currentUrl).isEqualTo(url)
-                .withFailMessage("A URL esperada não bate com a url aberta. Esperada:" + url + "URL Aberta: " + currentUrl);
-        driver.close();
-        driver.switchTo().window(tabs.get(0));
+        for (int i = 0; i < tabs.size(); i++) {
+            String currentUrl = driver.switchTo().window(tabs.get(i)).getCurrentUrl();
+            if (StringUtils.equalsIgnoreCase(url, currentUrl)) {
+                driver.switchTo().window(tabs.get(i)).getCurrentUrl();
+                driver.close();
+                driver.switchTo().window(tabs.get(0));
+                return;
+            }
+        }
+        throw new RuntimeException("Não foi possivel validar a aba, URL: " + url);
     }
 
 }

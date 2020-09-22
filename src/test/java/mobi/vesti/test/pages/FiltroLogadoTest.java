@@ -1,5 +1,6 @@
 package mobi.vesti.test.pages;
 
+import lombok.SneakyThrows;
 import mobi.vesti.dto.ProdutosDto;
 import mobi.vesti.pageobjects.FiltroPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
@@ -61,8 +62,14 @@ public class FiltroLogadoTest extends TestContext {
         assertThat(produtosHome.toArray()).containsAnyOf(ProdutosProperties.PRODUTOS_HOME_COM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
+    /**
+     *
+     * Teste ignorado pelo bug: https://trello.com/c/JHXItvCb/21-web-mobile-site-filtros
+     */
+    @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
-    public void testarTelaDeFiltroClicandoNoMenuHamburguer() throws InterruptedException {
+    @Ignore
+    public void testarTelaDeFiltroClicandoNoMenuHamburguer() {
         loginPage.logar();
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();

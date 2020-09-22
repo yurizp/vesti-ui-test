@@ -96,11 +96,11 @@ public class HomePageObject {
 
     public void validarQuePrecosNaoSaoExibidos() {
         List<ProdutosDto> anunciosVendasDtos = this.getAnunciosSemPecoProdutosDto();
-        assertEquals(anunciosVendasDtos.size(), 10);
+        assertEquals(anunciosVendasDtos.size(), 11);
     }
 
     public void validarQuePrecosEstaoSendoExibidos() {
         List<ProdutosDto> anunciosVendasDtos = this.getAnunciosComPrecoProdutosDto();
-        assertEquals(anunciosVendasDtos.size(), 10, "O numero de produtos na home não bate com o esperado.");
+        assertEquals(anunciosVendasDtos.size(), 11, "O numero de produtos na home não bate com o esperado.");
     }
 }

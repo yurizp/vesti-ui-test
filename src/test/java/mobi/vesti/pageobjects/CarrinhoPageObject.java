@@ -34,7 +34,7 @@ public class CarrinhoPageObject {
     public WebElement descricaoMensgemPedidoEnviado;
     @FindBy(xpath = "//item-grid/div/div")
     public WebElement mensagemMaximoDisponivel;
-    @FindBy(xpath = "/html/body/app/catalogue/success-panel/div/nav/div/button")
+    @FindBy(xpath = "//*[@class=\"icon icon-arrow-left\"]")
     public WebElement botaoVoltar;
     @FindBy(xpath = "//*[@class=\"alert alert-vesti show\"]")
     public WebElement mensagemCarrinhoAtualizado;

@@ -43,7 +43,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
     public void testarTelaDeFiltro() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.categorias("vestido").click();
         filtroPageObject.adicionarFiltros.categorias("blusa").click();
         filtroPageObject.adicionarFiltros.categorias("calça jeans").click();

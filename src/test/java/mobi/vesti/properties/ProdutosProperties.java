@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ProdutosProperties {
-    public static final List<ProdutosDto> PRODUTOS_HOME_SEM_PRECO = ImmutableList.of(PACK_JEANS.SEM_PRECO,
+    public static final List<ProdutosDto> PRODUTOS_HOME_SEM_PRECO = ImmutableList.of(
             JAQUETA.SEM_PRECO,
+            CALCA_JEANS_PACK.SEM_PRECO,
             VESTIDO_LONGO.SEM_PRECO,
             POLO.SEM_PRECO,
             CAMISETA_ESTAMPADA.SEM_PRECO,
@@ -19,9 +20,11 @@ public class ProdutosProperties {
             CAMISETA.SEM_PRECO,
             CAMISETA_MANGA_LON.SEM_PRECO,
             CALCA_JEANS_MILANDA.SEM_PRECO,
+            PACK_JEANS.SEM_PRECO,
             SHORTS.SEM_PRECO);
 
     public static final List<ProdutosDto> PRODUTOS_HOME_COM_PRECO = ImmutableList.of(
+            CALCA_JEANS_PACK.COM_PRECO,
             PACK_JEANS.COM_PRECO,
             JAQUETA.COM_PRECO,
             VESTIDO_LONGO.COM_PRECO,
@@ -74,6 +77,12 @@ public class ProdutosProperties {
         public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 79,90");
     }
 
+    public static class CALCA_JEANS_PACK {
+        public static final String NOME = "CALÇA JEANS PACK";
+        public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
+        public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 65,50");
+    }
+
     public static class VESTIDO_LONGO {
         public static final String NOME = "VESTIDO LONGO";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
@@ -81,10 +90,13 @@ public class ProdutosProperties {
     }
 
     public static class BLUSA {
-        //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
+        public static final String ID = "72f2e364-6708-4b65-bff6-ad3c1225c860";
         public static final String NOME = "BLUSA";
         public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
         public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 159,90 R$ 99,99");
+        public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = ImmutableList.of(
+                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getBranco()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getPreto()).build());
     }
 
     public static class SHORTS {
