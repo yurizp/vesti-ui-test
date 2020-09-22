@@ -73,6 +73,7 @@ public class CarrinhoTest extends TestContext {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
         homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
+        Thread.sleep(1000);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
@@ -120,6 +121,10 @@ public class CarrinhoTest extends TestContext {
         assertThat(" ").isEqualTo(carrinhoPage.camiseta.tamanhoGG.getVinho().getText());
     }
 
+    /**
+     * Testar mensagens de carrinho atualizado quando adicionado itens ao carrinho.
+     * Quando adicionado ou removido itens do carrinho deve validar mensagens de atualização de itens.
+     */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarMensagensDeCarrinhoAtualizadoQuandoAdicionadoRemovidoItensDoCarrinho() {
@@ -150,6 +155,10 @@ public class CarrinhoTest extends TestContext {
 
     }
 
+    /**
+     * Testar o calculo de valor total no carrinho.
+     * Conforme adicionado itens ao carrinho o valor total é calculado e deve bater com o esperado.
+     */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarCalculoDeValorTotalNoCarrinho() {
@@ -181,7 +190,9 @@ public class CarrinhoTest extends TestContext {
         assertThat(carrinhoPage.totalItens.getText()).isEqualTo("2 pc    R$ 299,98");
     }
 
-
+    /**
+     * Testar a remoção de item do carrinho pelo botão 'X' dentro do carrinho.
+     */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarRemocaoDeItensDoCarrinhoPeloIconeX() {
@@ -207,7 +218,10 @@ public class CarrinhoTest extends TestContext {
         homePage.validarQuePrecosEstaoSendoExibidos();
     }
 
-
+    /**
+     * Testar a remoção de itens do carrinho pressionando e segurando a quantidade de itens do carrinho.
+     * É esperado que quando a ação de manter pressionado for feita deve zerar a quantidade do tamanho e cor especifico.
+     */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarRemocaoDoCarrinhoPressionandoESegurandoAQuandidadeDoItem() {
@@ -233,6 +247,9 @@ public class CarrinhoTest extends TestContext {
 
     }
 
+    /**
+     * Validar mensagem de "Máximo disponível" ao adicionar produtos do tipo Pack.
+     */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarMaximoDisponivel() {
@@ -252,13 +269,51 @@ public class CarrinhoTest extends TestContext {
         validarMensagemDeLimiteAtingido(carrinhoPage.packJeans.botaoAdicionarItem, 4);
     }
 
+    /**
+     * Validar calculo de valor total para produtos do tipo Pack.
+     * Deve ir recalculando o valor total do carrinho conforme vai sendo adicionado novos Packs.
+     */
+    @SneakyThrows
+    @Test(retryAnalyzer = RetentarUmaVez.class)
+    public void validarCalculoDeValorTotalParaItensDoTipoPack() {
+        // Fazer login
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        loginPage.logar();
+        Thread.sleep(2000);
+
+        //Adiciona dois Pack Jeans ao carrinho e volta para a home
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.PACK_JEANS.NOME);
+        Thread.sleep(1000);
+        assertThat(carrinhoPage.packJeans.botaoAdicionarItem.getText()).isEqualTo("+");
+        assertThat(carrinhoPage.packJeans.botaoRemoverItem.getText()).isEqualTo("-");
+        assertThat(carrinhoPage.packJeans.quantidade.getText()).isEqualTo("0");
+        carrinhoPage.packJeans.botaoAdicionarItem.click();
+        assertThat(carrinhoPage.packJeans.quantidade.getText()).isEqualTo("1");
+        carrinhoPage.packJeans.botaoAdicionarItem.click();
+        assertThat(carrinhoPage.packJeans.quantidade.getText()).isEqualTo("2");
+        carrinhoPage.botaoContinuarComprando.click();
+        Thread.sleep(1000);
+
+        //Validar valor total dos itens no carrinho
+    }
+
+    /**
+     * Valida as informações de contato dentro da pagina de carrinho.
+     * Valida que existe e estão sendo exibidos como o esperado o nome, telefone e as iniciais do vendedor.
+     */
     private void validarInformacoesDeContato(){
         assertThat(carrinhoPage.nomeVendedor.getText()).isEqualTo(CarrinhoProperties.NOME_VENDEDOR);
         assertThat(carrinhoPage.telefoneVendedor.getText()).isEqualTo(CarrinhoProperties.TELEFONE_VENDEDOR);
         assertThat(carrinhoPage.iniciaisVendedor.getText()).isEqualTo(CarrinhoProperties.INICIAIS_VENDEDOR);
     }
 
-    private void validarMensagemDeLimiteAtingido(WebElement element, int numeroEstoque) {
+    /**
+     * Deve validar se a mensagem de limite maximo disponível foi exibido.
+     *
+     * @param element Botão a ser clicado para adicionar itens ao carrinho.
+     * @param cliquesEsperados Numero de cliques esperado para exibir a mensagem
+     */
+    private void validarMensagemDeLimiteAtingido(WebElement element, int cliquesEsperados) {
         int numeroCliques = 0;
         while (numeroCliques < 10) {
             element.click();
