@@ -9,4 +9,7 @@ public class CarrinhoProperties {
     public static final String NOME_VENDEDOR = "QA Modas Teste";
     public static final String TELEFONE_VENDEDOR = "(11) 9 8924-9349";
     public static final String INICIAIS_VENDEDOR = "Q T";
+    public static final String PECAS_ESGOTADAS_MENSAGEM = "Ops, algumas peças já esgotaram";
+    public static final String COR_VERMELHA_RGB = "rgba(255, 0, 0, 1)";
+    public static final String COR_PRETA_RGB = "rgba(51, 51, 51, 1)";
 }

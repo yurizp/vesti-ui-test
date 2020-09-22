@@ -43,7 +43,7 @@ public class AwsSeleniumApiPrototype {
     }
 
     /***
-     * Conecta a AWS paar gerar um token temporario.
+     * Conecta a AWS paar gerar um token temporário.
      * @return
      */
     private Credentials getSessionCredentials() {

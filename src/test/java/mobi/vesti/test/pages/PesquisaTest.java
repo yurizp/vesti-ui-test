@@ -76,20 +76,20 @@ public class PesquisaTest extends TestContext {
 
     private void pesquisarProdutosSemPreco(String textoPesquisa, ProdutosDto... produtosDto) throws InterruptedException {
         pesquisa.caixaDePesquisa.sendKeys(textoPesquisa);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         List<ProdutosDto> produtosHome = home.getAnunciosSemPecoProdutosDto();
         assertThat(produtosHome).containsExactlyInAnyOrder(produtosDto).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
         pesquisa.botaoFecharClick();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     }
 
     private void pesquisarProdutosComPreco(String textoPesquisa, ProdutosDto... produtosDto) throws InterruptedException {
         pesquisa.caixaDePesquisa.sendKeys(textoPesquisa);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         List<ProdutosDto> produtosHome = home.getAnunciosComPrecoProdutosDto();
         assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(produtosDto).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
         pesquisa.botaoFecharClick();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     }
 
     private void validarProdutosExistentesNaHomeSemPreco() {

@@ -5,9 +5,11 @@ import mobi.vesti.client.request.ColorRequestVestClient;
 import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.dto.ProdutosDto;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProdutosProperties {
     public static final List<ProdutosDto> PRODUTOS_HOME_SEM_PRECO = ImmutableList.of(
@@ -51,10 +53,10 @@ public class ProdutosProperties {
         public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
         public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 29,90");
         public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = ImmutableList.of(
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getRosa()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getVerde()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getAzulClaro()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getCinza()).build()
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getRosa()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getVerde()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getAzulClaro()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getCinza()).build()
         );
     }
 
@@ -95,20 +97,35 @@ public class ProdutosProperties {
         public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
         public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 159,90 R$ 99,99");
         public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = ImmutableList.of(
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getBranco()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getPreto()).build());
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getBranco()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getPreto()).build());
     }
 
     public static class SHORTS {
-        //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
-        public static final ProdutosDto SEM_PRECO = new ProdutosDto("SHORTS", "Ver Preço");
-        public static final ProdutosDto COM_PRECO = new ProdutosDto("SHORTS", "R$ 79,90");
+        public static final String ID = "bc57d790-eb17-4d81-95df-a0159834c45e";
+        public static final String NOME = "SHORTS";
+        public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
+        public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 79,90");
+        public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = ImmutableList.of(
+                ItensRequestVestClient.builder().tamanho(getTamanhos("10", "36", "38", "42", "46")).cor(getVerde()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhos("10", "36", "38", "42", "46")).cor(getVermelho()).build());
+
+        public static List<ItensRequestVestClient> getEstoque(String quantidadeDePecas) {
+            return ImmutableList.of(
+                    ItensRequestVestClient.builder().tamanho(getTamanhos(quantidadeDePecas, "36", "38", "42", "46")).cor(getVerde()).build(),
+                    ItensRequestVestClient.builder().tamanho(getTamanhos(quantidadeDePecas, "36", "38", "42", "46")).cor(getVermelho()).build());
+        }
     }
 
     public static class CAMISETA_MANGA_LON {
-        //        public static final String ID = "2961/b4a7ef4d-d61c-4275-8144-260962f6480c";
-        public static final ProdutosDto SEM_PRECO = new ProdutosDto("CAMISETA MANGA LON", "Ver Preço");
-        public static final ProdutosDto COM_PRECO = new ProdutosDto("CAMISETA MANGA LON", "R$ 120,00 R$ 60,00");
+        public static final String ID = "541c79e2-d0c7-400d-b858-d9539ce22139";
+        public static final String NOME = "CAMISETA MANGA LON";
+        public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
+        public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 120,00 R$ 60,00");
+        public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = ImmutableList.of(
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getPreto()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getCinza()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getAzulClaro()).build());
     }
 
     public static class CAMISETA {
@@ -116,23 +133,29 @@ public class ProdutosProperties {
         public static final ProdutosDto SEM_PRECO = new ProdutosDto("CAMISETA", "Ver Preço");
         public static final ProdutosDto COM_PRECO = new ProdutosDto("CAMISETA", "R$ 69,90", "100% algodão");
         public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = ImmutableList.of(
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getBranco()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getAmarelo()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getAzul()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getPreto()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getVinho()).build(),
-                ItensRequestVestClient.builder().tamanho(getTamanhos()).cor(getVermelho()).build()
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getBranco()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getAmarelo()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getAzul()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getPreto()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getVinho()).build(),
+                ItensRequestVestClient.builder().tamanho(getTamanhosPMG()).cor(getVermelho()).build()
         );
     }
 
-    public static ImmutableList<Map<String, String>> getTamanhos() {
-        return ImmutableList.of(
-                Collections.singletonMap("P", "4"),
-                Collections.singletonMap("M", "4"),
-                Collections.singletonMap("G", "4"),
-                Collections.singletonMap("GG", "4")
-        );
+    public static ImmutableList<Map<String, String>> getTamanhosPMG() {
+        return getTamanhosPMG("4");
+    }
 
+    public static ImmutableList<Map<String, String>> getTamanhosPMG(String quantidade) {
+        return getTamanhos(quantidade, "P", "M", "G");
+    }
+
+    public static ImmutableList<Map<String, String>> getTamanhos(String quantidade, String... tamanho) {
+        List<Map<String, String>> tamanhos = Arrays.asList(tamanho)
+                .stream()
+                .map(t -> Collections.singletonMap(t, quantidade))
+                .collect(Collectors.toList());
+        return ImmutableList.copyOf(tamanhos);
     }
 
     private static ColorRequestVestClient getRosa() {

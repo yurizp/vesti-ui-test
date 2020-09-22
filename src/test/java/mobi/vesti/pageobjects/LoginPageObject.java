@@ -29,12 +29,13 @@ public class LoginPageObject {
         PageFactory.initElements(driver, this);
     }
 
-    public void preencherLogin(LoginDto loginDto) throws InterruptedException {
+    public void preencherLogin(LoginDto loginDto) {
         campoSenha.sendKeys(loginDto.getSenha());
         Assert.assertFalse(getCampoCpfCnpj().isEnabled());
     }
 
     public void logar() throws InterruptedException {
+        Thread.sleep(2000);
         CadastroVendedorPageObject cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
         driver.navigate().to(ConfiguracoesGlobais.LOGIN);
         AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj(), cadastroVendedorPage.getCnpjCpfOuEmail());

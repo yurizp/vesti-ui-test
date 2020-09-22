@@ -26,7 +26,7 @@ public class PoloDetalhePage {
         public WebElement rosa;
         @FindBy(xpath = "//table/tbody/tr[3]/td[2]/button")
         public WebElement verde;
-        @FindBy(xpath = "//table/tbody/tr[3]/td[2]/button")
+        @FindBy(xpath = "//table/tbody/tr[4]/td[2]/button")
         public WebElement azul;
         @FindBy(xpath = "//table/tbody/tr[5]/td[2]/button")
         public WebElement cinza;

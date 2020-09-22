@@ -1,5 +1,6 @@
 package mobi.vesti.utils;
 
+import lombok.SneakyThrows;
 import mobi.vesti.test.TestContext;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -25,9 +26,13 @@ public class AcoesCustomizadas {
         actions.perform();
     }
 
+    @SneakyThrows
     public static void clicarEManterPressionado(WebElement element) {
         Actions action = new Actions(TestContext.driver);
-        action.clickAndHold(element).contextClick(element).build().perform();
+        action.clickAndHold(element)
+                .contextClick(element)
+                .build()
+                .perform();
         action.release();
     }
 
@@ -42,6 +47,17 @@ public class AcoesCustomizadas {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    /**
+     * Clica um numero de vezes definido em um elemento.
+     * @param element Elemento a ser clicado.
+     * @param numeroCliques Numero de cliques no elemento.
+     */
+    public static void cliarRepetidasVezes(WebElement element, int numeroCliques) {
+        for (int i = 0; i < numeroCliques; i++) {
+            element.click();
         }
     }
 }

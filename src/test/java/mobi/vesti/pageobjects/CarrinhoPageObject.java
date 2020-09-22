@@ -2,9 +2,11 @@ package mobi.vesti.pageobjects;
 
 import mobi.vesti.pageobjects.detalhe.BlusaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CalcaJeansMilandaDetalhePage;
+import mobi.vesti.pageobjects.detalhe.CalcaJeansPackDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CamisetaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.PackJeansDetalhePage;
 import mobi.vesti.pageobjects.detalhe.PoloDetalhePage;
+import mobi.vesti.pageobjects.detalhe.ShortDetalhePage;
 import mobi.vesti.pageobjects.detalhe.VestidoLongoDetalhePage;
 import mobi.vesti.properties.CarrinhoProperties;
 import org.apache.commons.lang3.StringUtils;
@@ -16,12 +18,6 @@ import org.testng.Assert;
 
 public class CarrinhoPageObject {
 
-    public PoloDetalhePage polo;
-    public VestidoLongoDetalhePage vestidoLongo;
-    public CamisetaDetalhePage camiseta;
-    public CalcaJeansMilandaDetalhePage calcaJeansMilanda;
-    public PackJeansDetalhePage packJeans;
-    public BlusaDetalhePage blusa;
     @FindBy(xpath = "//*[@id=\"navbar-cart-button\"]/i")
     public WebElement carrinhoIcone;
     @FindBy(xpath = "//*[@id=\"navbar-cart-button\"]/span")
@@ -49,6 +45,16 @@ public class CarrinhoPageObject {
     @FindBy(xpath = "//*[@class=\"seller-initials\"]")
     public WebElement iniciaisVendedor;
 
+    public PecasEsgotadas pecasEsgotadas;
+    public PoloDetalhePage polo;
+    public ShortDetalhePage shorts;
+    public VestidoLongoDetalhePage vestidoLongo;
+    public CamisetaDetalhePage camiseta;
+    public CalcaJeansMilandaDetalhePage calcaJeansMilanda;
+    public CalcaJeansPackDetalhePage calcaJeansPack;
+    public PackJeansDetalhePage packJeans;
+    public BlusaDetalhePage blusa;
+
     public CarrinhoPageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);
         polo = new PoloDetalhePage(driver);
@@ -57,13 +63,30 @@ public class CarrinhoPageObject {
         vestidoLongo = new VestidoLongoDetalhePage(driver);
         blusa = new BlusaDetalhePage(driver);
         packJeans = new PackJeansDetalhePage(driver);
+        shorts = new ShortDetalhePage(driver);
+        pecasEsgotadas = new PecasEsgotadas(driver);
+        calcaJeansPack = new CalcaJeansPackDetalhePage(driver);
     }
 
+    /**
+     * Valida a mensagem de sucesso para um pedido enviado.
+     */
     public void validaMensagemDePedidoEnviado() {
         String titulo = tituloMensagemPedidoEnviado.getText();
         String descricao = descricaoMensgemPedidoEnviado.getText();
         Assert.assertEquals(StringUtils.trim(titulo), CarrinhoProperties.TITULO_MENSAGEM_PEDIDO_ENVIADO);
         Assert.assertEquals(StringUtils.trim(descricao), CarrinhoProperties.DESCRICAO_MENSAGEM_PEDIDO_ENVIADO);
+    }
+
+    public class PecasEsgotadas {
+        @FindBy(xpath = "//prompt-modal/div[2]/div[1]/div/p")
+        public WebElement mensagem;
+        @FindBy(xpath = "//prompt-modal/div[2]/div[2]/button")
+        public WebElement botaoOk;
+
+        public PecasEsgotadas(WebDriver driver) {
+            PageFactory.initElements(driver, this);
+        }
     }
 
 }
