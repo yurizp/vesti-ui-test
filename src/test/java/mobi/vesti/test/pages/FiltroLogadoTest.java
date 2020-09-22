@@ -67,6 +67,7 @@ public class FiltroLogadoTest extends TestContext {
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
         filtroPageObject.adicionarFiltros.categorias("camiseta").click();
+        Thread.sleep(1000);
         filtroPageObject.adicionarFiltros.categorias("básica").click();
         filtroPageObject.adicionarFiltros.botaoVoltar.click();
         assertThat(filtroPageObject.existeCategoria("básica")).isTrue();
