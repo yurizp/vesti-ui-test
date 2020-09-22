@@ -40,7 +40,7 @@ public class VestClient {
                 .build();
 
         String response = client.newCall(request).execute().body().string();
-        Thread.sleep(6000);
+        log.info("Chamada para API de autenticação, resultado: {}", response);
         loginResponseVestClient = ObjectUtils.OBJECT_MAPPER.readValue(response, LoginResponseVestClient.class);
         return loginResponseVestClient;
     }
@@ -54,13 +54,8 @@ public class VestClient {
                 .addHeader("content-type", "application/json")
                 .build();
         String response = client.newCall(request).execute().body().string();
-//        assertThat("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}}").isEqualToIgnoringNewLines(response);
-        log.info("O resultado da chamada de API para a vest foi: {}", response);
+        log.info("Chamada para API de adicionar estoque, resultado: {}", response);
+        assertThat("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}}").isEqualToIgnoringNewLines(response);
     }
 
-
-    public static void main(String[] args) throws Exception {
-        adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
-        System.out.println("asds");
-    }
 }
