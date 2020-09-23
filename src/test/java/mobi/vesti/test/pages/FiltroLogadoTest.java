@@ -5,6 +5,7 @@ import mobi.vesti.dto.ProdutosDto;
 import mobi.vesti.pageobjects.FiltroPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
+import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
@@ -43,6 +44,8 @@ public class FiltroLogadoTest extends TestContext {
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltro() throws InterruptedException {
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
@@ -63,13 +66,14 @@ public class FiltroLogadoTest extends TestContext {
     }
 
     /**
-     *
-     * Teste ignorado pelo bug: https://trello.com/c/JHXItvCb/21-web-mobile-site-filtros
+     * Esse teste esta ignorado devido ao bug encontrado nele.
+     * Aguardando ok para retestar.
      */
+    @Ignore
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
-    @Ignore
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() {
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         loginPage.logar();
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();

@@ -8,16 +8,25 @@ import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.properties.CarrinhoProperties;
 import mobi.vesti.properties.ConfiguracoesGlobais;
+import mobi.vesti.properties.InfoProperties;
 import mobi.vesti.properties.LoginProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.AcoesCustomizadas;
+import mobi.vesti.utils.Mascara;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -47,43 +56,44 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarAdicionarERemoverProdutosDoCarrinho() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
-        //Adiciona os valores defaults ao estoque (4 peças de cada cor) via API
-        VestClient.adicionarEstoque(ProdutosProperties.POLO.ID, ProdutosProperties.POLO.ESTOQUE_REQUEST);
+        // Adiciona ao estoque 10 peças de cada cor
+        VestClient.adicionarEstoque(ProdutosProperties.POLO.ID, ProdutosProperties.POLO.getEstoque("10"));
 
         // Faz login clicando em um produto
         homePage.clicarEmAnuncioDeProdutoSemPreco("POLO");
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
-        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO);
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
         loginPage.getBotaoContinuar().click();
         Thread.sleep(2000);
 
         // Adiciona o item camiseta POLO Verde e Azul P, duas unidades de Rosa G
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.POLO.NOME);
-        carrinhoPage.polo.tamanhoP.verde.click();
-        carrinhoPage.polo.tamanhoP.azul.click();
-        carrinhoPage.polo.tamanhoG.rosa.click();
-        carrinhoPage.polo.tamanhoG.rosa.click();
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoP.verde, 6);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoP.azul, 6);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoG.rosa, 2);
         Thread.sleep(1000);
-        assertThat(carrinhoPage.polo.tamanhoP.verde.getText()).isEqualTo("1");
-        assertThat(carrinhoPage.polo.tamanhoP.azul.getText()).isEqualTo("1");
-        assertThat(carrinhoPage.polo.tamanhoG.rosa.getText()).isEqualTo("2");
+        assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.verde.getText());
+        assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.azul.getText());
+        assertThat("2").isEqualTo(carrinhoPage.polo.tamanhoG.rosa.getText());
 
         // Vai até a pagina do carrinho e adiciona uma camiseta Polo
         carrinhoPage.carrinhoIcone.click();
         Thread.sleep(1000);
-        carrinhoPage.polo.tamanhoGG.cinza.click();
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoG.cinza, 4);
 
         // Remove os produtos Polo rosa e adiciona uma Polo Rosa G
         AcoesCustomizadas.clicarEManterPressionado(carrinhoPage.polo.tamanhoG.rosa);
+        Thread.sleep(1000);
+        assertThat("0").isEqualTo(carrinhoPage.polo.tamanhoG.rosa.getText());
         Thread.sleep(2000);
-        carrinhoPage.polo.tamanhoG.rosa.click();
         Thread.sleep(2000);
-        assertThat(carrinhoPage.polo.tamanhoP.verde.getText()).isEqualTo("1");
-        assertThat(carrinhoPage.polo.tamanhoP.azul.getText()).isEqualTo("1");
-        assertThat(carrinhoPage.polo.tamanhoG.rosa.getText()).isEqualTo("1");
-        assertThat(carrinhoPage.polo.tamanhoGG.cinza.getText()).isEqualTo("1");
+        assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.verde.getText());
+        assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.azul.getText());
+        assertThat("0").isEqualTo(carrinhoPage.polo.tamanhoG.rosa.getText());
+        assertThat("4").isEqualTo(carrinhoPage.polo.tamanhoG.cinza.getText());
+        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("16 pc    R$ 478,40");
 
         //Finaliza o pedido e valida a mensagem
         carrinhoPage.botaoFinalizarPedido.click();
@@ -98,15 +108,15 @@ public class CarrinhoTest extends TestContext {
         VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
         homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
         Thread.sleep(1000);
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
-        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO);
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
         loginPage.getBotaoContinuar().click();
         Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");
-        carrinhoPage.camiseta.tamanhoP.getBranco().click();
-        carrinhoPage.camiseta.tamanhoP.getAmarelo().click();
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camiseta.tamanhoP.getBranco(),5);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camiseta.tamanhoP.getAmarelo(),5);
         carrinhoPage.camiseta.tamanhoM.getAzul().click();
         carrinhoPage.camiseta.tamanhoG.getPreto().click();
         carrinhoPage.camiseta.tamanhoGG.getVinho().click();
@@ -114,6 +124,7 @@ public class CarrinhoTest extends TestContext {
         validarInformacoesDeContato();
         Thread.sleep(1000);
         carrinhoPage.botaoFinalizarPedido.click();
+        Thread.sleep(1000);
         carrinhoPage.validaMensagemDePedidoEnviado();
 
     }
@@ -122,27 +133,46 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarProdutoMaximoDisponivel() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
-        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
-        homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
+
+        // Altera o estoque de Camiseta Estampada
+        List<Map<String, String>> tamanhosQuantidades = Arrays.asList(
+                Collections.singletonMap("P", "10"),
+                Collections.singletonMap("M", "4"),
+                Collections.singletonMap("G", "4"),
+                Collections.singletonMap("GG", "3")
+        );
+        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA_ESTAMPADA.ID, ProdutosProperties.CAMISETA_ESTAMPADA.getEstoque(tamanhosQuantidades));
+
+        // Loga clicando no produto Camiseta Estampada
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
-        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO);
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
         loginPage.getBotaoContinuar().click();
         Thread.sleep(2000);
-        homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");
-        validarMensagemDeLimiteAtingido(carrinhoPage.camiseta.tamanhoGG.getVinho(), 4);
-        assertThat("3").isEqualTo(carrinhoPage.camiseta.tamanhoGG.getVinho().getText());
+
+        // Valida a mensagem de maximo
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
+        validarMensagemDeLimiteAtingido(carrinhoPage.camisetaEstampada.tamanhoGG.preto, 3);
+        Thread.sleep(7000);
+        validarMensagemDeLimiteAtingido(carrinhoPage.camisetaEstampada.tamanhoG.preto, 4);
+        Thread.sleep(7000);
+        validarMensagemDeLimiteAtingido(carrinhoPage.camisetaEstampada.tamanhoM.preto, 4);
+        Thread.sleep(7000);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaEstampada.tamanhoP.preto, 6);
+
+        // Validar numero de itens selecionados
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoGG.preto.getText()).isEqualTo("2");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoG.preto.getText()).isEqualTo("3");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoM.preto.getText()).isEqualTo("3");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoP.preto.getText()).isEqualTo("6");
+
+        // Finalizar o orçamento
         carrinhoPage.carrinhoIcone.click();
-        validarInformacoesDeContato();
         Thread.sleep(1000);
         carrinhoPage.botaoFinalizarPedido.click();
         carrinhoPage.validaMensagemDePedidoEnviado();
-        carrinhoPage.botaoVoltar.click();
-        Thread.sleep(2000);
-        homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");
-        carrinhoPage.camiseta.tamanhoGG.getVinho().click();
-        assertThat(" ").isEqualTo(carrinhoPage.camiseta.tamanhoGG.getVinho().getText());
     }
 
     /**
@@ -194,6 +224,7 @@ public class CarrinhoTest extends TestContext {
         // Adicionar um Vestido tamanho GG vermelho ao carrinho
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.VESTIDO_LONGO.NOME);
         carrinhoPage.vestidoLongo.tamanhoGG.vermelho.click();
+        Thread.sleep(1000);
         assertThat(carrinhoPage.vestidoLongo.tamanhoGG.vermelho.getText()).isEqualTo("1");
         carrinhoPage.botaoContinuarComprando.click();
         Thread.sleep(1200);
@@ -286,36 +317,45 @@ public class CarrinhoTest extends TestContext {
         loginPage.logar();
         Thread.sleep(2000);
 
-        //Adiciona ao estoque 10 peças de cada cor via API
+        //Adiciona ao estoque 20 peças de cada cor via API
         VestClient.adicionarEstoque(ProdutosProperties.SHORTS.ID, ProdutosProperties.SHORTS.ESTOQUE_REQUEST);
 
-        //Adicionar ao carrinho 9 peças tamanho 36 e 38
+        //Adicionar ao carrinho 9 peças verdes dos tamanhos 36 e 38 e 4 peças verdes dos tamanhos 40 e 46
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.SHORTS.NOME);
-        carrinhoPage.shorts.tamanho36.verde.click();
-        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho36.verde,9);
-        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho38.verde,9);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho36.verde, 9);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho38.verde, 9);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho40.verde, 4);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho46.verde, 4);
         Thread.sleep(2000);
-        assertThat(carrinhoPage.shorts.tamanho36.verde.getText()).isEqualTo("9");
-        assertThat(carrinhoPage.shorts.tamanho38.verde.getText()).isEqualTo("9");
+        assertThat("9").isEqualTo(carrinhoPage.shorts.tamanho36.verde.getText());
+        assertThat("9").isEqualTo(carrinhoPage.shorts.tamanho38.verde.getText());
+        assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho40.verde.getText());
+        assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho46.verde.getText());
 
-        //Alterar o estoque para 5 peças cada cor via API
+        // Alterar o estoque para 5 peças cada cor via API
         VestClient.adicionarEstoque(ProdutosProperties.SHORTS.ID, ProdutosProperties.SHORTS.getEstoque("5"));
 
         // Valida mensagem de produto esgotado
         Thread.sleep(1000);
-        assertThat(carrinhoPage.shorts.tamanho36.verde.getCssValue("color")).isEqualTo(CarrinhoProperties.COR_PRETA_RGB);
-        assertThat(carrinhoPage.shorts.tamanho38.verde.getCssValue("color")).isEqualTo(CarrinhoProperties.COR_PRETA_RGB);
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.shorts.tamanho36.verde.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.shorts.tamanho38.verde.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.shorts.tamanho40.verde.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.shorts.tamanho46.verde.getCssValue("color"));
         carrinhoPage.carrinhoIcone.click();
         carrinhoPage.botaoFinalizarPedido.click();
-        assertThat(carrinhoPage.pecasEsgotadas.mensagem.getText()).isEqualTo(CarrinhoProperties.PECAS_ESGOTADAS_MENSAGEM);
-        carrinhoPage.pecasEsgotadas.botaoOk.click();
+        assertThat(CarrinhoProperties.PECAS_ESGOTADAS_MENSAGEM).isEqualTo(carrinhoPage.popUpMensagem.mensagem.getText());
+        carrinhoPage.popUpMensagem.botaoOk.click();
 
         // Valida a cor do texto e a quantidade de itens
         Thread.sleep(1000);
-        assertThat(carrinhoPage.shorts.tamanho36.verde.getCssValue("color")).isEqualTo(CarrinhoProperties.COR_VERMELHA_RGB);
-        assertThat(carrinhoPage.shorts.tamanho38.verde.getCssValue("color")).isEqualTo(CarrinhoProperties.COR_VERMELHA_RGB);
-        assertThat(carrinhoPage.shorts.tamanho36.verde.getText()).isEqualTo("4");
-        assertThat(carrinhoPage.shorts.tamanho38.verde.getText()).isEqualTo("4");
+        assertThat(CarrinhoProperties.COR_VERMELHA_RGB).isEqualTo(carrinhoPage.shorts.tamanho36.verde.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_VERMELHA_RGB).isEqualTo(carrinhoPage.shorts.tamanho38.verde.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.shorts.tamanho40.verde.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.shorts.tamanho46.verde.getCssValue("color"));
+        assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho36.verde.getText());
+        assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho38.verde.getText());
+        assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho40.verde.getText());
+        assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho46.verde.getText());
 
         // Finaliza a venda
         carrinhoPage.botaoFinalizarPedido.click();
@@ -323,12 +363,16 @@ public class CarrinhoTest extends TestContext {
         carrinhoPage.botaoVoltar.click();
         Thread.sleep(2000);
 
-        // Validar indisponibilidade de estoque após a compra
+        // Validar a indisponibilidade de estoque após a compra
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.SHORTS.NOME);
         carrinhoPage.shorts.tamanho38.verde.click();
         carrinhoPage.shorts.tamanho36.verde.click();
-        assertThat(carrinhoPage.shorts.tamanho36.verde.getText()).isEqualTo(" ");
-        assertThat(carrinhoPage.shorts.tamanho38.verde.getText()).isEqualTo(" ");
+        carrinhoPage.shorts.tamanho40.verde.click();
+        carrinhoPage.shorts.tamanho46.verde.click();
+        assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho36.verde.getText());
+        assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho38.verde.getText());
+        assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho40.verde.getText());
+        assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho46.verde.getText());
     }
 
     /**
@@ -350,7 +394,7 @@ public class CarrinhoTest extends TestContext {
         assertThat(carrinhoPage.packJeans.quantidade.getText()).isEqualTo("0");
 
         //Adicionar um pack e validar a mensagem
-        validarMensagemDeLimiteAtingido(carrinhoPage.packJeans.botaoAdicionarItem, 4);
+        validarMensagemDeLimiteAtingido(carrinhoPage.packJeans.botaoAdicionarItem, 3);
     }
 
     /**
@@ -365,25 +409,7 @@ public class CarrinhoTest extends TestContext {
         loginPage.logar();
         Thread.sleep(2000);
 
-        //Adiciona um Pack Jeans ao carrinho e volta para a home
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.PACK_JEANS.NOME);
-        Thread.sleep(800);
-        assertThat(carrinhoPage.packJeans.botaoAdicionarItem.getText()).isEqualTo("+");
-        assertThat(carrinhoPage.packJeans.botaoRemoverItem.getText()).isEqualTo("-");
-        assertThat(carrinhoPage.packJeans.quantidade.getText()).isEqualTo("0");
-        carrinhoPage.packJeans.botaoAdicionarItem.click();
-        Thread.sleep(800);
-        assertThat(carrinhoPage.packJeans.quantidade.getText()).isEqualTo("1");
-        carrinhoPage.botaoContinuarComprando.click();
-        Thread.sleep(800);
-
-        // Validar o valor total dos itens no carrinho
-        carrinhoPage.carrinhoIcone.click();
-        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("8 pc    R$ 400,00");
-        carrinhoPage.botaoVoltar.click();
-        Thread.sleep(800);
-
-        // Adicionar mais duas calcas jeans pack ao carrinho
+        //Adiciona uma Calça Jeans Pack ao carrinho e volta para a home
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CALCA_JEANS_PACK.NOME);
         Thread.sleep(800);
         assertThat(carrinhoPage.calcaJeansPack.botaoAdicionarItem.getText()).isEqualTo("+");
@@ -392,13 +418,38 @@ public class CarrinhoTest extends TestContext {
         carrinhoPage.calcaJeansPack.botaoAdicionarItem.click();
         Thread.sleep(800);
         assertThat(carrinhoPage.calcaJeansPack.quantidade.getText()).isEqualTo("1");
-        carrinhoPage.calcaJeansPack.botaoAdicionarItem.click();
+        carrinhoPage.carrinhoIcone.click();
         Thread.sleep(800);
-        assertThat(carrinhoPage.calcaJeansPack.quantidade.getText()).isEqualTo("2");
 
         // Validar o valor total dos itens no carrinho
-        carrinhoPage.carrinhoIcone.click();
-        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("16 pc    R$ 924,00");
+        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("4 pc    R$ 262,00");
+
+        // Abre o contato do Whatsapp
+        validarNovaAba(carrinhoPage.telefoneVendedor, InfoProperties.PAGE_LINK_WHATS);
+
+        // Validar o valor total dos itens no carrinho
+        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("4 pc    R$ 262,00");
+
+        // Adiciona mais uma Calça Jeans Pack ao carrinho
+        assertThat(carrinhoPage.calcaJeansPack.botaoAdicionarItem.getText()).isEqualTo("+");
+        assertThat(carrinhoPage.calcaJeansPack.botaoRemoverItem.getText()).isEqualTo("-");
+        assertThat(carrinhoPage.calcaJeansPack.quantidade.getText()).isEqualTo("1");
+        carrinhoPage.packJeans.botaoAdicionarItem.click();
+        Thread.sleep(800);
+        assertThat(carrinhoPage.calcaJeansPack.quantidade.getText()).isEqualTo("2");
+        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("8 pc    R$ 524,00");
+
+        // Adiciona mais duas Calça Jeans Pack ao carrinho
+        assertThat(carrinhoPage.calcaJeansPack.botaoAdicionarItem.getText()).isEqualTo("+");
+        assertThat(carrinhoPage.calcaJeansPack.botaoRemoverItem.getText()).isEqualTo("-");
+        assertThat(carrinhoPage.calcaJeansPack.quantidade.getText()).isEqualTo("2");
+        carrinhoPage.packJeans.botaoAdicionarItem.click();
+        carrinhoPage.packJeans.botaoAdicionarItem.click();
+        Thread.sleep(800);
+        assertThat(carrinhoPage.calcaJeansPack.quantidade.getText()).isEqualTo("4");
+        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("16 pc    R$ 1.048,00");
+
+        // Finalizar venda e validar mensagem
         carrinhoPage.botaoFinalizarPedido.click();
         Thread.sleep(800);
         carrinhoPage.validaMensagemDePedidoEnviado();
@@ -412,17 +463,84 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarQuantidadeMinimaDeCompra() {
         // Faz login clicando em um produto
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj());
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
-        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO);
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CPF);
         loginPage.getBotaoContinuar().click();
         Thread.sleep(2000);
 
-        //Adiciona ao estoque 4 peças de cada cor via API
+        // Adiciona ao estoque 20 peças de cada cor via API
+        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA_MANGA_LON.ID, ProdutosProperties.CAMISETA_MANGA_LON.getEstoque("20"));
+
+        // Adicionar uma Camiseta Manga Long ao carrinho
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho46.cinza, 11);
+        Thread.sleep(1000);
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho46.cinza.getText()).isEqualTo("11");
+        assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
+        carrinhoPage.botaoContinuarComprando.click();
+
+        // Validar mensagem de minimo
+        carrinhoPage.carrinhoIcone.click();
+        Thread.sleep(1000);
+        carrinhoPage.botaoFinalizarPedido.click();
+        Thread.sleep(2000);
+        assertThat(carrinhoPage.popUpMensagem.mensagem.getText()).isEqualTo(CarrinhoProperties.MENSAGEM_MINIMO_PECAS);
+        carrinhoPage.popUpMensagem.botaoOk.click();
+
+        // Adicionar uma camiseta manga lon
+        carrinhoPage.camisetaMangaLong.tamanho46.cinza.click();
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho46.cinza.getText()).isEqualTo("12");
+
+        // Finalizar o pedido e validar a mensagem
+        carrinhoPage.botaoFinalizarPedido.click();
+        carrinhoPage.validaMensagemDePedidoEnviado();
+    }
+
+    /**
+     * Validar o preço de um produto na promoção.
+     */
+    @SneakyThrows
+    @Test(retryAnalyzer = RetentarUmaVez.class)
+    public void validarPrecoProdutoPromocional() {
+        // Faz login clicando em um produto
+        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CPF.getDocumento());
+        Thread.sleep(800);
+        assertThat(loginPage.getCnpjCpfText()).isEqualTo(Mascara.cpf(LoginProperties.LOGIN_VALIDO_CPF.getDocumento()));
+        cadastroVendedorPage.getBotaoContinuar().click();
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CPF);
+        loginPage.getBotaoContinuar().click();
+        Thread.sleep(2000);
+
+        // Adiciona ao estoque 20 peças de cada cor via API
         VestClient.adicionarEstoque(ProdutosProperties.CAMISETA_MANGA_LON.ID, ProdutosProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST);
 
+        // Adicionar duas Camiseta Manga Long preta tamanho uma tamanho 38 e a outra 36
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho38.preto, 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho36.preto, 10);
+        Thread.sleep(1000);
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho38.preto.getText()).isEqualTo("2");
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho36.preto.getText()).isEqualTo("10");
+        assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
+
+        // Validar preço no carrinho
+        carrinhoPage.carrinhoIcone.click();
+        Thread.sleep(2000);
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho38.preto.getText()).isEqualTo("2");
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho36.preto.getText()).isEqualTo("10");
+        assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
+        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("12 pc    R$ 720,00");
+
+
+        // Finalizar o pedido e validar a mensagem
+        carrinhoPage.botaoFinalizarPedido.click();
+        carrinhoPage.validaMensagemDePedidoEnviado();
     }
 
     /**
@@ -443,19 +561,32 @@ public class CarrinhoTest extends TestContext {
      * @param element          Botão a ser clicado para adicionar itens ao carrinho.
      * @param cliquesEsperados Numero de cliques esperado para exibir a mensagem
      */
+    @SneakyThrows
     private void validarMensagemDeLimiteAtingido(WebElement element, int cliquesEsperados) {
         int numeroCliques = 0;
         while (numeroCliques < 10) {
             element.click();
             numeroCliques++;
+            Thread.sleep(1000);
             String text = carrinhoPage.mensagemMaximoDisponivel.getText();
             if (StringUtils.isNotBlank(text)) {
                 assertThat(CarrinhoProperties.MENSAGEM_MAXIMO_DISPONIVEL).isEqualTo(text);
-                assertThat(numeroCliques).isEqualTo(numeroCliques);
+                assertThat(numeroCliques).isEqualTo(cliquesEsperados);
                 return;
             }
         }
         throw new RuntimeException("Não foi possivel validar a mensagem de limite maximo.");
     }
 
+
+    @SneakyThrows
+    private void validarNovaAba(WebElement element, String url) {
+        element.click();
+        Thread.sleep(2000);
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+        Assertions.assertThat(driver.getCurrentUrl()).contains(url);
+        driver.close();
+        driver.switchTo().window(tabs.get(0));
+    }
 }

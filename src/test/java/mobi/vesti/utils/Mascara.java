@@ -15,4 +15,9 @@ public class Mascara {
     maskFormatter.setValueContainsLiteralCharacters(false);
     return maskFormatter.valueToString(cnpj);
   }
+  public static String cpf(String cnpj) throws ParseException {
+    MaskFormatter maskFormatter = new MaskFormatter("###.###.###-##");
+    maskFormatter.setValueContainsLiteralCharacters(false);
+    return maskFormatter.valueToString(cnpj);
+  }
 }

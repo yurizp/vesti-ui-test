@@ -38,9 +38,13 @@ public class LoginPageObject {
         Thread.sleep(2000);
         CadastroVendedorPageObject cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
         driver.navigate().to(ConfiguracoesGlobais.LOGIN);
-        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO.getCnpj(), cadastroVendedorPage.getCnpjCpfOuEmail());
+        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
-        preencherLogin(LoginProperties.LOGIN_VALIDO);
+        preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
         getBotaoContinuar().click();
+    }
+
+    public String getCnpjCpfText() {
+        return campoCpfCnpj.getAttribute("value");
     }
 }

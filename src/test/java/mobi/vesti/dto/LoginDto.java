@@ -15,7 +15,7 @@ import mobi.vesti.utils.ObjectUtils;
 @AllArgsConstructor
 public class LoginDto {
 
-    private String cnpj;
+    private String documento;
     private String senha;
     private String email;
     private String razaoSocial;

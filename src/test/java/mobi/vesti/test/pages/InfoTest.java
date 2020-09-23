@@ -47,9 +47,9 @@ public class InfoTest extends TestContext {
         assertThat(infoPageObject.infosUteis.descricaoMinimoPecas.getText()).isEqualTo(InfoProperties.DESCRICAO_MINIMO_PECAS);
         assertThat(infoPageObject.infosUteis.descricaoTroca.getText()).isEqualTo(InfoProperties.DESCRICAO_TROCA);
         assertThat(infoPageObject.infosUteis.descricaoMinimoValor.getText()).isEqualTo(InfoProperties.DESCRICAO_MINIMO_VALOR);
-        assertThat(InfoProperties.PAGE_LINK_INSTAGRAM).isEqualTo(infoPageObject.linkInstagram.getAttribute("href"));
-        assertThat(InfoProperties.PAGE_LINK_VESTI).isEqualTo(infoPageObject.linkVest.getAttribute("href"));
-        assertThat(InfoProperties.PAGE_LINK_WHATS).isEqualTo(infoPageObject.linkWhats.getAttribute("href"));
+        assertThat(infoPageObject.linkInstagram.getAttribute("href")).contains(InfoProperties.PAGE_LINK_INSTAGRAM);
+        assertThat(infoPageObject.linkVest.getAttribute("href")).contains(InfoProperties.PAGE_LINK_VESTI);
+        assertThat(infoPageObject.linkWhats.getAttribute("href")).contains(InfoProperties.PAGE_LINK_WHATS);
         validarNovaAba(infoPageObject.linkWhats,InfoProperties.PAGE_LINK_WHATS);
         validarNovaAba(infoPageObject.linkInstagram,InfoProperties.URL_INSTAGRAM);
         validarNovaAba(infoPageObject.linkVest,InfoProperties.URL_VESTI);

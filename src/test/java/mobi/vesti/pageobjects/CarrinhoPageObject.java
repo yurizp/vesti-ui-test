@@ -4,11 +4,14 @@ import mobi.vesti.pageobjects.detalhe.BlusaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CalcaJeansMilandaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CalcaJeansPackDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CamisetaDetalhePage;
+import mobi.vesti.pageobjects.detalhe.CamisetaEstampadaDetalhe;
+import mobi.vesti.pageobjects.detalhe.CamisetaMangaLongDetalhePage;
 import mobi.vesti.pageobjects.detalhe.PackJeansDetalhePage;
 import mobi.vesti.pageobjects.detalhe.PoloDetalhePage;
 import mobi.vesti.pageobjects.detalhe.ShortDetalhePage;
 import mobi.vesti.pageobjects.detalhe.VestidoLongoDetalhePage;
 import mobi.vesti.properties.CarrinhoProperties;
+import mobi.vesti.properties.ProdutosProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +25,7 @@ public class CarrinhoPageObject {
     public WebElement carrinhoIcone;
     @FindBy(xpath = "//*[@id=\"navbar-cart-button\"]/span")
     public WebElement carrinhoQuantidadeItens;
-    @FindBy(xpath = "//cart-panel/div/div[2]/div[3]/div/button")
+    @FindBy(xpath = "//*[@class=\"cart-summary-container container-fluid\"]//button")
     public WebElement botaoFinalizarPedido;
     @FindBy(xpath = "//catalogue/success-panel/div/div/div[2]/h2")
     public WebElement tituloMensagemPedidoEnviado;
@@ -36,7 +39,7 @@ public class CarrinhoPageObject {
     public WebElement mensagemCarrinhoAtualizado;
     @FindBy(xpath = "//*[@class=\"btn-block btn btn-vesti\"]")
     public WebElement botaoContinuarComprando;
-    @FindBy(xpath = "//cart-panel/div/div[2]/div[2]/div/p/span")
+    @FindBy(xpath = "//*[@class=\"cart-summary-item\"]//span")
     public WebElement totalItens;
     @FindBy(xpath = "//*[@class=\"seller-name\"]")
     public WebElement nomeVendedor;
@@ -45,7 +48,7 @@ public class CarrinhoPageObject {
     @FindBy(xpath = "//*[@class=\"seller-initials\"]")
     public WebElement iniciaisVendedor;
 
-    public PecasEsgotadas pecasEsgotadas;
+    public PecasEsgotadas popUpMensagem;
     public PoloDetalhePage polo;
     public ShortDetalhePage shorts;
     public VestidoLongoDetalhePage vestidoLongo;
@@ -54,6 +57,8 @@ public class CarrinhoPageObject {
     public CalcaJeansPackDetalhePage calcaJeansPack;
     public PackJeansDetalhePage packJeans;
     public BlusaDetalhePage blusa;
+    public CamisetaMangaLongDetalhePage camisetaMangaLong;
+    public CamisetaEstampadaDetalhe camisetaEstampada;
 
     public CarrinhoPageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -64,8 +69,10 @@ public class CarrinhoPageObject {
         blusa = new BlusaDetalhePage(driver);
         packJeans = new PackJeansDetalhePage(driver);
         shorts = new ShortDetalhePage(driver);
-        pecasEsgotadas = new PecasEsgotadas(driver);
+        popUpMensagem = new PecasEsgotadas(driver);
         calcaJeansPack = new CalcaJeansPackDetalhePage(driver);
+        camisetaMangaLong = new CamisetaMangaLongDetalhePage(driver);
+        camisetaEstampada = new CamisetaEstampadaDetalhe(driver);
     }
 
     /**

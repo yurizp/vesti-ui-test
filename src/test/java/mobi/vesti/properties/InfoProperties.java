@@ -11,7 +11,7 @@ public class InfoProperties {
     public static final String SITE_VESTI = "www.vesti.mobi";
     public static final String TELEFONE_CELULAR = "(11) 98924-9349";
     public static final String PAGE_LINK_INSTAGRAM = "http://www.instagram.com/instagram";
-    public static final String PAGE_LINK_WHATS = "https://api.whatsapp.com/send?phone=+5511989249349";
+    public static final String PAGE_LINK_WHATS = "https://api.whatsapp.com/send?phone=";
     public static final String PAGE_LINK_VESTI = "http://www.vesti.mobi/";
 
     public static final String URL_INSTAGRAM = "https://www.instagram.com";
