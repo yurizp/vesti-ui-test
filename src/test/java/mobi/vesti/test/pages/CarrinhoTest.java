@@ -20,6 +20,7 @@ import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -56,11 +57,12 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarAdicionarERemoverProdutosDoCarrinho() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         // Adiciona ao estoque 10 peças de cada cor
         VestClient.adicionarEstoque(ProdutosProperties.POLO.ID, ProdutosProperties.POLO.getEstoque("10"));
 
         // Faz login clicando em um produto
-        homePage.clicarEmAnuncioDeProdutoSemPreco("POLO");
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.POLO.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
@@ -102,6 +104,7 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarRealizarPedidoClientePossuiCadastro() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
         homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
         Thread.sleep(1000);
@@ -130,6 +133,7 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarProdutoMaximoDisponivel() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
 
         // Altera o estoque de Camiseta Estampada
         List<Map<String, String>> tamanhosQuantidades = Arrays.asList(
@@ -142,8 +146,8 @@ public class CarrinhoTest extends TestContext {
 
         // Loga clicando no produto Camiseta Estampada
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
-        cadastroVendedorPage.getBotaoContinuar();
+        Thread.sleep(2000);
+        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
         loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
         loginPage.getBotaoContinuar().click();
@@ -170,6 +174,15 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(1000);
         carrinhoPage.botaoFinalizarPedido.click();
         carrinhoPage.validaMensagemDePedidoEnviado();
+        carrinhoPage.botaoVoltar.click();
+
+        // Validar a indisponibilidade dos itens M, G e GG
+        Thread.sleep(1000);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoGG.preto.getText()).isEqualTo(" ");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoG.preto.getText()).isEqualTo(" ");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoM.preto.getText()).isEqualTo(" ");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoP.preto.getText()).isEqualTo("0");
     }
 
     /**
@@ -181,6 +194,7 @@ public class CarrinhoTest extends TestContext {
     public void validarMensagensDeCarrinhoAtualizadoQuandoAdicionadoRemovidoItensDoCarrinho() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -215,6 +229,7 @@ public class CarrinhoTest extends TestContext {
     public void validarCalculoDeValorTotalNoCarrinho() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -279,6 +294,7 @@ public class CarrinhoTest extends TestContext {
     public void validarRemocaoDoCarrinhoPressionandoESegurandoAQuantidadeDoItem() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -312,6 +328,7 @@ public class CarrinhoTest extends TestContext {
     public void validarProdutoEsgotadoDuranteUmPedido() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -381,6 +398,7 @@ public class CarrinhoTest extends TestContext {
     public void validarMaximoDisponivel() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -404,6 +422,7 @@ public class CarrinhoTest extends TestContext {
     public void validarCalculoDeValorTotalParaItensDoTipoPack() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -462,6 +481,7 @@ public class CarrinhoTest extends TestContext {
     public void validarQuantidadeMinimaDeCompra() {
         // Faz login clicando em um produto
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
@@ -506,6 +526,7 @@ public class CarrinhoTest extends TestContext {
     public void validarPrecoProdutoPromocional() {
         // Faz login clicando em um produto
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CPF.getDocumento());
         Thread.sleep(800);

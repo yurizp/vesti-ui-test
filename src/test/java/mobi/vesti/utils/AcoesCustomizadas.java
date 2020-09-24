@@ -29,7 +29,9 @@ public class AcoesCustomizadas {
     @SneakyThrows
     public static void clicarEManterPressionado(WebElement element) {
         Actions action = new Actions(TestContext.driver);
-        action.clickAndHold(element)
+        action.contextClick()
+                .clickAndHold(element)
+                .contextClick()
                 .build()
                 .perform();
         action.release();

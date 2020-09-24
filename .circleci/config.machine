@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:201903-01    # recommended linux image - includes Ubuntu 16.04, docker 18.09.3, docker-compose 1.23.1
+    steps:
+      - checkout
+      - run: docker-compose pull
+      - run:
+          name: Subir selenium standalone
+          background: true
+          command: docker-compose up
+      - run: mkdir test-reports
+      - run: sleep 20
+      - run: ./gradlew dependencies
+      - run: ./gradlew --version
+      - run:
+          name: Execução de testes
+          no_output_timeout: 1.5h
+          command: ./gradlew test
+      - run:
+          name: Save test results
+          no_output_timeout: 1.5h
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+            docker  -a ./build/reports/tests/test/.  ~/test-results/junit/
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit

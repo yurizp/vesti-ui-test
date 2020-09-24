@@ -1,12 +1,13 @@
 package mobi.vesti.webdriver.builder;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import mobi.vesti.webdriver.prototype.AwsSeleniumApiPrototype;
+import mobi.vesti.webdriver.prototype.TestingBotPrototype;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import mobi.vesti.webdriver.prototype.TestingBotPrototype;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -68,6 +69,7 @@ public class RemoteWebDriverBuilder {
         return new RemoteWebDriver(seleniumUrl, chromeOptions);
     }
 
+    @SneakyThrows
     private static ChromeDriver localRunner() {
         if (isWindows()) {
             log.info("{} Sistema operacional Windows.", PREFIXO);
@@ -75,7 +77,7 @@ public class RemoteWebDriverBuilder {
         }
         if (isUnix()) {
             log.info("{} Sistema operacional Linux.", PREFIXO);
-            System.setProperty("webdriver.chrome.driver",new File("src/test/resources/chromedriver").getAbsolutePath());
+            System.setProperty("webdriver.chrome.driver", new File("src/test/resources/chromedriver").getAbsolutePath());
         }
         return new ChromeDriver(getChromeOptions());
     }
@@ -85,8 +87,9 @@ public class RemoteWebDriverBuilder {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
         Map<String, Integer> timeouts = new HashMap<>();
-        timeouts.put("implicit", 3000);
+        timeouts.put("implicit", 120000);
         chromeOptions.setCapability("timeouts", timeouts);
+//        chromeOptions.addArguments("--headless");
         return chromeOptions;
     }
 
