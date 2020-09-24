@@ -40,6 +40,7 @@ public class LoginPageObject {
         driver.navigate().to(ConfiguracoesGlobais.LOGIN);
         AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
+        Thread.sleep(1000);
         preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
         getBotaoContinuar().click();
     }

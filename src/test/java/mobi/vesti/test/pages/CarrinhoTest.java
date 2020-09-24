@@ -85,10 +85,7 @@ public class CarrinhoTest extends TestContext {
 
         // Remove os produtos Polo rosa e adiciona uma Polo Rosa G
         AcoesCustomizadas.clicarEManterPressionado(carrinhoPage.polo.tamanhoG.rosa);
-        Thread.sleep(1000);
-        assertThat("0").isEqualTo(carrinhoPage.polo.tamanhoG.rosa.getText());
-        Thread.sleep(2000);
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.verde.getText());
         assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.azul.getText());
         assertThat("0").isEqualTo(carrinhoPage.polo.tamanhoG.rosa.getText());
@@ -96,8 +93,8 @@ public class CarrinhoTest extends TestContext {
         assertThat(carrinhoPage.totalItens.getText()).isEqualTo("16 pc    R$ 478,40");
 
         //Finaliza o pedido e valida a mensagem
-        carrinhoPage.botaoFinalizarPedido.click();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
+        AcoesCustomizadas.clicarViaJavaScript(carrinhoPage.botaoFinalizarPedido);
         carrinhoPage.validaMensagemDePedidoEnviado();
     }
 
@@ -290,6 +287,7 @@ public class CarrinhoTest extends TestContext {
 
         //Adicionar Blusa Tamanho G branca ao carrinho
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.BLUSA.NOME);
+        Thread.sleep(1000);
         carrinhoPage.blusa.tamanhoG.branco.click();
         assertThat(carrinhoPage.blusa.tamanhoG.branco.getText()).isEqualTo("1");
         assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
@@ -300,7 +298,7 @@ public class CarrinhoTest extends TestContext {
         validarInformacoesDeContato();
         assertThat(carrinhoPage.totalItens.getText()).isEqualTo("1 pc    R$ 99,99");
         AcoesCustomizadas.clicarEManterPressionado(carrinhoPage.blusa.tamanhoG.branco);
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         assertThat(carrinhoPage.mensagemCarrinhoAtualizado.getText()).isEqualTo(CarrinhoProperties.MENSGAEM_PRODUTO_REMOVIDO);
         assertThat(carrinhoPage.totalItens.getText()).isEqualTo("0 pc    R$ 0,00");
 

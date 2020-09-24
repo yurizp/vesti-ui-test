@@ -30,12 +30,9 @@ public class AcoesCustomizadas {
     public static void clicarEManterPressionado(WebElement element) {
         Actions action = new Actions(TestContext.driver);
         action.clickAndHold(element)
-                .pause(2000)
-                .contextClick(element)
                 .build()
                 .perform();
         action.release();
-        Thread.sleep(3000);
     }
 
     public static void clicarViaJavaScript(WebElement element) {
