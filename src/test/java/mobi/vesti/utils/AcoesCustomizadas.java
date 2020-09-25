@@ -24,15 +24,16 @@ public class AcoesCustomizadas {
         actions.moveToElement(element);
         element.sendKeys(Keys.SHIFT);
         actions.perform();
+        driver.switchTo().window(driver.getWindowHandle());
+
     }
 
     @SneakyThrows
     public static void clicarEManterPressionado(WebElement element) {
-        Actions action = new Actions(TestContext.driver);
-        action.clickAndHold(element)
-                .build()
-                .perform();
-        action.release();
+        new Actions(TestContext.driver)
+                .clickAndHold(element)
+                .pause(1000)
+                .release().build().perform();
     }
 
     public static void clicarViaJavaScript(WebElement element) {
@@ -51,7 +52,8 @@ public class AcoesCustomizadas {
 
     /**
      * Clica um numero de vezes definido em um elemento.
-     * @param element Elemento a ser clicado.
+     *
+     * @param element       Elemento a ser clicado.
      * @param numeroCliques Numero de cliques no elemento.
      */
     @SneakyThrows

@@ -55,13 +55,23 @@ public class InfoTest extends TestContext {
         validarNovaAba(infoPageObject.linkVest,InfoProperties.URL_VESTI);
     }
 
+    /**
+     * Validar as informaçoes existentes no menu hamburguer
+     */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarInformacoesUteisLogado() {
+        // Faz login na plataforma
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         loginPageObject.logar();
+
+        // Abre o menu hamburguer
         menuPageObject.botaoHamburguer.click();
+
+        // Vai para a tela de informações uteis
         menuPageObject.botaoInformacoesUteis.click();
+
+        // Valida os textos dos linkgs
         assertThat(infoPageObject.linkWhats.getText()).isEqualTo(InfoProperties.TELEFONE_CELULAR);
         assertThat(infoPageObject.linkVest.getText()).isEqualTo(InfoProperties.SITE_VESTI);
         assertThat(infoPageObject.linkInstagram.getText()).isEqualTo(InfoProperties.INSTAGRAM);
@@ -70,16 +80,24 @@ public class InfoTest extends TestContext {
         assertThat(infoPageObject.infosUteis.descricaoTroca.getText()).isEqualTo(InfoProperties.DESCRICAO_TROCA);
         assertThat(infoPageObject.infosUteis.descricaoMinimoValor.getText()).isEqualTo(InfoProperties.DESCRICAO_MINIMO_VALOR);
         assertThat(infoPageObject.infosUteis.telefoneEmpresa.getText()).isEqualTo(InfoProperties.TELEFONE_CELULAR);
+
+        // Valida que todos itens contem links para os lugares corretos
         assertThat(infoPageObject.infosUteis.nomeEmpresa.getText()).isEqualTo(InfoProperties.NOME_EMPRESA);
         assertThat(infoPageObject.linkInstagram.getAttribute("href")).isEqualTo(InfoProperties.PAGE_LINK_INSTAGRAM);
         assertThat(infoPageObject.linkVest.getAttribute("href")).contains(InfoProperties.PAGE_LINK_VESTI);
         assertThat(infoPageObject.linkWhats.getAttribute("href")).contains(InfoProperties.PAGE_LINK_WHATS);
+
+        // Clica e valida as abas que estão sendo abertas
         validarNovaAba(infoPageObject.linkWhats,InfoProperties.PAGE_LINK_WHATS);
         validarNovaAba(infoPageObject.linkInstagram,InfoProperties.URL_INSTAGRAM);
         validarNovaAba(infoPageObject.linkVest,InfoProperties.URL_VESTI);
+
+        // Faz logout do sisitema
         menuPageObject.botaoVoltar.click();
         menuPageObject.botaoSair.click();
         Thread.sleep(5000);
+
+        // Valida que os produtos que estão sendo exibido não contem preço
         assertThat(homePageObject.getAnunciosSemPecoProdutosDto()).containsExactlyInAnyOrderElementsOf(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
 
     }

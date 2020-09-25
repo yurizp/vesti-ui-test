@@ -1,8 +1,0 @@
-<suite name="test suite" parallel="methods" thread-count="3">
-
-    <test name="all-tests" >
-        <packages>
-            <package name="mobi.vesti"/>
-        </packages>
-    </test>
-</suite>

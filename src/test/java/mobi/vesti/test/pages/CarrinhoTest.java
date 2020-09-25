@@ -37,14 +37,6 @@ public class CarrinhoTest extends TestContext {
     private CarrinhoPageObject carrinhoPage;
     private LoginPageObject loginPage;
 
-    @BeforeClass
-    public void before() {
-        homePage = PageFactory.initElements(driver, HomePageObject.class);
-        loginPage = new LoginPageObject(driver);
-        carrinhoPage = new CarrinhoPageObject(driver);
-        cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
-    }
-
     /**
      * Nesse teste o cliente vai selecionar o produto Polo e irá selecionar os seguintes tamanhos e cores:
      * 1 x P-Verde
@@ -56,11 +48,12 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarAdicionarERemoverProdutosDoCarrinho() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         // Adiciona ao estoque 10 peças de cada cor
         VestClient.adicionarEstoque(ProdutosProperties.POLO.ID, ProdutosProperties.POLO.getEstoque("10"));
 
         // Faz login clicando em um produto
-        homePage.clicarEmAnuncioDeProdutoSemPreco("POLO");
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.POLO.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
@@ -71,26 +64,27 @@ public class CarrinhoTest extends TestContext {
         // Adiciona o item camiseta POLO Verde e Azul P, duas unidades de Rosa G
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.POLO.NOME);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoP.verde, 6);
-        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoP.azul, 6);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoP.azul, 7);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoG.rosa, 2);
         Thread.sleep(1000);
         assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.verde.getText());
-        assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.azul.getText());
+        assertThat("7").isEqualTo(carrinhoPage.polo.tamanhoP.azul.getText());
         assertThat("2").isEqualTo(carrinhoPage.polo.tamanhoG.rosa.getText());
 
         // Vai até a pagina do carrinho e adiciona uma camiseta Polo
         carrinhoPage.carrinhoIcone.click();
         Thread.sleep(1000);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoG.cinza, 4);
+        Thread.sleep(1000);
 
         // Remove os produtos Polo rosa e adiciona uma Polo Rosa G
         AcoesCustomizadas.clicarEManterPressionado(carrinhoPage.polo.tamanhoG.rosa);
         Thread.sleep(3000);
         assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.verde.getText());
-        assertThat("6").isEqualTo(carrinhoPage.polo.tamanhoP.azul.getText());
+        assertThat("7").isEqualTo(carrinhoPage.polo.tamanhoP.azul.getText());
         assertThat("0").isEqualTo(carrinhoPage.polo.tamanhoG.rosa.getText());
         assertThat("4").isEqualTo(carrinhoPage.polo.tamanhoG.cinza.getText());
-        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("16 pc    R$ 478,40");
+        assertThat(carrinhoPage.totalItens.getText()).isEqualTo("17 pc    R$ 508,30");
 
         //Finaliza o pedido e valida a mensagem
         Thread.sleep(1000);
@@ -98,10 +92,19 @@ public class CarrinhoTest extends TestContext {
         carrinhoPage.validaMensagemDePedidoEnviado();
     }
 
+    @BeforeClass
+    public void before() {
+        homePage = PageFactory.initElements(driver, HomePageObject.class);
+        loginPage = new LoginPageObject(driver);
+        carrinhoPage = new CarrinhoPageObject(driver);
+        cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
+    }
+
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarRealizarPedidoClientePossuiCadastro() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
         homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
         Thread.sleep(1000);
@@ -130,6 +133,7 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarProdutoMaximoDisponivel() {
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
 
         // Altera o estoque de Camiseta Estampada
         List<Map<String, String>> tamanhosQuantidades = Arrays.asList(
@@ -142,8 +146,8 @@ public class CarrinhoTest extends TestContext {
 
         // Loga clicando no produto Camiseta Estampada
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
-        cadastroVendedorPage.getBotaoContinuar();
+        Thread.sleep(2000);
+        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
         loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
         loginPage.getBotaoContinuar().click();
@@ -170,6 +174,15 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(1000);
         carrinhoPage.botaoFinalizarPedido.click();
         carrinhoPage.validaMensagemDePedidoEnviado();
+        carrinhoPage.botaoVoltar.click();
+
+        // Validar a indisponibilidade dos itens M, G e GG
+        Thread.sleep(1000);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoGG.preto.getText()).isEqualTo(" ");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoG.preto.getText()).isEqualTo(" ");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoM.preto.getText()).isEqualTo(" ");
+        assertThat(carrinhoPage.camisetaEstampada.tamanhoP.preto.getText()).isEqualTo("0");
     }
 
     /**
@@ -181,6 +194,7 @@ public class CarrinhoTest extends TestContext {
     public void validarMensagensDeCarrinhoAtualizadoQuandoAdicionadoRemovidoItensDoCarrinho() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -215,6 +229,7 @@ public class CarrinhoTest extends TestContext {
     public void validarCalculoDeValorTotalNoCarrinho() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -279,6 +294,7 @@ public class CarrinhoTest extends TestContext {
     public void validarRemocaoDoCarrinhoPressionandoESegurandoAQuantidadeDoItem() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -298,7 +314,7 @@ public class CarrinhoTest extends TestContext {
         validarInformacoesDeContato();
         assertThat(carrinhoPage.totalItens.getText()).isEqualTo("1 pc    R$ 99,99");
         AcoesCustomizadas.clicarEManterPressionado(carrinhoPage.blusa.tamanhoG.branco);
-        Thread.sleep(3000);
+        Thread.sleep(800);
         assertThat(carrinhoPage.mensagemCarrinhoAtualizado.getText()).isEqualTo(CarrinhoProperties.MENSGAEM_PRODUTO_REMOVIDO);
         assertThat(carrinhoPage.totalItens.getText()).isEqualTo("0 pc    R$ 0,00");
 
@@ -312,6 +328,7 @@ public class CarrinhoTest extends TestContext {
     public void validarProdutoEsgotadoDuranteUmPedido() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -341,6 +358,7 @@ public class CarrinhoTest extends TestContext {
         assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.shorts.tamanho46.verde.getCssValue("color"));
         carrinhoPage.carrinhoIcone.click();
         carrinhoPage.botaoFinalizarPedido.click();
+        Thread.sleep(1000);
         assertThat(CarrinhoProperties.PECAS_ESGOTADAS_MENSAGEM).isEqualTo(carrinhoPage.popUpMensagem.mensagem.getText());
         carrinhoPage.popUpMensagem.botaoOk.click();
 
@@ -381,6 +399,7 @@ public class CarrinhoTest extends TestContext {
     public void validarMaximoDisponivel() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -404,6 +423,7 @@ public class CarrinhoTest extends TestContext {
     public void validarCalculoDeValorTotalParaItensDoTipoPack() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
@@ -462,6 +482,7 @@ public class CarrinhoTest extends TestContext {
     public void validarQuantidadeMinimaDeCompra() {
         // Faz login clicando em um produto
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
@@ -476,7 +497,7 @@ public class CarrinhoTest extends TestContext {
         // Adicionar uma Camiseta Manga Long ao carrinho
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho46.cinza, 11);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         assertThat(carrinhoPage.camisetaMangaLong.tamanho46.cinza.getText()).isEqualTo("11");
         assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
         carrinhoPage.botaoContinuarComprando.click();
@@ -506,6 +527,7 @@ public class CarrinhoTest extends TestContext {
     public void validarPrecoProdutoPromocional() {
         // Faz login clicando em um produto
         driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CPF.getDocumento());
         Thread.sleep(800);

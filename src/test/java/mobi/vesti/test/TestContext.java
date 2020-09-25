@@ -19,13 +19,13 @@ public class TestContext {
     public static WebDriver driver;
 
     @BeforeClass
-    public void ini() throws MalformedURLException {
+    public static void ini() throws MalformedURLException {
         driver = RemoteWebDriverBuilder.instance();
     }
 
     @SneakyThrows
     @AfterClass
-    public void close() {
+    public static void close() {
         driver.close();
         driver.quit();
     }
