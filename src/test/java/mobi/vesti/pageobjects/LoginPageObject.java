@@ -35,9 +35,9 @@ public class LoginPageObject {
     }
 
     public void logar() throws InterruptedException {
-        Thread.sleep(2000);
         CadastroVendedorPageObject cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
         driver.navigate().to(ConfiguracoesGlobais.LOGIN);
+        Thread.sleep(2000);
         AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
         Thread.sleep(1000);

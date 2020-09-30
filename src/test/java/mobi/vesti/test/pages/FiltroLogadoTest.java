@@ -7,7 +7,7 @@ import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
-import mobi.vesti.properties.ProdutosProperties;
+import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.openqa.selenium.WebElement;
@@ -37,14 +37,14 @@ public class FiltroLogadoTest extends TestContext {
     public void testarFiltroDaHome() throws InterruptedException {
         loginPage.logar();
         Thread.sleep(2000);
-        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosProperties.BLUSA.COM_PRECO);
-        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"), ProdutosProperties.CAMISETA_ESTAMPADA.COM_PRECO, ProdutosProperties.CAMISETA.COM_PRECO, ProdutosProperties.CAMISETA_MANGA_LON.COM_PRECO);
-        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosProperties.VESTIDO_LONGO.COM_PRECO);
+        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosQaModasProperties.BLUSA.COM_PRECO);
+        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"), ProdutosQaModasProperties.CAMISETA_ESTAMPADA.COM_PRECO, ProdutosQaModasProperties.CAMISETA.COM_PRECO, ProdutosQaModasProperties.CAMISETA_MANGA_LON.COM_PRECO);
+        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosQaModasProperties.VESTIDO_LONGO.COM_PRECO);
     }
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltro() throws InterruptedException {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
@@ -55,14 +55,14 @@ public class FiltroLogadoTest extends TestContext {
         filtroPageObject.adicionarFiltros.botaoVoltar.click();
         List<ProdutosDto> produtos = homePage.getAnunciosComPrecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsAnyOf(ProdutosProperties.PACK_JEANS.COM_PRECO,
-                        ProdutosProperties.JAQUETA.COM_PRECO,
-                        ProdutosProperties.VESTIDO_LONGO.COM_PRECO,
-                        ProdutosProperties.BLUSA.COM_PRECO)
+                .containsAnyOf(ProdutosQaModasProperties.PACK_JEANS.COM_PRECO,
+                        ProdutosQaModasProperties.JAQUETA.COM_PRECO,
+                        ProdutosQaModasProperties.VESTIDO_LONGO.COM_PRECO,
+                        ProdutosQaModasProperties.BLUSA.COM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.categoriasDto().forEach(categoriaDto -> categoriaDto.fechar());
         List<ProdutosDto> produtosHome = homePage.getAnunciosComPrecoProdutosDto();
-        assertThat(produtosHome.toArray()).containsAnyOf(ProdutosProperties.PRODUTOS_HOME_COM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+        assertThat(produtosHome.toArray()).containsAnyOf(ProdutosQaModasProperties.PRODUTOS_HOME_COM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
     /**
@@ -73,7 +73,7 @@ public class FiltroLogadoTest extends TestContext {
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         loginPage.logar();
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
@@ -85,7 +85,7 @@ public class FiltroLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("camiseta")).isFalse();
         List<ProdutosDto> produtos = homePage.getAnunciosComPrecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsOnly(ProdutosProperties.CAMISETA.COM_PRECO)
+                .containsOnly(ProdutosQaModasProperties.CAMISETA.COM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         filtroPageObject.adicionarFiltros.categorias("estampada").click();
@@ -95,8 +95,8 @@ public class FiltroLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("camiseta")).isFalse();
         produtos = homePage.getAnunciosComPrecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsExactlyInAnyOrder(ProdutosProperties.CAMISETA.COM_PRECO,
-                        ProdutosProperties.CAMISETA_ESTAMPADA.COM_PRECO)
+                .containsExactlyInAnyOrder(ProdutosQaModasProperties.CAMISETA.COM_PRECO,
+                        ProdutosQaModasProperties.CAMISETA_ESTAMPADA.COM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         filtroPageObject.adicionarFiltros.categorias("jaqueta").click();
@@ -111,9 +111,9 @@ public class FiltroLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("estampada")).isFalse();
         produtos = homePage.getAnunciosComPrecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsAnyOf(ProdutosProperties.CAMISETA.COM_PRECO,
-                        ProdutosProperties.JAQUETA.COM_PRECO,
-                        ProdutosProperties.CAMISETA_ESTAMPADA.COM_PRECO)
+                .containsAnyOf(ProdutosQaModasProperties.CAMISETA.COM_PRECO,
+                        ProdutosQaModasProperties.JAQUETA.COM_PRECO,
+                        ProdutosQaModasProperties.CAMISETA_ESTAMPADA.COM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
     }
 
@@ -125,7 +125,7 @@ public class FiltroLogadoTest extends TestContext {
         filtro.click();
         Thread.sleep(1000);
         List<ProdutosDto> produtosHome = homePage.getAnunciosComPrecoProdutosDto();
-        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosProperties.PRODUTOS_HOME_COM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosQaModasProperties.PRODUTOS_HOME_COM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
 }

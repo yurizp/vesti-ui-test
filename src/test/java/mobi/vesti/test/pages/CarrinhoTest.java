@@ -12,7 +12,7 @@ import mobi.vesti.properties.CarrinhoProperties;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.InfoProperties;
 import mobi.vesti.properties.LoginProperties;
-import mobi.vesti.properties.ProdutosProperties;
+import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.utils.Mascara;
@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static mobi.vesti.properties.ProdutosProperties.getVerde;
-import static mobi.vesti.properties.ProdutosProperties.getVermelho;
+import static mobi.vesti.properties.ProdutosQaModasProperties.getVerde;
+import static mobi.vesti.properties.ProdutosQaModasProperties.getVermelho;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CarrinhoTest extends TestContext {
@@ -47,17 +47,18 @@ public class CarrinhoTest extends TestContext {
      * 1 x P-Azul
      * 2X G-Rosa
      * No carrinho deve adicionar Polo 1 x GG-Cinza e então deve zerar a cor G-Rosa e depois adicionar 1 x GG-Rosa e então finalizar a compra normalmente.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarAdicionarERemoverProdutosDoCarrinho() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         // Adiciona ao estoque 10 peças de cada cor
-        VestClient.adicionarEstoque(ProdutosProperties.POLO.ID, ProdutosProperties.POLO.getEstoque("10"));
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.POLO.ID, ProdutosQaModasProperties.POLO.getEstoque("10"));
 
         // Faz login clicando em um produto
-        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.POLO.NOME);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModasProperties.POLO.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
@@ -66,7 +67,7 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         // Adiciona o item camiseta POLO Verde e Azul P, duas unidades de Rosa G
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.POLO.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.POLO.NOME);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoP.verde, 6);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoP.azul, 7);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.polo.tamanhoG.rosa, 2);
@@ -107,9 +108,9 @@ public class CarrinhoTest extends TestContext {
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarRealizarPedidoClientePossuiCadastro() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
-        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA.ID, ProdutosProperties.CAMISETA.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA.ID, ProdutosQaModasProperties.CAMISETA.ESTOQUE_REQUEST);
         homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
         Thread.sleep(1000);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
@@ -136,7 +137,7 @@ public class CarrinhoTest extends TestContext {
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarProdutoMaximoDisponivel() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
 
         // Altera o estoque de Camiseta Estampada
@@ -146,10 +147,10 @@ public class CarrinhoTest extends TestContext {
                 Collections.singletonMap("G", "4"),
                 Collections.singletonMap("GG", "3")
         );
-        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA_ESTAMPADA.ID, ProdutosProperties.CAMISETA_ESTAMPADA.getEstoque(tamanhosQuantidades));
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_ESTAMPADA.ID, ProdutosQaModasProperties.CAMISETA_ESTAMPADA.getEstoque(tamanhosQuantidades));
 
         // Loga clicando no produto Camiseta Estampada
-        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModasProperties.CAMISETA_ESTAMPADA.NOME);
         Thread.sleep(2000);
         AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
@@ -158,7 +159,7 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         // Valida a mensagem de maximo
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_ESTAMPADA.NOME);
         validarMensagemDeLimiteAtingido(carrinhoPage.camisetaEstampada.tamanhoGG.preto, 3);
         Thread.sleep(7000);
         validarMensagemDeLimiteAtingido(carrinhoPage.camisetaEstampada.tamanhoG.preto, 4);
@@ -182,7 +183,7 @@ public class CarrinhoTest extends TestContext {
 
         // Validar a indisponibilidade dos itens M, G e GG
         Thread.sleep(1000);
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_ESTAMPADA.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_ESTAMPADA.NOME);
         assertThat(carrinhoPage.camisetaEstampada.tamanhoGG.preto.getText()).isEqualTo(" ");
         assertThat(carrinhoPage.camisetaEstampada.tamanhoG.preto.getText()).isEqualTo(" ");
         assertThat(carrinhoPage.camisetaEstampada.tamanhoM.preto.getText()).isEqualTo(" ");
@@ -192,18 +193,19 @@ public class CarrinhoTest extends TestContext {
     /**
      * Testar mensagens de carrinho atualizado quando adicionado itens ao carrinho.
      * Quando adicionado ou removido itens do carrinho deve validar mensagens de atualização de itens.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarMensagensDeCarrinhoAtualizadoQuandoAdicionadoRemovidoItensDoCarrinho() {
         // Fazer login
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
         // Abrir o item Calca Jeans Milanda
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CALCA_JEANS_MILANDA.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CALCA_JEANS_MILANDA.NOME);
         Thread.sleep(5000);
         assertThat(carrinhoPage.calcaJeansMilanda.botaoAdicionarItem.getText()).isEqualTo("+");
         assertThat(carrinhoPage.calcaJeansMilanda.botaoRemoverItem.getText()).isEqualTo("-");
@@ -227,18 +229,19 @@ public class CarrinhoTest extends TestContext {
     /**
      * Testar o calculo de valor total no carrinho.
      * Conforme adicionado itens ao carrinho o valor total é calculado e deve bater com o esperado.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarCalculoDeValorTotalNoCarrinho() {
         // Fazer login
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
         // Adicionar um Vestido tamanho GG vermelho ao carrinho
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.VESTIDO_LONGO.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.VESTIDO_LONGO.NOME);
         carrinhoPage.vestidoLongo.tamanhoGG.vermelho.click();
         Thread.sleep(1000);
         assertThat(carrinhoPage.vestidoLongo.tamanhoGG.vermelho.getText()).isEqualTo("1");
@@ -248,7 +251,7 @@ public class CarrinhoTest extends TestContext {
         assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
 
         // Adicionar uma Blusa tamanho G preta ao carrinho
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.BLUSA.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.BLUSA.NOME);
         carrinhoPage.blusa.tamanhoGG.preto.click();
         assertThat(carrinhoPage.blusa.tamanhoGG.preto.getText()).isEqualTo("1");
         carrinhoPage.botaoContinuarComprando.click();
@@ -263,17 +266,18 @@ public class CarrinhoTest extends TestContext {
 
     /**
      * Testar a remoção de item do carrinho pelo botão 'X' dentro do carrinho.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarRemocaoDeItensDoCarrinhoPeloIconeX() {
         // Fazer login
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         loginPage.logar();
         Thread.sleep(2000);
 
         // Adicionar o item Vestido Longo GG vermelho ao carrinho
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.VESTIDO_LONGO.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.VESTIDO_LONGO.NOME);
         carrinhoPage.vestidoLongo.tamanhoGG.vermelho.click();
         assertThat(carrinhoPage.vestidoLongo.tamanhoGG.vermelho.getText()).isEqualTo("1");
         assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
@@ -292,21 +296,22 @@ public class CarrinhoTest extends TestContext {
     /**
      * Testar a remoção de itens do carrinho pressionando e segurando a quantidade de itens do carrinho.
      * É esperado que quando a ação de manter pressionado for feita deve zerar a quantidade do tamanho e cor especifico.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarRemocaoDoCarrinhoPressionandoESegurandoAQuantidadeDoItem() {
         // Fazer login
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
         //Adiciona os valores defaults ao estoque (4 peças de cada cor) via API
-        VestClient.adicionarEstoque(ProdutosProperties.BLUSA.ID, ProdutosProperties.BLUSA.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.BLUSA.ID, ProdutosQaModasProperties.BLUSA.ESTOQUE_REQUEST);
 
         //Adicionar Blusa Tamanho G branca ao carrinho
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.BLUSA.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.BLUSA.NOME);
         Thread.sleep(1000);
         carrinhoPage.blusa.tamanhoG.branco.click();
         assertThat(carrinhoPage.blusa.tamanhoG.branco.getText()).isEqualTo("1");
@@ -326,21 +331,22 @@ public class CarrinhoTest extends TestContext {
 
     /**
      * Testar produtos esgotado durante um pedido.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarProdutoEsgotadoDuranteUmPedido() {
         // Fazer login
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
         //Adiciona ao estoque 20 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosProperties.SHORTS.ID, ProdutosProperties.SHORTS.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.SHORTS.ID, ProdutosQaModasProperties.SHORTS.ESTOQUE_REQUEST);
 
         //Adicionar ao carrinho 9 peças verdes dos tamanhos 36 e 38 e 4 peças verdes dos tamanhos 40 e 46
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.SHORTS.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.SHORTS.NOME);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho36.verde, 9);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho38.verde, 9);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.shorts.tamanho40.verde, 4);
@@ -362,7 +368,7 @@ public class CarrinhoTest extends TestContext {
                 ItensRequestVestClient.builder().tamanho(tamanho).cor(getVerde()).build(),
                 ItensRequestVestClient.builder().tamanho(tamanho).cor(getVermelho()).build());
 
-        VestClient.adicionarEstoque(ProdutosProperties.SHORTS.ID, estoque);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.SHORTS.ID, estoque);
 
         // Valida mensagem de produto esgotado
         Thread.sleep(1000);
@@ -394,7 +400,7 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         // Validar a indisponibilidade de estoque após a compra
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.SHORTS.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.SHORTS.NOME);
         carrinhoPage.shorts.tamanho38.verde.click();
         carrinhoPage.shorts.tamanho36.verde.click();
         assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho36.verde.getText());
@@ -406,18 +412,19 @@ public class CarrinhoTest extends TestContext {
 
     /**
      * Validar mensagem de "Máximo disponível" ao adicionar produtos do tipo Pack.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarMaximoDisponivel() {
         // Fazer login
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
         //Adicionar Pack Jeans ao carrinho
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.PACK_JEANS.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.PACK_JEANS.NOME);
         Thread.sleep(1000);
         assertThat(carrinhoPage.packJeans.botaoAdicionarItem.getText()).isEqualTo("+");
         assertThat(carrinhoPage.packJeans.botaoRemoverItem.getText()).isEqualTo("-");
@@ -430,18 +437,19 @@ public class CarrinhoTest extends TestContext {
     /**
      * Validar calculo de valor total para produtos do tipo Pack.
      * Deve ir recalculando o valor total do carrinho conforme vai sendo adicionado novos Packs.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarCalculoDeValorTotalParaItensDoTipoPack() {
         // Fazer login
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         loginPage.logar();
         Thread.sleep(2000);
 
         //Adiciona uma Calça Jeans Pack ao carrinho e volta para a home
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CALCA_JEANS_PACK.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CALCA_JEANS_PACK.NOME);
         Thread.sleep(800);
         assertThat(carrinhoPage.calcaJeansPack.botaoAdicionarItem.getText()).isEqualTo("+");
         assertThat(carrinhoPage.calcaJeansPack.botaoRemoverItem.getText()).isEqualTo("-");
@@ -489,14 +497,15 @@ public class CarrinhoTest extends TestContext {
     /**
      * Validar a quantidade minima de compra.
      * Deve aceitar pedidos com no mínimo dois itens no carrinho.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarQuantidadeMinimaDeCompra() {
         // Faz login clicando em um produto
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
-        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
@@ -505,10 +514,10 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         // Adiciona ao estoque 20 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA_MANGA_LON.ID, ProdutosProperties.CAMISETA_MANGA_LON.getEstoque("20"));
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.getEstoque("20"));
 
         // Adicionar uma Camiseta Manga Long ao carrinho
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho46.cinza, 11);
         Thread.sleep(2000);
         assertThat(carrinhoPage.camisetaMangaLong.tamanho46.cinza.getText()).isEqualTo("11");
@@ -534,14 +543,15 @@ public class CarrinhoTest extends TestContext {
 
     /**
      * Validar o preço de um produto na promoção.
+     * Utilizando o ambiente QAMODAS.
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarPrecoProdutoPromocional() {
         // Faz login clicando em um produto
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
-        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CPF.getDocumento());
         Thread.sleep(800);
         assertThat(loginPage.getCnpjCpfText()).isEqualTo(Mascara.cpf(LoginProperties.LOGIN_VALIDO_CPF.getDocumento()));
@@ -551,10 +561,10 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         // Adiciona ao estoque 20 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosProperties.CAMISETA_MANGA_LON.ID, ProdutosProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST);
 
         // Adicionar duas Camiseta Manga Long preta tamanho uma tamanho 38 e a outra 36
-        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.CAMISETA_MANGA_LON.NOME);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho38.preto, 2);
         AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho36.preto, 10);
         Thread.sleep(1000);
@@ -574,6 +584,52 @@ public class CarrinhoTest extends TestContext {
         // Finalizar o pedido e validar a mensagem
         carrinhoPage.botaoFinalizarPedido.click();
         carrinhoPage.validaMensagemDePedidoEnviado();
+    }
+
+
+    /**
+     * Validar o botão limpar logando com CPF.
+     * Utilizando o ambiente QAMODAS.
+     */
+    @SneakyThrows
+    @Test(retryAnalyzer = RetentarUmaVez.class)
+    public void validarBotaoLimparLogandoComCpf() {
+        // Faz login clicando em um produto
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
+        Thread.sleep(2000);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CPF.getDocumento());
+        Thread.sleep(800);
+        assertThat(loginPage.getCnpjCpfText()).isEqualTo(Mascara.cpf(LoginProperties.LOGIN_VALIDO_CPF.getDocumento()));
+        cadastroVendedorPage.getBotaoContinuar().click();
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CPF);
+        loginPage.getBotaoContinuar().click();
+        Thread.sleep(2500);
+
+        // Valida o titulo e o preço exibido na home
+        homePage.validarTituloEPrecoDeProdutos();
+
+        // Adiciona ao estoque 20 peças de cada cor via API
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST);
+
+        // Adicionar uma Camiseta Manga Long preta tamanho 42
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camisetaMangaLong.tamanho42.preto, 1);
+        Thread.sleep(1000);
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho42.preto.getText()).isEqualTo("1");
+        Thread.sleep(1000);
+        assertThat(carrinhoPage.carrinhoQuantidadeItens.getText()).isEqualTo("1");
+
+        // Clica em botao limpar e valida que foi removido
+        carrinhoPage.botaoLimpar.click();
+        Thread.sleep(800);
+        assertThat(carrinhoPage.mensagemCarrinhoAtualizado.getText()).isEqualTo(CarrinhoProperties.MENSGAEM_PRODUTO_REMOVIDO);
+        assertThat(carrinhoPage.camisetaMangaLong.tamanho42.preto.getText()).isEqualTo("0");
+        assertThat(AcoesCustomizadas.elementoExiste(carrinhoPage.carrinhoQuantidadeItens)).isFalse();
+
+        // Voltar para o catalogo e validar produtos
+        carrinhoPage.botaoVoltar.click();
+        homePage.validarTituloEPrecoDeProdutos();
     }
 
     /**

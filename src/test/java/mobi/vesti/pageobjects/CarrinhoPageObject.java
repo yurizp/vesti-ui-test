@@ -11,7 +11,6 @@ import mobi.vesti.pageobjects.detalhe.PoloDetalhePage;
 import mobi.vesti.pageobjects.detalhe.ShortDetalhePage;
 import mobi.vesti.pageobjects.detalhe.VestidoLongoDetalhePage;
 import mobi.vesti.properties.CarrinhoProperties;
-import mobi.vesti.properties.ProdutosProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,6 +46,8 @@ public class CarrinhoPageObject {
     public WebElement telefoneVendedor;
     @FindBy(xpath = "//*[@class=\"seller-initials\"]")
     public WebElement iniciaisVendedor;
+    @FindBy(xpath = "//button[contains(text(), 'limpar')]")
+    public WebElement botaoLimpar;
 
     public PecasEsgotadas popUpMensagem;
     public PoloDetalhePage polo;

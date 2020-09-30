@@ -6,7 +6,6 @@ import mobi.vesti.client.request.EstoqueRequestVetClient;
 import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.client.response.LoginResponseVestClient;
 import mobi.vesti.properties.LoginProperties;
-import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.utils.ObjectUtils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;

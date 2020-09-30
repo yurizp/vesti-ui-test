@@ -2,8 +2,6 @@ package mobi.vesti.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import mobi.vesti.test.TestContext;
-import org.openqa.selenium.WebDriverException;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 

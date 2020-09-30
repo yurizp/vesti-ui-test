@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProdutosProperties {
+public class ProdutosQaModasProperties {
     public static final List<ProdutosDto> PRODUTOS_HOME_SEM_PRECO = ImmutableList.of(
             JAQUETA.SEM_PRECO,
             CALCA_JEANS_PACK.SEM_PRECO,

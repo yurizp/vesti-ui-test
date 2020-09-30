@@ -8,7 +8,7 @@ import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.LoginProperties;
 import mobi.vesti.properties.MensgensProperties;
-import mobi.vesti.properties.ProdutosProperties;
+import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.testng.annotations.BeforeClass;
@@ -37,11 +37,11 @@ public class HomeTest extends TestContext {
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validaSeAnunciosEstaoSemPreco() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         List<ProdutosDto> produtosHome = homePage.getAnunciosSemPecoProdutosDto();
         System.out.println(produtosHome.toString());;
-        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO.toArray())
+        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosQaModasProperties.PRODUTOS_HOME_SEM_PRECO.toArray())
                 .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
@@ -49,9 +49,9 @@ public class HomeTest extends TestContext {
      * Deve validar o login utilizando E-mail.
      */
     @SneakyThrows
-    @Test
+    @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarLoginComEmail() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
 
         // Faz clica em um produto
         homePage.clicarEmAnuncioDeProdutoSemPreco();
@@ -65,7 +65,7 @@ public class HomeTest extends TestContext {
         Thread.sleep(2000);
 
         // Valida que esta sendo exibido os produtos com os preço
-        homePage.validarProdutosComPreco();
+        homePage.validarTituloEPrecoDeProdutos();
     }
 
 }

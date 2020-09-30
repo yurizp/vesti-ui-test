@@ -5,7 +5,7 @@ import mobi.vesti.pageobjects.FiltroPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
-import mobi.vesti.properties.ProdutosProperties;
+import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.openqa.selenium.WebElement;
@@ -30,18 +30,18 @@ public class FiltroSemEstarLogadoTest extends TestContext {
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarFiltroDaHome() throws InterruptedException {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
-        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosProperties.BLUSA.SEM_PRECO);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
+        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosQaModasProperties.BLUSA.SEM_PRECO);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"),
-                ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO,
-                ProdutosProperties.CAMISETA_MANGA_LON.SEM_PRECO,
-                ProdutosProperties.CAMISETA.SEM_PRECO);
-        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosProperties.VESTIDO_LONGO.SEM_PRECO);
+                ProdutosQaModasProperties.CAMISETA_ESTAMPADA.SEM_PRECO,
+                ProdutosQaModasProperties.CAMISETA_MANGA_LON.SEM_PRECO,
+                ProdutosQaModasProperties.CAMISETA.SEM_PRECO);
+        selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("vestido"), ProdutosQaModasProperties.VESTIDO_LONGO.SEM_PRECO);
     }
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltro() throws InterruptedException {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.categorias("vestido").click();
@@ -51,19 +51,19 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         Thread.sleep(1000);
         List<ProdutosDto> produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsAnyOf(ProdutosProperties.PACK_JEANS.SEM_PRECO,
-                        ProdutosProperties.JAQUETA.SEM_PRECO,
-                        ProdutosProperties.VESTIDO_LONGO.SEM_PRECO,
-                        ProdutosProperties.BLUSA.SEM_PRECO)
+                .containsAnyOf(ProdutosQaModasProperties.PACK_JEANS.SEM_PRECO,
+                        ProdutosQaModasProperties.JAQUETA.SEM_PRECO,
+                        ProdutosQaModasProperties.VESTIDO_LONGO.SEM_PRECO,
+                        ProdutosQaModasProperties.BLUSA.SEM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.categoriasDto().forEach(categoriaDto -> categoriaDto.fechar());
         List<ProdutosDto> produtosHome = homePage.getAnunciosSemPecoProdutosDto();
-        assertThat(produtosHome.toArray()).containsAnyOf(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+        assertThat(produtosHome.toArray()).containsAnyOf(ProdutosQaModasProperties.PRODUTOS_HOME_SEM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() throws InterruptedException {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
         filtroPageObject.adicionarFiltros.categorias("camiseta").click();
         filtroPageObject.adicionarFiltros.categorias("básica").click();
@@ -72,7 +72,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("camiseta")).isFalse();
         List<ProdutosDto> produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsOnly(ProdutosProperties.CAMISETA.SEM_PRECO, ProdutosProperties.CAMISETA_MANGA_LON.SEM_PRECO)
+                .containsOnly(ProdutosQaModasProperties.CAMISETA.SEM_PRECO, ProdutosQaModasProperties.CAMISETA_MANGA_LON.SEM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         filtroPageObject.adicionarFiltros.categorias("estampada").click();
@@ -82,9 +82,9 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("camiseta")).isFalse();
         produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsExactlyInAnyOrder(ProdutosProperties.CAMISETA.SEM_PRECO,
-                        ProdutosProperties.CAMISETA_MANGA_LON.SEM_PRECO,
-                        ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO)
+                .containsExactlyInAnyOrder(ProdutosQaModasProperties.CAMISETA.SEM_PRECO,
+                        ProdutosQaModasProperties.CAMISETA_MANGA_LON.SEM_PRECO,
+                        ProdutosQaModasProperties.CAMISETA_ESTAMPADA.SEM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         filtroPageObject.adicionarFiltros.categorias("jaqueta de cou").click();
@@ -99,9 +99,9 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("estampada")).isFalse();
         produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsAnyOf(ProdutosProperties.CAMISETA.SEM_PRECO,
-                        ProdutosProperties.JAQUETA.SEM_PRECO,
-                        ProdutosProperties.CAMISETA_ESTAMPADA.SEM_PRECO)
+                .containsAnyOf(ProdutosQaModasProperties.CAMISETA.SEM_PRECO,
+                        ProdutosQaModasProperties.JAQUETA.SEM_PRECO,
+                        ProdutosQaModasProperties.CAMISETA_ESTAMPADA.SEM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
     }
 
@@ -111,7 +111,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
         assertThat(produtos).containsExactlyInAnyOrder(anunciosVendasDto).withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtro.click();
         List<ProdutosDto> produtosHome = homePage.getAnunciosSemPecoProdutosDto();
-        assertThat(produtosHome.toArray()).containsAnyOf(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+        assertThat(produtosHome.toArray()).containsAnyOf(ProdutosQaModasProperties.PRODUTOS_HOME_SEM_PRECO.toArray()).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
 }

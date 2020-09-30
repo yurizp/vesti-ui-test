@@ -6,7 +6,7 @@ import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.pageobjects.PaginaProdutoPageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.MensgensProperties;
-import mobi.vesti.properties.ProdutosProperties;
+import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.testng.annotations.BeforeClass;
@@ -32,23 +32,23 @@ public class DetalheProdutoTest extends TestContext {
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void telaProdutoVerificarFotoEstampaClientePossuiCadastro() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(3000);
         validarProdutosSemPrecoNaHome();
         loginPageObject.logar();
         Thread.sleep(3000);
         validarProdutosComPrecoNaHome();
         homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");
-        assertThat(produtoPageObject.descricao.getText()).isEqualTo(ProdutosProperties.CAMISETA.COM_PRECO.getDescricao());
-        assertThat(produtoPageObject.titulo.getText()).isEqualTo(ProdutosProperties.CAMISETA.COM_PRECO.getTitulo());
+        assertThat(produtoPageObject.descricao.getText()).isEqualTo(ProdutosQaModasProperties.CAMISETA.COM_PRECO.getDescricao());
+        assertThat(produtoPageObject.titulo.getText()).isEqualTo(ProdutosQaModasProperties.CAMISETA.COM_PRECO.getTitulo());
         produtoPageObject.imagem.click();
         produtoPageObject.botaoFechar.click();
         produtoPageObject.botaoVoltar.click();
         validarProdutosComPrecoNaHome();
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         homePage.buscarAnuncioDeProduto("VESTIDO LONGO").click();
-        assertThat(produtoPageObject.descricao.getText()).isEqualTo(ProdutosProperties.VESTIDO_LONGO.COM_PRECO.getDescricao());
-        assertThat(produtoPageObject.titulo.getText()).isEqualTo(ProdutosProperties.VESTIDO_LONGO.COM_PRECO.getTitulo());
+        assertThat(produtoPageObject.descricao.getText()).isEqualTo(ProdutosQaModasProperties.VESTIDO_LONGO.COM_PRECO.getDescricao());
+        assertThat(produtoPageObject.titulo.getText()).isEqualTo(ProdutosQaModasProperties.VESTIDO_LONGO.COM_PRECO.getTitulo());
         produtoPageObject.vestidoLongo.corRosa.isDisplayed();
         produtoPageObject.vestidoLongo.corVermelha.isDisplayed();
         produtoPageObject.vestidoLongo.corRosa.click();
@@ -61,20 +61,20 @@ public class DetalheProdutoTest extends TestContext {
 
     private void validarProdutosSemPrecoNaHome() {
         assertThat(homePage.getAnunciosSemPecoProdutosDto().toArray())
-                .containsAnyOf(ProdutosProperties.PACK_JEANS.SEM_PRECO,
-                        ProdutosProperties.JAQUETA.SEM_PRECO,
-                        ProdutosProperties.VESTIDO_LONGO.SEM_PRECO,
-                        ProdutosProperties.BLUSA.SEM_PRECO)
+                .containsAnyOf(ProdutosQaModasProperties.PACK_JEANS.SEM_PRECO,
+                        ProdutosQaModasProperties.JAQUETA.SEM_PRECO,
+                        ProdutosQaModasProperties.VESTIDO_LONGO.SEM_PRECO,
+                        ProdutosQaModasProperties.BLUSA.SEM_PRECO)
                 .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 
 
     private void validarProdutosComPrecoNaHome() {
         assertThat(homePage.getAnunciosComPrecoProdutosDto().toArray())
-                .containsAnyOf(ProdutosProperties.PACK_JEANS.COM_PRECO,
-                        ProdutosProperties.JAQUETA.COM_PRECO,
-                        ProdutosProperties.VESTIDO_LONGO.COM_PRECO,
-                        ProdutosProperties.BLUSA.COM_PRECO)
+                .containsAnyOf(ProdutosQaModasProperties.PACK_JEANS.COM_PRECO,
+                        ProdutosQaModasProperties.JAQUETA.COM_PRECO,
+                        ProdutosQaModasProperties.VESTIDO_LONGO.COM_PRECO,
+                        ProdutosQaModasProperties.BLUSA.COM_PRECO)
                 .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 

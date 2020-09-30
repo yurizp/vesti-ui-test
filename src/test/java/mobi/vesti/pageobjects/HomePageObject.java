@@ -3,7 +3,7 @@ package mobi.vesti.pageobjects;
 import lombok.Getter;
 import mobi.vesti.dto.ProdutosDto;
 import mobi.vesti.properties.MensgensProperties;
-import mobi.vesti.properties.ProdutosProperties;
+import mobi.vesti.properties.ProdutosQaModasProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -113,9 +113,9 @@ public class HomePageObject {
     /**
      * Valida o titulo e o valor dos produtos que estão sendo exibidos na home.
      */
-    public void validarProdutosComPreco() {
+    public void validarTituloEPrecoDeProdutos() {
         List<ProdutosDto> produtosHome = getAnunciosComPrecoProdutosDto();
-        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosProperties.PRODUTOS_HOME_COM_PRECO.toArray())
+        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosQaModasProperties.PRODUTOS_HOME_COM_PRECO.toArray())
                 .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 }

@@ -8,7 +8,7 @@ import mobi.vesti.pageobjects.MenuPageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.InfoProperties;
 import mobi.vesti.properties.MensgensProperties;
-import mobi.vesti.properties.ProdutosProperties;
+import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.utils.RetentarUmaVez;
@@ -37,7 +37,7 @@ public class InfoTest extends TestContext {
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarInformacoesUteisDeslogado() {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         menuPageObject.botaoHamburguer.click();
         menuPageObject.botaoInformacoesUteis.click();
         assertThat(infoPageObject.linkWhats.getText()).isEqualTo(InfoProperties.TELEFONE_CELULAR);
@@ -66,8 +66,8 @@ public class InfoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarInformacoesUteisLogado() {
         // Faz login na plataforma
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
         loginPageObject.logar();
+        Thread.sleep(2000);
 
         // Abre o menu hamburguer
         menuPageObject.botaoHamburguer.click();
@@ -100,11 +100,11 @@ public class InfoTest extends TestContext {
         assertThat(infoPageObject.nomeVendedor.getText()).isEqualTo(InfoProperties.NOME_VENDEDOR);
         assertThat(infoPageObject.linkWhatsVendedor.getText()).isEqualTo(InfoProperties.TELEFONE_CELULAR_VENDEDOR);
         String href = infoPageObject.linkWhatsVendedor.getAttribute("href");
-        System.out.println(href);
         assertThat(href).contains(InfoProperties.PAGE_LINK_WHATS);
 
         // Clica e valida as abas das informações do vendedor
-        validarNovaAba(infoPageObject.linkWhatsVendedor,InfoProperties.PAGE_LINK_WHATS);
+        // TODO: Aguardando resposta sobre o comportamento
+        // validarNovaAba(infoPageObject.linkWhatsVendedor,InfoProperties.PAGE_LINK_WHATS);
 
         // Faz logout do sisitema
         menuPageObject.botaoVoltar.click();
@@ -112,14 +112,14 @@ public class InfoTest extends TestContext {
         Thread.sleep(5000);
 
         // Valida que os produtos que estão sendo exibido não contem preço
-        assertThat(homePageObject.getAnunciosSemPecoProdutosDto()).containsExactlyInAnyOrderElementsOf(ProdutosProperties.PRODUTOS_HOME_SEM_PRECO).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+        assertThat(homePageObject.getAnunciosSemPecoProdutosDto()).containsExactlyInAnyOrderElementsOf(ProdutosQaModasProperties.PRODUTOS_HOME_SEM_PRECO).withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
 
     }
 
     @SneakyThrows
     private void validarNovaAba(WebElement element, String url) {
         element.click();
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
         assertThat(driver.getCurrentUrl()).contains(url);

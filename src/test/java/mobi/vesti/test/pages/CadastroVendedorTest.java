@@ -39,7 +39,7 @@ public class CadastroVendedorTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarFluxoDeCadastroComSucessoDeNovoVendedor()
             throws InterruptedException, ParseException {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         homePage.validarQuePrecosNaoSaoExibidos();
         String cnpj = DocumentoFactory.cnpj();
         VendedorDto vendedorDto =
@@ -60,7 +60,7 @@ public class CadastroVendedorTest extends TestContext {
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarValidacaoDeCamposNoCadastroDeVendedor() throws Exception {
-        driver.navigate().to(ConfiguracoesGlobais.BASE_URL);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         homePage.validarQuePrecosNaoSaoExibidos();
         homePage.clicarEmAnuncioDeProdutoSemPreco();
         cadastroVendedorPage.getCnpjCpfOuEmail().click();
