@@ -13,4 +13,5 @@ public class CarrinhoProperties {
     public static final String COR_VERMELHA_RGB = "rgba(255, 0, 0, 1)";
     public static final String COR_PRETA_RGB = "rgba(51, 51, 51, 1)";
     public static final String MENSAGEM_MINIMO_PECAS = "Seu carrinho não possui a quantidade mínima de 12 peças, por favor volte ao catálogo para completar seu pedido";
+    public static final String PEDIDO_MINIMO_MENSAGEM = "Seu carrinho não atingiu o valor mínimo de R$ 500,00, por favor volte ao catálogo para completar seu pedido";
 }

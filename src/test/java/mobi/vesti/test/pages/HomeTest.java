@@ -57,15 +57,15 @@ public class HomeTest extends TestContext {
         homePage.clicarEmAnuncioDeProdutoSemPreco();
 
         // Preenche os dados da tela de login utilizando o email
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_EMAIL.getEmail());
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_EMAIL_QAMODAS.getEmail());
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
-        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ_QAMODAS);
         loginPage.getBotaoContinuar().click();
         Thread.sleep(2000);
 
         // Valida que esta sendo exibido os produtos com os preço
-        homePage.validarTituloEPrecoDeProdutos();
+        homePage.validarTituloEPrecoDeProdutosQaModas();
     }
 
 }

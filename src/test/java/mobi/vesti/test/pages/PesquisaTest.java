@@ -56,7 +56,7 @@ public class PesquisaTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarPesquisaLogado() {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
-        login.logar();
+        login.logarQaModas();
         Thread.sleep(3000);
         validarProdutosExistentesNaHomeComPreco();
         pesquisa.botaoLupa.click();

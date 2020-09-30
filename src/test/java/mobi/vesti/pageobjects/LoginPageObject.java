@@ -34,14 +34,14 @@ public class LoginPageObject {
         Assert.assertFalse(getCampoCpfCnpj().isEnabled());
     }
 
-    public void logar() throws InterruptedException {
+    public void logarQaModas() throws InterruptedException {
         CadastroVendedorPageObject cadastroVendedorPage = PageFactory.initElements(driver, CadastroVendedorPageObject.class);
-        driver.navigate().to(ConfiguracoesGlobais.LOGIN);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_LOGIN);
         Thread.sleep(2000);
-        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
+        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ_QAMODAS.getDocumento(), cadastroVendedorPage.getCnpjCpfOuEmail());
         cadastroVendedorPage.getBotaoContinuar().click();
         Thread.sleep(1000);
-        preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ);
+        preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ_QAMODAS);
         getBotaoContinuar().click();
     }
 

@@ -97,7 +97,7 @@ public class HomePageObject {
                 .click();
     }
 
-    public void validarQuePrecosNaoSaoExibidos() {
+    public void validarQuePrecosNaoSaoExibidosQaModas() {
         List<ProdutosDto> anunciosVendasDtos = this.getAnunciosSemPecoProdutosDto();
         assertEquals(anunciosVendasDtos.size(), 11);
     }
@@ -105,15 +105,23 @@ public class HomePageObject {
     /**
      * Valida que estão sendo exibidos o numero esperado de produtos com preço.
      */
-    public void validarQuePrecosEstaoSendoExibidos() {
+    public void validarQuePrecosEstaoSendoExibidosQaModas() {
         List<ProdutosDto> anunciosVendasDtos = this.getAnunciosComPrecoProdutosDto();
-        assertEquals(anunciosVendasDtos.size(), 11, "O numero de produtos na home não bate com o esperado.");
+        assertEquals(anunciosVendasDtos.size(), 11, "O numero de produtos na home do QaModas não bate com o esperado.");
+    }
+
+    /**
+     * Valida que estão sendo exibidos o numero esperado de produtos com preço.
+     */
+    public void validarQuantidadeDeProdutosSendoExibidosPepitaModas() {
+        List<ProdutosDto> anunciosVendasDtos = this.getAnunciosComPrecoProdutosDto();
+        assertEquals(anunciosVendasDtos.size(), 23, "O numero de produtos na home do Pepita Modas não bate com o esperado.");
     }
 
     /**
      * Valida o titulo e o valor dos produtos que estão sendo exibidos na home.
      */
-    public void validarTituloEPrecoDeProdutos() {
+    public void validarTituloEPrecoDeProdutosQaModas() {
         List<ProdutosDto> produtosHome = getAnunciosComPrecoProdutosDto();
         assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosQaModasProperties.PRODUTOS_HOME_COM_PRECO.toArray())
                 .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);

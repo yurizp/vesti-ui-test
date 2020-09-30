@@ -35,7 +35,7 @@ public class DetalheProdutoTest extends TestContext {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(3000);
         validarProdutosSemPrecoNaHome();
-        loginPageObject.logar();
+        loginPageObject.logarQaModas();
         Thread.sleep(3000);
         validarProdutosComPrecoNaHome();
         homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");

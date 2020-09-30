@@ -35,7 +35,7 @@ public class FiltroLogadoTest extends TestContext {
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarFiltroDaHome() throws InterruptedException {
-        loginPage.logar();
+        loginPage.logarQaModas();
         Thread.sleep(2000);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("blusa"), ProdutosQaModasProperties.BLUSA.COM_PRECO);
         selecionarEValidarFiltrosTelaHome(filtroPageObject.categorias("camiseta"), ProdutosQaModasProperties.CAMISETA_ESTAMPADA.COM_PRECO, ProdutosQaModasProperties.CAMISETA.COM_PRECO, ProdutosQaModasProperties.CAMISETA_MANGA_LON.COM_PRECO);
@@ -46,7 +46,7 @@ public class FiltroLogadoTest extends TestContext {
     public void testarTelaDeFiltro() throws InterruptedException {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
-        loginPage.logar();
+        loginPage.logarQaModas();
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         filtroPageObject.adicionarFiltros.categorias("vestido").click();
@@ -74,7 +74,7 @@ public class FiltroLogadoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
-        loginPage.logar();
+        loginPage.logarQaModas();
         Thread.sleep(2000);
         filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
         filtroPageObject.adicionarFiltros.categorias("camiseta").click();

@@ -1,6 +1,7 @@
 package mobi.vesti.pageobjects;
 
 import mobi.vesti.pageobjects.detalhe.BlusaDetalhePage;
+import mobi.vesti.pageobjects.detalhe.BlusaFemininaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CalcaJeansMilandaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CalcaJeansPackDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CamisetaDetalhePage;
@@ -60,6 +61,7 @@ public class CarrinhoPageObject {
     public BlusaDetalhePage blusa;
     public CamisetaMangaLongDetalhePage camisetaMangaLong;
     public CamisetaEstampadaDetalhe camisetaEstampada;
+    public BlusaFemininaDetalhePage blusaFeminina;
 
     public CarrinhoPageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -74,6 +76,7 @@ public class CarrinhoPageObject {
         calcaJeansPack = new CalcaJeansPackDetalhePage(driver);
         camisetaMangaLong = new CamisetaMangaLongDetalhePage(driver);
         camisetaEstampada = new CamisetaEstampadaDetalhe(driver);
+        blusaFeminina = new BlusaFemininaDetalhePage(driver);
     }
 
     /**

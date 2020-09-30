@@ -40,7 +40,7 @@ public class CadastroVendedorTest extends TestContext {
     public void testarFluxoDeCadastroComSucessoDeNovoVendedor()
             throws InterruptedException, ParseException {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
-        homePage.validarQuePrecosNaoSaoExibidos();
+        homePage.validarQuePrecosNaoSaoExibidosQaModas();
         String cnpj = DocumentoFactory.cnpj();
         VendedorDto vendedorDto =
                 VendedorDto.builder()
@@ -55,13 +55,13 @@ public class CadastroVendedorTest extends TestContext {
         homePage.clicarEmAnuncioDeProdutoSemPreco();
         cadastroVendedorPage.preencherFormularioCnpj(vendedorDto);
         cadastroVendedorPage.finalizarCadastro();
-        homePage.validarQuePrecosNaoSaoExibidos();
+        homePage.validarQuePrecosNaoSaoExibidosQaModas();
     }
 
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarValidacaoDeCamposNoCadastroDeVendedor() throws Exception {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
-        homePage.validarQuePrecosNaoSaoExibidos();
+        homePage.validarQuePrecosNaoSaoExibidosQaModas();
         homePage.clicarEmAnuncioDeProdutoSemPreco();
         cadastroVendedorPage.getCnpjCpfOuEmail().click();
         sendKeys("123asdasdsdada", cadastroVendedorPage.getCnpjCpfOuEmail());

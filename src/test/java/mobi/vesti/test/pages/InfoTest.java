@@ -66,7 +66,7 @@ public class InfoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarInformacoesUteisLogado() {
         // Faz login na plataforma
-        loginPageObject.logar();
+        loginPageObject.logarQaModas();
         Thread.sleep(2000);
 
         // Abre o menu hamburguer
