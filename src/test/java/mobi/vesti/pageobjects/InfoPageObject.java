@@ -15,6 +15,10 @@ public class InfoPageObject {
     public WebElement linkInstagram;
     @FindBy(xpath = "/html/body/app/catalogue/detalhes-da-marca/div/div[2]/div")
     public WebElement bio;
+    @FindBy(xpath = "//*[@class=\"phone-seller\"]//a")
+    public WebElement linkWhatsVendedor;
+    @FindBy(xpath = "//*[@class=\"name-seller\"]")
+    public WebElement nomeVendedor;
 
     public InfosUteis infosUteis;
 

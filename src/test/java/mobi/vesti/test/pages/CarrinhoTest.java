@@ -1,7 +1,9 @@
 package mobi.vesti.test.pages;
 
+import com.google.common.collect.ImmutableList;
 import lombok.SneakyThrows;
 import mobi.vesti.client.VestClient;
+import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.pageobjects.CadastroVendedorPageObject;
 import mobi.vesti.pageobjects.CarrinhoPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
@@ -28,6 +30,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static mobi.vesti.properties.ProdutosProperties.getVerde;
+import static mobi.vesti.properties.ProdutosProperties.getVermelho;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CarrinhoTest extends TestContext {
@@ -115,8 +119,8 @@ public class CarrinhoTest extends TestContext {
         loginPage.getBotaoContinuar().click();
         Thread.sleep(2000);
         homePage.clicarEmAnuncioDeProdutoComPreco("CAMISETA");
-        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camiseta.tamanhoP.getBranco(),5);
-        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camiseta.tamanhoP.getAmarelo(),5);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camiseta.tamanhoP.getBranco(), 5);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.camiseta.tamanhoP.getAmarelo(), 5);
         carrinhoPage.camiseta.tamanhoM.getAzul().click();
         carrinhoPage.camiseta.tamanhoG.getPreto().click();
         carrinhoPage.camiseta.tamanhoGG.getVinho().click();
@@ -347,8 +351,18 @@ public class CarrinhoTest extends TestContext {
         assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho40.verde.getText());
         assertThat("4").isEqualTo(carrinhoPage.shorts.tamanho46.verde.getText());
 
-        // Alterar o estoque para 5 peças cada cor via API
-        VestClient.adicionarEstoque(ProdutosProperties.SHORTS.ID, ProdutosProperties.SHORTS.getEstoque("5"));
+        // Alterar o estoque dos tamanhos 36 e 38 para 5 peças cada cor via API
+        List<Map<String, String>> tamanho = Arrays.asList(
+                Collections.singletonMap("36", "5"),
+                Collections.singletonMap("38", "5"),
+                Collections.singletonMap("42", "10"),
+                Collections.singletonMap("46", "10"),
+                Collections.singletonMap("40", "10"));
+        ImmutableList<ItensRequestVestClient> estoque = ImmutableList.of(
+                ItensRequestVestClient.builder().tamanho(tamanho).cor(getVerde()).build(),
+                ItensRequestVestClient.builder().tamanho(tamanho).cor(getVermelho()).build());
+
+        VestClient.adicionarEstoque(ProdutosProperties.SHORTS.ID, estoque);
 
         // Valida mensagem de produto esgotado
         Thread.sleep(1000);
@@ -383,12 +397,11 @@ public class CarrinhoTest extends TestContext {
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosProperties.SHORTS.NOME);
         carrinhoPage.shorts.tamanho38.verde.click();
         carrinhoPage.shorts.tamanho36.verde.click();
-        carrinhoPage.shorts.tamanho40.verde.click();
-        carrinhoPage.shorts.tamanho46.verde.click();
         assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho36.verde.getText());
         assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho38.verde.getText());
-        assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho40.verde.getText());
-        assertThat(" ").isEqualTo(carrinhoPage.shorts.tamanho46.verde.getText());
+        assertThat("0").isEqualTo(carrinhoPage.shorts.tamanho40.verde.getText());
+        assertThat("0").isEqualTo(carrinhoPage.shorts.tamanho42.verde.getText());
+        assertThat("0").isEqualTo(carrinhoPage.shorts.tamanho46.verde.getText());
     }
 
     /**

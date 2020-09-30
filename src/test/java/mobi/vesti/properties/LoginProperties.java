@@ -12,6 +12,13 @@ public class LoginProperties {
             .senha("123123")
             .build();
 
+    public static final LoginDto LOGIN_VALIDO_EMAIL = LoginDto.builder()
+            .documento("84682934074")
+            .email(" testecpf@tst.com")
+            .razaoSocial("cliente-de-teste-1")
+            .senha("123123")
+            .build();
+
     public static final LoginDto LOGIN_VALIDO_CPF = LoginDto.builder()
             .documento("84682934074")
             .email("testecpf@tst.com")

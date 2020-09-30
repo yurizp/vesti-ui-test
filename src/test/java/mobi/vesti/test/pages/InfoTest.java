@@ -10,6 +10,7 @@ import mobi.vesti.properties.InfoProperties;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosProperties;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
@@ -53,6 +54,9 @@ public class InfoTest extends TestContext {
         validarNovaAba(infoPageObject.linkWhats,InfoProperties.PAGE_LINK_WHATS);
         validarNovaAba(infoPageObject.linkInstagram,InfoProperties.URL_INSTAGRAM);
         validarNovaAba(infoPageObject.linkVest,InfoProperties.URL_VESTI);
+        // Valida a não exibição do dados de vendedor
+        assertThat(AcoesCustomizadas.elementoExiste(infoPageObject.linkWhatsVendedor)).isFalse();
+        assertThat(AcoesCustomizadas.elementoExiste(infoPageObject.nomeVendedor)).isFalse();
     }
 
     /**
@@ -91,6 +95,16 @@ public class InfoTest extends TestContext {
         validarNovaAba(infoPageObject.linkWhats,InfoProperties.PAGE_LINK_WHATS);
         validarNovaAba(infoPageObject.linkInstagram,InfoProperties.URL_INSTAGRAM);
         validarNovaAba(infoPageObject.linkVest,InfoProperties.URL_VESTI);
+
+        // Valida exibição das informações do vendedor
+        assertThat(infoPageObject.nomeVendedor.getText()).isEqualTo(InfoProperties.NOME_VENDEDOR);
+        assertThat(infoPageObject.linkWhatsVendedor.getText()).isEqualTo(InfoProperties.TELEFONE_CELULAR_VENDEDOR);
+        String href = infoPageObject.linkWhatsVendedor.getAttribute("href");
+        System.out.println(href);
+        assertThat(href).contains(InfoProperties.PAGE_LINK_WHATS);
+
+        // Clica e valida as abas das informações do vendedor
+        validarNovaAba(infoPageObject.linkWhatsVendedor,InfoProperties.PAGE_LINK_WHATS);
 
         // Faz logout do sisitema
         menuPageObject.botaoVoltar.click();

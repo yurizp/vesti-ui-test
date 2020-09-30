@@ -13,8 +13,8 @@ public class InfoProperties {
     public static final String PAGE_LINK_INSTAGRAM = "http://www.instagram.com/instagram";
     public static final String PAGE_LINK_WHATS = "https://api.whatsapp.com/send?phone=";
     public static final String PAGE_LINK_VESTI = "http://www.vesti.mobi/";
-
     public static final String URL_INSTAGRAM = "https://www.instagram.com";
     public static final String URL_VESTI = "https://www.vesti.mobi";
-
+    public static final String NOME_VENDEDOR = "QA Modas";
+    public static final String TELEFONE_CELULAR_VENDEDOR = "(11) 98924-9349";
 }

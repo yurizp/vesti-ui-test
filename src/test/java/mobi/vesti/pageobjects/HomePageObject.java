@@ -2,6 +2,8 @@ package mobi.vesti.pageobjects;
 
 import lombok.Getter;
 import mobi.vesti.dto.ProdutosDto;
+import mobi.vesti.properties.MensgensProperties;
+import mobi.vesti.properties.ProdutosProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +16,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertEquals;
 
 @Getter
@@ -99,8 +102,20 @@ public class HomePageObject {
         assertEquals(anunciosVendasDtos.size(), 11);
     }
 
+    /**
+     * Valida que estão sendo exibidos o numero esperado de produtos com preço.
+     */
     public void validarQuePrecosEstaoSendoExibidos() {
         List<ProdutosDto> anunciosVendasDtos = this.getAnunciosComPrecoProdutosDto();
         assertEquals(anunciosVendasDtos.size(), 11, "O numero de produtos na home não bate com o esperado.");
+    }
+
+    /**
+     * Valida o titulo e o valor dos produtos que estão sendo exibidos na home.
+     */
+    public void validarProdutosComPreco() {
+        List<ProdutosDto> produtosHome = getAnunciosComPrecoProdutosDto();
+        assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosProperties.PRODUTOS_HOME_COM_PRECO.toArray())
+                .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
     }
 }
