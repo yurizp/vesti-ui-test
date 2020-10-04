@@ -7,6 +7,7 @@ import mobi.vesti.pageobjects.detalhe.CalcaJeansPackDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CamisetaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CamisetaEstampadaDetalhe;
 import mobi.vesti.pageobjects.detalhe.CamisetaMangaLongDetalhePage;
+import mobi.vesti.pageobjects.detalhe.MacacaoDetalhePage;
 import mobi.vesti.pageobjects.detalhe.PackJeansDetalhePage;
 import mobi.vesti.pageobjects.detalhe.PoloDetalhePage;
 import mobi.vesti.pageobjects.detalhe.ShortDetalhePage;
@@ -49,6 +50,8 @@ public class CarrinhoPageObject {
     public WebElement iniciaisVendedor;
     @FindBy(xpath = "//button[contains(text(), 'limpar')]")
     public WebElement botaoLimpar;
+    @FindBy(xpath = "//*[@class=\"list-item clearfix\"]/p")
+    public WebElement mensagemEsgotado;
 
     public PecasEsgotadas popUpMensagem;
     public PoloDetalhePage polo;
@@ -62,6 +65,7 @@ public class CarrinhoPageObject {
     public CamisetaMangaLongDetalhePage camisetaMangaLong;
     public CamisetaEstampadaDetalhe camisetaEstampada;
     public BlusaFemininaDetalhePage blusaFeminina;
+    public MacacaoDetalhePage macacao;
 
     public CarrinhoPageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -77,6 +81,7 @@ public class CarrinhoPageObject {
         camisetaMangaLong = new CamisetaMangaLongDetalhePage(driver);
         camisetaEstampada = new CamisetaEstampadaDetalhe(driver);
         blusaFeminina = new BlusaFemininaDetalhePage(driver);
+        macacao = new MacacaoDetalhePage(driver);
     }
 
     /**

@@ -18,9 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class EstoqueRequestVetClient {
 
-    @Builder.Default
     @JsonProperty("scheme_url")
-    private String schemaUrl = "qamodas";
+    private String schemaUrl;
 
     @JsonProperty("itens")
     private List<ItensRequestVestClient> itens;

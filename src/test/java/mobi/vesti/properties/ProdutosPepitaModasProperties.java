@@ -5,11 +5,8 @@ import mobi.vesti.client.request.ColorRequestVestClient;
 import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.dto.ProdutosDto;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static mobi.vesti.properties.EstoqueProperties.getAzul;
 import static mobi.vesti.properties.EstoqueProperties.getPreto;
@@ -31,4 +28,26 @@ public class ProdutosPepitaModasProperties {
             return ImmutableList.of(ItensRequestVestClient.builder().tamanho(tamanhosQuantidades).cor(getPreto()).build());
         }
     }
+
+    public static class MACACAO {
+        public static final String ID = "12a3981e-5bd6-449c-b5c6-b60edab2850d";
+        public static final String NOME = "MACACÃO";
+        public static final ProdutosDto COM_PRECO = new ProdutosDto(NOME, "R$ 109,00");
+        public static final ProdutosDto SEM_PRECO = new ProdutosDto(NOME, "Ver Preço");
+        public static final List<ItensRequestVestClient> ESTOQUE_REQUEST = ImmutableList.of(
+                ItensRequestVestClient.builder().tamanho(getTamanhos("1", "P", "M")).cor(getPretoPepita()).build());
+        public static final List<ItensRequestVestClient> SEM_ESTOQUE_REQUEST = ImmutableList.of(
+                ItensRequestVestClient.builder().tamanho(getTamanhos("0", "P", "M")).cor(getPretoPepita()).build());
+
+    }
+
+    private static ColorRequestVestClient getPretoPepita() {
+        return ColorRequestVestClient.builder()
+                .codigoCor("#0e0d0d")
+                .id("14c6d748-b305-4b83-b1e9-3671da033bb3")
+                .nome("Preto")
+                .build();
+    }
+
+
 }

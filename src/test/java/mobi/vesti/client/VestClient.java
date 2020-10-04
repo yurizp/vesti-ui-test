@@ -1,11 +1,14 @@
 package mobi.vesti.client;
 
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import mobi.vesti.client.request.EstoqueRequestVetClient;
 import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.client.response.LoginResponseVestClient;
+import mobi.vesti.properties.AmbienteProperties;
 import mobi.vesti.properties.LoginProperties;
+import mobi.vesti.properties.ProdutosPepitaModasProperties;
 import mobi.vesti.utils.ObjectUtils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -44,8 +47,8 @@ public class VestClient {
         return loginResponseVestClient;
     }
 
-    public static void adicionarEstoque(String productId, List<ItensRequestVestClient> itens) throws Exception {
-        RequestBody body = RequestBody.create(JSON, EstoqueRequestVetClient.builder().itens(itens).build().toString());
+    public static void adicionarEstoque(String productId, List<ItensRequestVestClient> itens, String ambiente) throws Exception {
+        RequestBody body = RequestBody.create(JSON, EstoqueRequestVetClient.builder().schemaUrl(ambiente).itens(itens).build().toString());
         Request request = new Request.Builder()
                 .url(BASE_URL + String.format(ESTOQUE_URI, productId))
                 .put(body)
@@ -57,4 +60,8 @@ public class VestClient {
         assertThat("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}}").isEqualToIgnoringNewLines(response);
     }
 
+    @SneakyThrows
+    public static void main(String[] args) {
+        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.ESTOQUE_REQUEST, AmbienteProperties.PEPITAMODAS);
+    }
 }

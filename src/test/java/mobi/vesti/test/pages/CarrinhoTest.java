@@ -8,6 +8,7 @@ import mobi.vesti.pageobjects.CadastroVendedorPageObject;
 import mobi.vesti.pageobjects.CarrinhoPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
+import mobi.vesti.properties.AmbienteProperties;
 import mobi.vesti.properties.CarrinhoProperties;
 import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.InfoProperties;
@@ -56,7 +57,7 @@ public class CarrinhoTest extends TestContext {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
         // Adiciona ao estoque 10 peças de cada cor
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.POLO.ID, ProdutosQaModasProperties.POLO.getEstoque("10"));
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.POLO.ID, ProdutosQaModasProperties.POLO.getEstoque("10"), AmbienteProperties.QAMODAS);
 
         // Faz login clicando em um produto
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModasProperties.POLO.NOME);
@@ -111,7 +112,7 @@ public class CarrinhoTest extends TestContext {
     public void testarRealizarPedidoClientePossuiCadastro() {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA.ID, ProdutosQaModasProperties.CAMISETA.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA.ID, ProdutosQaModasProperties.CAMISETA.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS);
         homePage.clicarEmAnuncioDeProdutoSemPreco("CAMISETA");
         Thread.sleep(1000);
         cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ_QAMODAS.getDocumento());
@@ -148,7 +149,7 @@ public class CarrinhoTest extends TestContext {
                 Collections.singletonMap("G", "4"),
                 Collections.singletonMap("GG", "3")
         );
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_ESTAMPADA.ID, ProdutosQaModasProperties.CAMISETA_ESTAMPADA.getEstoque(tamanhosQuantidades));
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_ESTAMPADA.ID, ProdutosQaModasProperties.CAMISETA_ESTAMPADA.getEstoque(tamanhosQuantidades), AmbienteProperties.QAMODAS);
 
         // Loga clicando no produto Camiseta Estampada
         homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModasProperties.CAMISETA_ESTAMPADA.NOME);
@@ -309,7 +310,7 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         //Adiciona os valores defaults ao estoque (4 peças de cada cor) via API
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.BLUSA.ID, ProdutosQaModasProperties.BLUSA.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.BLUSA.ID, ProdutosQaModasProperties.BLUSA.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS);
 
         //Adicionar Blusa Tamanho G branca ao carrinho
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.BLUSA.NOME);
@@ -344,7 +345,7 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         //Adiciona ao estoque 20 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.SHORTS.ID, ProdutosQaModasProperties.SHORTS.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.SHORTS.ID, ProdutosQaModasProperties.SHORTS.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS);
 
         //Adicionar ao carrinho 9 peças verdes dos tamanhos 36 e 38 e 4 peças verdes dos tamanhos 40 e 46
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.SHORTS.NOME);
@@ -369,7 +370,7 @@ public class CarrinhoTest extends TestContext {
                 ItensRequestVestClient.builder().tamanho(tamanho).cor(getVerde()).build(),
                 ItensRequestVestClient.builder().tamanho(tamanho).cor(getVermelho()).build());
 
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.SHORTS.ID, estoque);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.SHORTS.ID, estoque, AmbienteProperties.QAMODAS);
 
         // Valida mensagem de produto esgotado
         Thread.sleep(1000);
@@ -515,7 +516,7 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         // Adiciona ao estoque 20 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.getEstoque("20"));
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.getEstoque("20"), AmbienteProperties.QAMODAS);
 
         // Adicionar uma Camiseta Manga Long ao carrinho
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
@@ -562,7 +563,7 @@ public class CarrinhoTest extends TestContext {
         Thread.sleep(2000);
 
         // Adiciona ao estoque 20 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS);
 
         // Adicionar duas Camiseta Manga Long preta tamanho uma tamanho 38 e a outra 36
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
@@ -611,7 +612,7 @@ public class CarrinhoTest extends TestContext {
         homePage.validarTituloEPrecoDeProdutosQaModas();
 
         // Adiciona ao estoque 20 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosQaModasProperties.CAMISETA_MANGA_LON.ID, ProdutosQaModasProperties.CAMISETA_MANGA_LON.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS);
 
         // Adicionar uma Camiseta Manga Long preta tamanho 42
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CAMISETA_MANGA_LON.NOME);
@@ -632,7 +633,6 @@ public class CarrinhoTest extends TestContext {
         carrinhoPage.botaoVoltar.click();
         homePage.validarTituloEPrecoDeProdutosQaModas();
     }
-
 
     /**
      * Validar o valor minimo configurado no ambiente para pedido
@@ -657,7 +657,7 @@ public class CarrinhoTest extends TestContext {
         homePage.validarQuantidadeDeProdutosSendoExibidosPepitaModas();
 
         // Adiciona ao estoque 10 peças de cada cor via API
-        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.BLUSA_FEMININA.ID, ProdutosPepitaModasProperties.BLUSA_FEMININA.ESTOQUE_REQUEST);
+        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.BLUSA_FEMININA.ID, ProdutosPepitaModasProperties.BLUSA_FEMININA.ESTOQUE_REQUEST, AmbienteProperties.PEPITAMODAS);
 
         // Adicionar uma Camiseta Manga Long preta tamanho 42
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosPepitaModasProperties.BLUSA_FEMININA.NOME);
@@ -700,6 +700,67 @@ public class CarrinhoTest extends TestContext {
         carrinhoPage.botaoFinalizarPedido.click();
         carrinhoPage.validaMensagemDePedidoEnviado();
 
+    }
+
+    /**
+     * Validar produto esgotado com estoque binario
+     * Utilizando o ambiente PEPITAMODAS.
+     */
+    @SneakyThrows
+    @Test(retryAnalyzer = RetentarUmaVez.class)
+    public void validarProdutoComEstoqueBinario() {
+        // Deixa o macacao como disponivel em estoque
+        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.ESTOQUE_REQUEST, AmbienteProperties.PEPITAMODAS);
+
+        // Faz login clicando em um produto
+        driver.navigate().to(ConfiguracoesGlobais.PEPITAMODAS_BASE_URL);
+        Thread.sleep(2000);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosPepitaModasProperties.MACACAO.NOME);
+        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ_PEPITAMODAS.getEmail(), cadastroVendedorPage.getCnpjCpfOuEmail());
+        Thread.sleep(800);
+        assertThat(loginPage.getCnpjCpfText()).isEqualTo(LoginProperties.LOGIN_VALIDO_CNPJ_PEPITAMODAS.getEmail());
+        cadastroVendedorPage.getBotaoContinuar().click();
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ_PEPITAMODAS);
+        loginPage.getBotaoContinuar().click();
+        Thread.sleep(2500);
+
+        // Valida quantidade de itens exibidos na home
+        homePage.validarQuantidadeDeProdutosSendoExibidosPepitaModas();
+
+        // Adiciona Macacao ao carrinho
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosPepitaModasProperties.MACACAO.NOME);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.macacao.tamanhoP.preto, 3);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.macacao.tamanhoM.preto, 3);
+        Thread.sleep(2000);
+        assertThat(carrinhoPage.macacao.tamanhoP.preto.getText()).isEqualTo("3");
+        assertThat(carrinhoPage.macacao.tamanhoM.preto.getText()).isEqualTo("3");
+
+        // Muda o estoque do macacão para esgotado
+        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.SEM_ESTOQUE_REQUEST, AmbienteProperties.PEPITAMODAS);
+
+        // Clica no carrinho
+        carrinhoPage.carrinhoIcone.click();
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.macacao.tamanhoP.preto.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.macacao.tamanhoM.preto.getCssValue("color"));
+
+        // Clicar em finalizar venda
+        carrinhoPage.botaoFinalizarPedido.click();
+        Thread.sleep(1000);
+        assertThat(CarrinhoProperties.COR_VERMELHA_RGB).isEqualTo(carrinhoPage.macacao.tamanhoP.preto.getCssValue("color"));
+        assertThat(CarrinhoProperties.COR_VERMELHA_RGB).isEqualTo(carrinhoPage.macacao.tamanhoM.preto.getCssValue("color"));
+        assertThat(CarrinhoProperties.PECAS_ESGOTADAS_MENSAGEM).isEqualTo(carrinhoPage.popUpMensagem.mensagem.getText());
+        carrinhoPage.popUpMensagem.botaoOk.click();
+
+
+        // Voltar para home e clicar no produto macacão
+        carrinhoPage.botaoVoltar.click();
+        Thread.sleep(1000);
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosPepitaModasProperties.MACACAO.NOME);
+
+        // Validar que esta exibindo o produto como esgotado
+        assertThat(carrinhoPage.mensagemEsgotado.getText()).isEqualTo(CarrinhoProperties.MENSGAEM_PRODUTO_ESGOTADO);
+        assertThat(AcoesCustomizadas.elementoExiste(carrinhoPage.macacao.tamanhoP.preto)).isFalse();
+        assertThat(AcoesCustomizadas.elementoExiste(carrinhoPage.macacao.tamanhoM.preto)).isFalse();
     }
 
     /**
