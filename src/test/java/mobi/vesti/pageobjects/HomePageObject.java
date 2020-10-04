@@ -24,12 +24,11 @@ public class HomePageObject {
 
     @FindBy(how = How.XPATH, using = "//*[@id=\"grid-panel\"]//list-grid-item")
     private List<WebElement> anunciosProdutos;
-
-    public HomePageObject() throws MalformedURLException {
-    }
+    public BannerAplicativo bannerAplicativo;
 
     public HomePageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);
+        bannerAplicativo = new BannerAplicativo(driver);
     }
 
     public List<ProdutosDto> getAnunciosSemPecoProdutosDto() {
@@ -125,5 +124,21 @@ public class HomePageObject {
         List<ProdutosDto> produtosHome = getAnunciosComPrecoProdutosDto();
         assertThat(produtosHome.toArray()).containsExactlyInAnyOrder(ProdutosQaModasProperties.PRODUTOS_HOME_COM_PRECO.toArray())
                 .withFailMessage(MensgensProperties.HOME_PRODUTOS_DIFERENTES);
+    }
+
+    public class BannerAplicativo {
+        @FindBy(xpath = "//*[@class=\"navbar navbar-default navbar-fixed-top\"]//*[@class=\"banner-container\"]//img")
+        public WebElement icone;
+        @FindBy(xpath = "//*[@class=\"navbar navbar-default navbar-fixed-top\"]//*[@class=\"banner-container\"]//*[@class=\"title\"]")
+        public WebElement titulo;
+        @FindBy(xpath = "//*[@class=\"navbar navbar-default navbar-fixed-top\"]//*[@class=\"banner-container\"]//*[@class=\"subtitle\"]")
+        public WebElement descricao;
+        @FindBy(xpath = "//*[@class=\"navbar navbar-default navbar-fixed-top\"]//*[@class=\"banner-container\"]//button[2]")
+        public WebElement botaoBaixar;
+        @FindBy(xpath = "//*[@class=\"navbar navbar-default navbar-fixed-top\"]//*[@class=\"banner-container\"]//button[1]")
+        public WebElement botaoFechar;
+        public BannerAplicativo(WebDriver driver) {
+            PageFactory.initElements(driver, this);
+        }
     }
 }

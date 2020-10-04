@@ -10,6 +10,7 @@ import mobi.vesti.properties.LoginProperties;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
+import mobi.vesti.utils.AcoesCustomizadas;
 import mobi.vesti.utils.RetentarUmaVez;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -68,4 +69,51 @@ public class HomeTest extends TestContext {
         homePage.validarTituloEPrecoDeProdutosQaModas();
     }
 
+
+    /**
+     * Deve validar a exibição do banner para download do aplicativo
+     */
+    @SneakyThrows
+    @Test(retryAnalyzer = RetentarUmaVez.class)
+    public void validarBannerDoAplicativo() {
+        driver.navigate().to(ConfiguracoesGlobais.NAMIE);
+        Thread.sleep(1000);
+
+        // Validar exibição do banner do aplicativo
+        validarExibicaoBannerAplicativo();
+
+        // Rolar pagina para baixo
+        AcoesCustomizadas.rolarPaginaParaBaixo();
+        AcoesCustomizadas.rolarPaginaParaBaixo();
+        AcoesCustomizadas.rolarPaginaParaBaixo();
+
+        // Validar a não exibição do banner do aplicativo
+        validarNaoExibicaoBannerAplicativo();
+
+        // Rolar pagina para baixo
+        AcoesCustomizadas.rolarPaginaParaCima();
+
+        // Validar a não exibição do banner do aplicativo
+        validarExibicaoBannerAplicativo();
+    }
+
+    @SneakyThrows
+    private void validarNaoExibicaoBannerAplicativo() {
+        Thread.sleep(1000);
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.botaoBaixar)).isFalse();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.botaoFechar)).isFalse();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.descricao)).isFalse();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.icone)).isFalse();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.titulo)).isFalse();
+    }
+
+    @SneakyThrows
+    private void validarExibicaoBannerAplicativo() {
+        Thread.sleep(1000);
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.botaoBaixar)).isTrue();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.botaoFechar)).isTrue();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.descricao)).isTrue();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.icone)).isTrue();
+        assertThat(AcoesCustomizadas.elementoExiste(homePage.bannerAplicativo.titulo)).isTrue();
+    }
 }

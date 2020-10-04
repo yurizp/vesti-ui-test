@@ -63,4 +63,20 @@ public class AcoesCustomizadas {
             Thread.sleep(200);
         }
     }
+
+    /**
+     * Rolar pagina para baixo.
+     */
+    public static void rolarPaginaParaBaixo() {
+        JavascriptExecutor Scrool = (JavascriptExecutor) driver;
+        Scrool.executeScript("window.scrollBy(0,2000)", "");
+    }
+
+    /**
+     * Rolar pagina para baixo.
+     */
+    public static void rolarPaginaParaCima() {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("scrollBy(0,-2000)", "");
+    }
 }
