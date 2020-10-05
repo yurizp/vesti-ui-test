@@ -107,6 +107,7 @@ public class FiltroSemEstarLogadoTest extends TestContext {
 
     public void selecionarEValidarFiltrosTelaHome(WebElement filtro, ProdutosDto... anunciosVendasDto) throws InterruptedException {
         filtro.click();
+        Thread.sleep(1000);
         List<ProdutosDto> produtos = homePage.getAnunciosSemPecoProdutosDto();
         assertThat(produtos).containsExactlyInAnyOrder(anunciosVendasDto).withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtro.click();

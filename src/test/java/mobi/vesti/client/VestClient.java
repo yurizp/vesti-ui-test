@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import mobi.vesti.client.request.EstoqueRequestVetClient;
 import mobi.vesti.client.request.ItensRequestVestClient;
 import mobi.vesti.client.response.LoginResponseVestClient;
-import mobi.vesti.properties.AmbienteProperties;
+import mobi.vesti.client.response.PedidoResponse;
 import mobi.vesti.properties.LoginProperties;
-import mobi.vesti.properties.ProdutosPepitaModasProperties;
 import mobi.vesti.utils.ObjectUtils;
+import mobi.vesti.utils.ResourceUtils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,9 +22,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public class VestClient {
 
-    private static final String BASE_URL = "https://hapi.meuvesti.com/api/appvendas";
+    private static final String BASE_URL_APPVENDAS = "https://hapi.meuvesti.com/api/appvendas";
+    private static final String BASE_URL_APPCOMPRAS = "https://hapi.meuvesti.com/api/appcompras";
     private static final String LOGIN_URI = "/login";
     private static final String ESTOQUE_URI = "/stocks/%s/product?v=1.0";
+    private static final String CRIAR_PEDIDO = "/simple-quotes?v=1.2";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static LoginResponseVestClient loginResponseVestClient;
 
@@ -36,7 +38,7 @@ public class VestClient {
         }
         RequestBody body = RequestBody.create(JSON, LoginProperties.LOGIN_API.toString());
         Request request = new Request.Builder()
-                .url(BASE_URL + LOGIN_URI)
+                .url(BASE_URL_APPVENDAS + LOGIN_URI)
                 .post(body)
                 .addHeader("content-type", "application/json")
                 .build();
@@ -50,7 +52,7 @@ public class VestClient {
     public static void adicionarEstoque(String productId, List<ItensRequestVestClient> itens, String ambiente) throws Exception {
         RequestBody body = RequestBody.create(JSON, EstoqueRequestVetClient.builder().schemaUrl(ambiente).itens(itens).build().toString());
         Request request = new Request.Builder()
-                .url(BASE_URL + String.format(ESTOQUE_URI, productId))
+                .url(BASE_URL_APPVENDAS + String.format(ESTOQUE_URI, productId))
                 .put(body)
                 .addHeader("authorization", "Bearer " + autenticacao().getToken())
                 .addHeader("content-type", "application/json")
@@ -60,8 +62,4 @@ public class VestClient {
         assertThat("{\"result\":{\"success\":true,\"message\":\"Ok\",\"messages\":\"\"}}").isEqualToIgnoringNewLines(response);
     }
 
-    @SneakyThrows
-    public static void main(String[] args) {
-        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.ESTOQUE_REQUEST, AmbienteProperties.PEPITAMODAS);
-    }
 }
