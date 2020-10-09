@@ -235,7 +235,7 @@ public class CarrinhoTest extends TestContext {
      */
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
-    public void validarCalculoDeValorTotalNoCarrinho() {
+    public void     validarCalculoDeValorTotalNoCarrinho() {
         // Fazer login
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         Thread.sleep(2000);
@@ -739,6 +739,7 @@ public class CarrinhoTest extends TestContext {
         VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.SEM_ESTOQUE_REQUEST, AmbienteProperties.PEPITAMODAS);
 
         // Clica no carrinho
+        AcoesCustomizadas.rolarPaginaParaCima();
         carrinhoPage.carrinhoIcone.click();
         Thread.sleep(2000);
         assertThat(CarrinhoProperties.COR_PRETA_RGB).isEqualTo(carrinhoPage.macacao.tamanhoP.preto.getCssValue("color"));

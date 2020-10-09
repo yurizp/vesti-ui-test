@@ -20,7 +20,7 @@ public class MacacaoDetalhePage {
     @Getter
     public class TamanhoP {
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[2]/button")
+        @FindBy(xpath = "//item-grid//tr[2]/td[2]/button")
         public WebElement preto;
 
         public TamanhoP(WebDriver driver) {
@@ -31,7 +31,7 @@ public class MacacaoDetalhePage {
     @Getter
     public class TamanhoM {
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[3]/button")
+        @FindBy(xpath = "//item-grid//tr[2]/td[3]/button")
         public WebElement preto;
 
         public TamanhoM(WebDriver driver) {

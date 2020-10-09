@@ -13,10 +13,10 @@ public class BlusaDetalhePage {
     public TamanhoG tamanhoG;
     public TamanhoGG tamanhoGG;
 
-    @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[1]/color-button")
+    @FindBy(xpath = "//item-grid//tr[3]/td[1]/color-button")
     public WebElement corVermelha;
 
-    @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[1]/color-button")
+    @FindBy(xpath = "//item-grid//tr[2]/td[1]/color-button")
     public WebElement corRosa;
 
     @FindBy(xpath = "//catalogue/color-zoom-box/div[1]/div/h3")
@@ -33,10 +33,10 @@ public class BlusaDetalhePage {
     @Getter
     public class TamanhoP {
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[2]/button")
+        @FindBy(xpath = "//item-grid//tr[2]/td[2]/button")
         private WebElement branco;
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[2]/button")
+        @FindBy(xpath = "//item-grid//tr[3]/td[2]/button")
         private WebElement preto;
 
         public TamanhoP(WebDriver driver) {
@@ -47,10 +47,10 @@ public class BlusaDetalhePage {
     @Getter
     public class TamanhoM {
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[3]/button")
+        @FindBy(xpath = "//item-grid//tr[2]/td[3]/button")
         private WebElement branco;
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[3]/button")
+        @FindBy(xpath = "//item-grid//tr[3]/td[3]/button")
         private WebElement preto;
 
         public TamanhoM(WebDriver driver) {
@@ -61,10 +61,10 @@ public class BlusaDetalhePage {
     @Getter
     public class TamanhoG {
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[4]/button")
+        @FindBy(xpath = "//item-grid//tr[2]/td[4]/button")
         public WebElement branco;
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[4]/button")
+        @FindBy(xpath = "//item-grid//tr[3]/td[4]/button")
         public WebElement preto;
 
         public TamanhoG(WebDriver driver) {
@@ -75,10 +75,10 @@ public class BlusaDetalhePage {
     @Getter
     public class TamanhoGG {
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[2]/td[5]/button")
+        @FindBy(xpath = "//item-grid//tr[2]/td[5]/button")
         public WebElement branco;
 
-        @FindBy(xpath = "//item-grid/div/table/tbody/tr[3]/td[5]/button")
+        @FindBy(xpath = "//item-grid//tr[3]/td[5]/button")
         public WebElement preto;
 
         public TamanhoGG(WebDriver driver) {
