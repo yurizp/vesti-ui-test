@@ -17,4 +17,5 @@ public class InfoProperties {
     public static final String URL_VESTI = "https://www.vesti.mobi";
     public static final String NOME_VENDEDOR = "QA Modas";
     public static final String TELEFONE_CELULAR_VENDEDOR = "(11) 98924-9349";
+    public static final String LINK_GOOGLE = "https://play.google.com/store/apps/details?id=com.meuvesti.namine&hl=pt_BR";
 }

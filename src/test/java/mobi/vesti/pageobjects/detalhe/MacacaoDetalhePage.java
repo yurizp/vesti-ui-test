@@ -10,6 +10,8 @@ public class MacacaoDetalhePage {
 
     public TamanhoP tamanhoP;
     public TamanhoM tamanhoM;
+    @FindBy(xpath = "//cart-panel//cart-product//h2/i")
+    public WebElement botaoExcluirPeca;
 
     public MacacaoDetalhePage(WebDriver driver) {
         PageFactory.initElements(driver, this);

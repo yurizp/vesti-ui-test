@@ -103,6 +103,28 @@ public class FiltroSemEstarLogadoTest extends TestContext {
                         ProdutosQaModasProperties.JAQUETA.SEM_PRECO,
                         ProdutosQaModasProperties.CAMISETA_ESTAMPADA.SEM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
+        // Limpa os filtros
+        filtroPageObject.categorias("jaqueta de cou").click();
+        Thread.sleep(1000);
+        filtroPageObject.categorias("camiseta").click();
+        Thread.sleep(1000);
+        //Abrir menu hamburguer
+        filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
+        Thread.sleep(500);
+
+        // Selecionar as categorias
+        filtroPageObject.adicionarFiltros.categorias("blusa").click();
+        filtroPageObject.adicionarFiltros.categorias("jaqueta").click();
+        filtroPageObject.adicionarFiltros.categorias("algadao").click();
+        filtroPageObject.adicionarFiltros.botaoVoltar.click();
+        Thread.sleep(1000);
+
+        // Validar o filtro aplicado
+        assertThat(filtroPageObject.existeCategoria("algadao")).isTrue();
+        produtos = homePage.getAnunciosSemPecoProdutosDto();
+        assertThat(produtos.toArray())
+                .containsAnyOf(ProdutosQaModasProperties.BLUSA.SEM_PRECO)
+                .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
     }
 
     public void selecionarEValidarFiltrosTelaHome(WebElement filtro, ProdutosDto... anunciosVendasDto) throws InterruptedException {

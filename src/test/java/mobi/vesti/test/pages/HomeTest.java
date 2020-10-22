@@ -6,6 +6,7 @@ import mobi.vesti.pageobjects.CadastroVendedorPageObject;
 import mobi.vesti.pageobjects.HomePageObject;
 import mobi.vesti.pageobjects.LoginPageObject;
 import mobi.vesti.properties.ConfiguracoesGlobais;
+import mobi.vesti.properties.InfoProperties;
 import mobi.vesti.properties.LoginProperties;
 import mobi.vesti.properties.MensgensProperties;
 import mobi.vesti.properties.ProdutosQaModasProperties;
@@ -79,6 +80,9 @@ public class HomeTest extends TestContext {
         driver.navigate().to(ConfiguracoesGlobais.NAMIE);
         Thread.sleep(1000);
 
+        //Validar que quando clica no banner vai para a pagina do Google
+        validarAberturaPaginaGoogle();
+
         // Validar exibição do banner do aplicativo
         validarExibicaoBannerAplicativo();
 
@@ -95,6 +99,15 @@ public class HomeTest extends TestContext {
 
         // Validar a não exibição do banner do aplicativo
         validarExibicaoBannerAplicativo();
+    }
+
+    @SneakyThrows
+    private void validarAberturaPaginaGoogle() {
+        homePage.bannerAplicativo.botaoBaixar.click();
+        Thread.sleep(3000);
+        assertThat(driver.getCurrentUrl()).isEqualTo(InfoProperties.LINK_GOOGLE);
+        Thread.sleep(2000);
+        driver.navigate().to(ConfiguracoesGlobais.NAMIE);
     }
 
     @SneakyThrows

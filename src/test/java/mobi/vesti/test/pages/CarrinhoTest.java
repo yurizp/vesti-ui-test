@@ -752,11 +752,10 @@ public class CarrinhoTest extends TestContext {
         assertThat(CarrinhoProperties.COR_VERMELHA_RGB).isEqualTo(carrinhoPage.macacao.tamanhoM.preto.getCssValue("color"));
         assertThat(CarrinhoProperties.PECAS_ESGOTADAS_MENSAGEM).isEqualTo(carrinhoPage.popUpMensagem.mensagem.getText());
         carrinhoPage.popUpMensagem.botaoOk.click();
-
+        carrinhoPage.macacao.botaoExcluirPeca.click();
+        Thread.sleep(1000);
 
         // Voltar para home e clicar no produto macacão
-        carrinhoPage.botaoVoltar.click();
-        Thread.sleep(1000);
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosPepitaModasProperties.MACACAO.NOME);
         Thread.sleep(1000);
 
