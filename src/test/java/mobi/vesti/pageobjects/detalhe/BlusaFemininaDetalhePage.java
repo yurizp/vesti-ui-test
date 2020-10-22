@@ -22,10 +22,10 @@ public class BlusaFemininaDetalhePage {
     @Getter
     public class TamanhoP {
 
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[2]/td[2]")
+        @FindBy(xpath = "//item-grid/div//tr[2]/td[2]")
         public WebElement azul;
 
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[2]")
+        @FindBy(xpath = "//item-grid/div//tr[3]/td[2]")
         public WebElement preto;
 
         public TamanhoP(WebDriver driver) {
@@ -36,10 +36,10 @@ public class BlusaFemininaDetalhePage {
     @Getter
     public class TamanhoM {
 
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[2]/td[3]")
+        @FindBy(xpath = "//item-grid/div//tr[2]/td[3]")
         public WebElement azul;
 
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[3]")
+        @FindBy(xpath = "//item-grid/div//tr[3]/td[3]")
         public WebElement preto;
 
         public TamanhoM(WebDriver driver) {
@@ -50,10 +50,10 @@ public class BlusaFemininaDetalhePage {
     @Getter
     public class TamanhoG {
 
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[2]/td[4]")
+        @FindBy(xpath = "//item-grid/div//tr[2]/td[4]")
         public WebElement azul;
 
-        @FindBy(xpath = "//item-grid/div/div[2]/table/tbody/tr[3]/td[4]")
+        @FindBy(xpath = "//item-grid/div//tr[3]/td[4]")
         public WebElement preto;
 
         public TamanhoG(WebDriver driver) {
