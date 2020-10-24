@@ -67,15 +67,15 @@ public class FiltroLogadoTest extends TestContext {
 
     /**
      * Esse teste esta ignorado devido ao bug encontrado nele.
-     * Aguardando ok para retestar.
+     * Aguardando ok para .
      */
-    @Ignore
     @SneakyThrows
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void testarTelaDeFiltroClicandoNoMenuHamburguer() {
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         loginPage.logarQaModas();
         Thread.sleep(2000);
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_BASE_URL);
         filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
         filtroPageObject.adicionarFiltros.categorias("camiseta").click();
         Thread.sleep(1000);
@@ -84,28 +84,32 @@ public class FiltroLogadoTest extends TestContext {
         assertThat(filtroPageObject.existeCategoria("básica")).isTrue();
         assertThat(filtroPageObject.existeCategoria("camiseta")).isFalse();
         List<ProdutosDto> produtos = homePage.getAnunciosComPrecoProdutosDto();
+        produtos.forEach(produtosDto -> System.out.println(produtosDto.toString()));
         assertThat(produtos.toArray())
-                .containsOnly(ProdutosQaModasProperties.CAMISETA.COM_PRECO)
+                .containsOnly(ProdutosQaModasProperties.CAMISETA.COM_PRECO, ProdutosQaModasProperties.CAMISETA_MANGA_LON.COM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
         filtroPageObject.adicionarFiltros.categorias("estampada").click();
         filtroPageObject.adicionarFiltros.botaoVoltar.click();
+        Thread.sleep(2000);
         assertThat(filtroPageObject.existeCategoria("básica")).isTrue();
         assertThat(filtroPageObject.existeCategoria("estampada")).isTrue();
         assertThat(filtroPageObject.existeCategoria("camiseta")).isFalse();
         produtos = homePage.getAnunciosComPrecoProdutosDto();
         assertThat(produtos.toArray())
-                .containsExactlyInAnyOrder(ProdutosQaModasProperties.CAMISETA.COM_PRECO,
+                .containsExactlyInAnyOrder(
+                        ProdutosQaModasProperties.CAMISETA.COM_PRECO,
+                        ProdutosQaModasProperties.CAMISETA_MANGA_LON.COM_PRECO,
                         ProdutosQaModasProperties.CAMISETA_ESTAMPADA.COM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
         filtroPageObject.adicionarFiltros.botaoAdicionar.click();
-        filtroPageObject.adicionarFiltros.categorias("jaqueta").click();
+        filtroPageObject.adicionarFiltros.categorias("jaqueta de cou").click();
         assertThat(filtroPageObject.adicionarFiltros.existeCategorias("estampada")).isFalse()
                 .withFailMessage(MensgensProperties.FILTRO_CATEGORIA_NAO_DEVERIA_EXISTIR);
         assertThat(filtroPageObject.adicionarFiltros.existeCategorias("básica")).isFalse()
                 .withFailMessage(MensgensProperties.FILTRO_CATEGORIA_NAO_DEVERIA_EXISTIR);
         filtroPageObject.adicionarFiltros.botaoVoltar.click();
-        assertThat(filtroPageObject.existeCategoria("jaqueta")).isTrue();
+        assertThat(filtroPageObject.existeCategoria("jaqueta de cou")).isTrue();
         assertThat(filtroPageObject.existeCategoria("camiseta")).isTrue();
         assertThat(filtroPageObject.existeCategoria("básica")).isFalse();
         assertThat(filtroPageObject.existeCategoria("estampada")).isFalse();
@@ -114,6 +118,28 @@ public class FiltroLogadoTest extends TestContext {
                 .containsAnyOf(ProdutosQaModasProperties.CAMISETA.COM_PRECO,
                         ProdutosQaModasProperties.JAQUETA.COM_PRECO,
                         ProdutosQaModasProperties.CAMISETA_ESTAMPADA.COM_PRECO)
+                .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
+        // Limpa os filtros
+        filtroPageObject.categorias("jaqueta de cou").click();
+        Thread.sleep(1000);
+        filtroPageObject.categorias("camiseta").click();
+        Thread.sleep(1000);
+        //Abrir menu hamburguer
+        filtroPageObject.adicionarFiltros.menuPageObject.botaoHamburguer.click();
+        Thread.sleep(500);
+
+        // Selecionar as categorias
+        filtroPageObject.adicionarFiltros.categorias("blusa").click();
+        filtroPageObject.adicionarFiltros.categorias("jaqueta").click();
+        filtroPageObject.adicionarFiltros.categorias("algadao").click();
+        filtroPageObject.adicionarFiltros.botaoVoltar.click();
+        Thread.sleep(1000);
+
+        // Validar o filtro aplicado
+        assertThat(filtroPageObject.existeCategoria("algadao")).isTrue();
+        produtos = homePage.getAnunciosComPrecoProdutosDto();
+        assertThat(produtos.toArray())
+                .containsAnyOf(ProdutosQaModasProperties.BLUSA.COM_PRECO)
                 .withFailMessage(MensgensProperties.FILTRO_ERRO_AO_FILTRAR);
     }
 
