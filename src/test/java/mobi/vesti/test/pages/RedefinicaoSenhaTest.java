@@ -30,16 +30,6 @@ public class RedefinicaoSenhaTest extends TestContext {
         loginPage = new LoginPageObject(driver);
     }
 
-
-    //    testenotificacao
-    //14.091.416/0001-77
-    //    testeclienteqa@gmail.com
-    //123123
-    //
-    //        846.829.340-74
-    //    testecpf@tst.com
-    //123123
-
     /**
      * Redefinição de senha utilizando o E-mail
      */
