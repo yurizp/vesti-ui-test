@@ -10,12 +10,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.w3c.dom.html.HTMLInputElement;
 
 import static mobi.vesti.test.TestContext.driver;
 
 @Getter
 public class LoginPageObject {
 
+    @FindBy(xpath = "//*[@class=\"forgot-password-button\"]")
+    public WebElement botaoEsqueciMinhaSenha;
     @FindBy(xpath = "//*[@ng-reflect-name=\"cnpjCpfOrEmail\"]//input")
     private WebElement campoCpfCnpj;
 

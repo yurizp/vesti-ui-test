@@ -427,7 +427,7 @@ public class CarrinhoTest extends TestContext {
 
         //Adicionar Pack Jeans ao carrinho
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.PACK_JEANS.NOME);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         assertThat(carrinhoPage.packJeans.botaoAdicionarItem.getText()).isEqualTo("+");
         assertThat(carrinhoPage.packJeans.botaoRemoverItem.getText()).isEqualTo("-");
         assertThat(carrinhoPage.packJeans.quantidade.getText()).isEqualTo("0");
@@ -452,7 +452,8 @@ public class CarrinhoTest extends TestContext {
 
         //Adiciona uma Calça Jeans Pack ao carrinho e volta para a home
         homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModasProperties.CALCA_JEANS_PACK.NOME);
-        Thread.sleep(800);
+
+        Thread.sleep(1800);
         assertThat(carrinhoPage.calcaJeansPack.botaoAdicionarItem.getText()).isEqualTo("+");
         assertThat(carrinhoPage.calcaJeansPack.botaoRemoverItem.getText()).isEqualTo("-");
         assertThat(carrinhoPage.calcaJeansPack.quantidade.getText()).isEqualTo("0");

@@ -66,6 +66,8 @@ public class CadastroVendedorPageObject {
     @FindBy(how = How.XPATH, using = "//*[@class=\"container-fluid\"]//button")
     public WebElement botaoVoltar;
 
+    @FindBy(xpath = "//*[@class=\"alert alert-vesti show\"]")
+    public WebElement popupMensagem;
 
     public CadastroVendedorPageObject(WebDriver driver) {
         PageFactory.initElements(TestContext.driver, this);
