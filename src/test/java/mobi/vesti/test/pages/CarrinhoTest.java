@@ -14,6 +14,7 @@ import mobi.vesti.properties.ConfiguracoesGlobais;
 import mobi.vesti.properties.InfoProperties;
 import mobi.vesti.properties.LoginProperties;
 import mobi.vesti.properties.ProdutosPepitaModasProperties;
+import mobi.vesti.properties.ProdutosQaModas2ModasProperties;
 import mobi.vesti.properties.ProdutosQaModasProperties;
 import mobi.vesti.test.TestContext;
 import mobi.vesti.utils.AcoesCustomizadas;
@@ -764,6 +765,81 @@ public class CarrinhoTest extends TestContext {
         assertThat(carrinhoPage.mensagemEsgotado.getText()).isEqualTo(CarrinhoProperties.MENSGAEM_PRODUTO_ESGOTADO);
         assertThat(AcoesCustomizadas.elementoExiste(carrinhoPage.macacao.tamanhoP.preto)).isFalse();
         assertThat(AcoesCustomizadas.elementoExiste(carrinhoPage.macacao.tamanhoM.preto)).isFalse();
+    }
+
+    /**
+     * Validar frete
+     * Utilizando o ambiente QAMODAS2.
+     */
+    @SneakyThrows
+    @Test(retryAnalyzer = RetentarUmaVez.class)
+    public void validarFrete() {
+        // Deixa o macacao como disponivel em estoque
+        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS);
+
+        // Faz login clicando em um produto
+        driver.navigate().to(ConfiguracoesGlobais.QAMODAS_2);
+        Thread.sleep(2000);
+        homePage.clicarEmAnuncioDeProdutoSemPreco(ProdutosQaModas2ModasProperties.CALCA_ALGODAO.NOME);
+        AcoesCustomizadas.sendKeys(LoginProperties.LOGIN_VALIDO_CNPJ_QAMODAS2.getEmail(), cadastroVendedorPage.getCnpjCpfOuEmail());
+        Thread.sleep(800);
+        assertThat(loginPage.getCnpjCpfText()).isEqualTo(LoginProperties.LOGIN_VALIDO_CNPJ_QAMODAS2.getEmail());
+        cadastroVendedorPage.getBotaoContinuar().click();
+        loginPage.preencherLogin(LoginProperties.LOGIN_VALIDO_CNPJ_QAMODAS2);
+        loginPage.getBotaoContinuar().click();
+        Thread.sleep(2500);
+
+        // Muda o estoque do macacão para esgotado
+        VestClient.adicionarEstoque(ProdutosQaModas2ModasProperties.CALCA_ALGODAO.ID,ProdutosQaModas2ModasProperties.CALCA_ALGODAO.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS2);
+
+
+        // Adiciona Macacao ao carrinho
+        homePage.clicarEmAnuncioDeProdutoComPreco(ProdutosQaModas2ModasProperties.CALCA_ALGODAO.NOME);
+        Thread.sleep(1000);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoP.getPreto(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoP.getCinza(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoP.getAzul(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoM.getCinza(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoM.getPreto(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoM.getAzul(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoG.getCinza(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoG.getPreto(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoG.getAzul(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoGG.getCinza(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoGG.getPreto(), 2);
+        AcoesCustomizadas.cliarRepetidasVezes(carrinhoPage.calcaAlgodao.tamanhoGG.getAzul(), 2);
+        Thread.sleep(2000);
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoGG.getAzul().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoGG.getCinza().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoGG.getPreto().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoG.getAzul().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoG.getCinza().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoG.getPreto().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoP.getAzul().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoP.getCinza().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoP.getPreto().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoM.getAzul().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoM.getCinza().getText()).isEqualTo("2");
+        assertThat(carrinhoPage.calcaAlgodao.tamanhoM.getPreto().getText()).isEqualTo("2");
+
+        // Ir para carrinho
+        carrinhoPage.carrinhoIcone.click();
+
+        // Seleciona endereço de entrega
+        carrinhoPage.enderecoEntrega.click();
+        AcoesCustomizadas.sendKeys("09440140 ",carrinhoPage.enderecoEntregaPage.cep);
+        carrinhoPage.enderecoEntregaPage.numero.click();
+        Thread.sleep(2000);
+        carrinhoPage.enderecoEntregaPage.numero.sendKeys("123");
+        carrinhoPage.enderecoEntregaPage.botaoSalvar.click();
+        Thread.sleep(1000);
+
+        // Seleciona o tipo de entrega
+        carrinhoPage.opcoesEntrega.outrasFormas.click();
+        carrinhoPage.opcoesEntrega.botaoContinuar.click();
+        Thread.sleep(1000);
+        assertThat(carrinhoPage.opcoesEntrega.mensagemObrigatorio.getText()).contains("Obrigatório");
+
     }
 
     /**

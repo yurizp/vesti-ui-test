@@ -2,6 +2,7 @@ package mobi.vesti.pageobjects;
 
 import mobi.vesti.pageobjects.detalhe.BlusaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.BlusaFemininaDetalhePage;
+import mobi.vesti.pageobjects.detalhe.CalcaAlgodaoPage;
 import mobi.vesti.pageobjects.detalhe.CalcaJeansMilandaDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CalcaJeansPackDetalhePage;
 import mobi.vesti.pageobjects.detalhe.CamisetaDetalhePage;
@@ -19,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+import org.w3c.dom.html.HTMLInputElement;
 
 public class CarrinhoPageObject {
 
@@ -52,6 +54,10 @@ public class CarrinhoPageObject {
     public WebElement botaoLimpar;
     @FindBy(xpath = "//*[@class=\"list-item clearfix\"]/p")
     public WebElement mensagemEsgotado;
+    @FindBy(xpath = "//div/div[2]/div[3]/div")
+    public WebElement frete;
+    @FindBy(xpath = "//div/div[2]/div[2]/div")
+    public WebElement enderecoEntrega;
 
     public PecasEsgotadas popUpMensagem;
     public PoloDetalhePage polo;
@@ -66,6 +72,9 @@ public class CarrinhoPageObject {
     public CamisetaEstampadaDetalhe camisetaEstampada;
     public BlusaFemininaDetalhePage blusaFeminina;
     public MacacaoDetalhePage macacao;
+    public CalcaAlgodaoPage calcaAlgodao;
+    public EnderecoPageObject enderecoEntregaPage;
+    public OpcoesEntrega opcoesEntrega;
 
     public CarrinhoPageObject(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -82,6 +91,9 @@ public class CarrinhoPageObject {
         camisetaEstampada = new CamisetaEstampadaDetalhe(driver);
         blusaFeminina = new BlusaFemininaDetalhePage(driver);
         macacao = new MacacaoDetalhePage(driver);
+        calcaAlgodao = new CalcaAlgodaoPage(driver);
+        enderecoEntregaPage = new EnderecoPageObject(driver);
+        opcoesEntrega = new OpcoesEntrega(driver);
     }
 
     /**
@@ -105,4 +117,19 @@ public class CarrinhoPageObject {
         }
     }
 
+    public class OpcoesEntrega {
+
+        @FindBy(xpath = "//*[@ng-reflect-id=\"inlineRadio-4\"]")
+        public WebElement outrasFormas;
+
+        @FindBy(xpath = "//*[@class=\"help-block\"]")
+        public WebElement mensagemObrigatorio;
+        @FindBy(xpath = "//*[normalize-space(text())='Continuar']")
+        public WebElement botaoContinuar;
+
+        public OpcoesEntrega(WebDriver driver) {
+            PageFactory.initElements(driver, this);
+        }
+
+    }
 }
