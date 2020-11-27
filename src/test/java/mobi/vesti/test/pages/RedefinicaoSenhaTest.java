@@ -183,7 +183,7 @@ public class RedefinicaoSenhaTest extends TestContext {
 
         // Preenche os dados da tela de login utilizando o email
         cadastroVendedorPage.getCnpjCpfOuEmail().clear();
-        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys("14091416000177");
+        cadastroVendedorPage.getCnpjCpfOuEmail().sendKeys("84682934074");
         cadastroVendedorPage.getBotaoContinuar();
         cadastroVendedorPage.getBotaoContinuar().click();
         loginPage.botaoEsqueciMinhaSenha.click();
@@ -191,7 +191,7 @@ public class RedefinicaoSenhaTest extends TestContext {
 
         // Validar mensagem de senha enviada
         assertThat(esqueceuSenhaPageObject.titulo.getText()).contains("VERIFIQUE SEU E-MAIL");
-        assertThat(esqueceuSenhaPageObject.mensagem.getText()).contains("Enviamos um link de troca de senha para: t*************@gmail.com.");
+        assertThat(esqueceuSenhaPageObject.mensagem.getText()).contains("Enviamos um link de troca de senha para: t*******@tst.com.");
         esqueceuSenhaPageObject.linkNaoTemMaisAcessoAoEmail.click();
 
         // Tentar entrar com um email invalido
@@ -222,17 +222,17 @@ public class RedefinicaoSenhaTest extends TestContext {
         Thread.sleep(1000);
         assertThat(esqueceuSenhaPageObject.alerta.mensage.getText()).contains("Seus dados foram enviados com sucesso, em breve entraremos em contato");
         esqueceuSenhaPageObject.alerta.botaoOK.click();
-        assertThat(cadastroVendedorPage.getCnpjCpfOuEmailText()).isEqualTo(Mascara.cnpj("14091416000177"));
+        assertThat(cadastroVendedorPage.getCnpjCpfOuEmailText()).isEqualTo(Mascara.cpf("84682934074"));
 
         // Validar mensagem de senha enviada
         loginPage.botaoEsqueciMinhaSenha.click();
         Thread.sleep(2000);
         assertThat(esqueceuSenhaPageObject.titulo.getText()).contains("VERIFIQUE SEU E-MAIL");
-        assertThat(esqueceuSenhaPageObject.mensagem.getText()).contains("Enviamos um link de troca de senha para: t*************@gmail.com.");
+        assertThat(esqueceuSenhaPageObject.mensagem.getText()).contains("Enviamos um link de troca de senha para: t*******@tst.com.");
 
         // Validar voltar pelo botao voltar
         esqueceuSenhaPageObject.botaoVoltar.click();
-        assertThat(cadastroVendedorPage.getCnpjCpfOuEmailText()).isEqualTo(Mascara.cnpj("14091416000177"));
+        assertThat(cadastroVendedorPage.getCnpjCpfOuEmailText()).isEqualTo(Mascara.cpf("84682934074"));
     }
 
 
