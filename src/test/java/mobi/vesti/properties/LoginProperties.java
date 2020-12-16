@@ -36,6 +36,7 @@ public class LoginProperties {
             .senha("123123")
             .email("cliente-de-teste-3@tst.com")
             .build();
+
     public static final LoginDto LOGIN_VALIDO_CNPJ_QAMODAS2 = LoginDto.builder()
             .email("testecartao3@tst.com")
             .documento("03956716000155")

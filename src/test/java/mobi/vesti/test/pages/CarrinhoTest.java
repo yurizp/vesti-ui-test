@@ -775,7 +775,8 @@ public class CarrinhoTest extends TestContext {
     @Test(retryAnalyzer = RetentarUmaVez.class)
     public void validarFrete() {
         // Deixa o macacao como disponivel em estoque
-        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS);
+        VestClient.adicionarEstoque(ProdutosPepitaModasProperties.MACACAO.ID, ProdutosPepitaModasProperties.MACACAO.ESTOQUE_REQUEST, AmbienteProperties.QAMODAS2);
+        VestClient.excluirEnderecos("bc57d790-eb17-4d81-95df-a0159834c45e", LoginProperties.LOGIN_API);
 
         // Faz login clicando em um produto
         driver.navigate().to(ConfiguracoesGlobais.QAMODAS_2);
